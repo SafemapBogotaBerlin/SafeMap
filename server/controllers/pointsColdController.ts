@@ -1,14 +1,13 @@
 import { Request, Response } from 'express';
-import { addColdPointModel, getColdPointsModel, coordinates } from '../models/testModel';
+import { addColdPointModel, getColdPointsModel, coordinates } from '../models/pointsCold';
+import { addRealTimePointModel } from '../models/pointsRealTime';
 
 export async function addPoint(req: Request, res: Response): Promise<Response> {
   const { user_id, added_dttm, danger_type, coordinates } = req.body;
   const { latitude, longitude } = coordinates;
-
   if (!user_id || !added_dttm || !danger_type || !coordinates) {
     return res.status(400).json({ error: 'All fields are required' });
   }
-
   try {
     const id = await addColdPointModel({ user_id, added_dttm, danger_type, coordinates });
     if (id) {
@@ -16,6 +15,21 @@ export async function addPoint(req: Request, res: Response): Promise<Response> {
     } else {
       res.status(500).json({ error: 'Failed to add test data' });
     }
+  } catch (error) {
+    console.error('Error adding test data: ', error);
+    res.status(500).json({ error: 'Internal Server Error' });
+  }
+}
+
+export async function addPointRT(req: Request, res: Response): Promise<Response> {
+  console.log('entered controllers realtime')
+  const { user_id, added_dttm, danger_type, coordinates } = req.body;
+  const { latitude, longitude } = coordinates;
+  if (!user_id || !added_dttm || !danger_type || !coordinates) {
+    return res.status(400).json({ error: 'All fields are required' });
+  }
+  try {
+    await addRealTimePointModel({ user_id, added_dttm, danger_type, coordinates });
   } catch (error) {
     console.error('Error adding test data: ', error);
     res.status(500).json({ error: 'Internal Server Error' });

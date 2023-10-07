@@ -1,6 +1,6 @@
 
 import { Router } from 'express';
-import { addPoint, getColdPoints } from './controllers/testController';
+import { addPoint, getColdPoints, addPointRT } from './controllers/pointsColdController';
 
 const router = Router();
 //routes
@@ -10,6 +10,7 @@ router.get('/', ( req, res ) => {
 })
 
 router.post('/addDangerPoint', addPoint);
+router.post('/addDangerPointRT', addPointRT);
 router.get('/getDangerPoints', getColdPoints);
 
 export default router;

@@ -1,5 +1,8 @@
 import {  collection, addDoc, getDocs } from 'firebase/firestore';
 import firestore  from './db'
+import { getDatabase, ref, set } from "firebase/database";
+
+const database = getDatabase();
 
 export interface coordinates {
   latitude: number
@@ -15,9 +18,9 @@ export interface point {
 
 const dangerPointsCollection = 'dangerPoints';
 
-export async function addColdPointModel(testData: { user_id: string, added_dttm: string, danger_type: string, coordinates: coordinates }): Promise<string | undefined> {
+export async function addColdPointModel(data: point): Promise<string | undefined> {
   try {
-    const docRef = await addDoc(collection(firestore, dangerPointsCollection), testData);
+    const docRef = await addDoc(collection(firestore, dangerPointsCollection), data);
     return docRef.id;
   } catch (error) {
     console.error('Error adding document: ', error);
