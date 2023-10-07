@@ -7,7 +7,7 @@ const router = (0, express_1.Router)();
 router.get('/', (req, res) => {
     res.send("This is a basic route!");
 });
-router.post('/addTest', testController_1.addTest);
-router.get('/getTest', testController_1.getTest);
+router.post('/addDangerPoint', testController_1.addPoint);
+router.get('/getDangerPoints', testController_1.getColdPoints);
 exports.default = router;
 //# sourceMappingURL=router.js.map

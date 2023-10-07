@@ -1,6 +1,5 @@
 import { initializeApp } from 'firebase/app';
-import {getAnalytics} from 'firebase/analytics';
-import { getFirestore, collection, getDocs } from 'firebase/firestore';
+import { getFirestore } from 'firebase/firestore';
 
 const firebaseConfig = {
   apiKey: "AIzaSyAM2TYDpwTfII_E1vCpVcFgRH5kNcAokDE",
@@ -13,12 +12,6 @@ const firebaseConfig = {
 };
 
 const app = initializeApp(firebaseConfig);
-//const analytics = getAnalytics(app);
 const firestore : any = getFirestore(app);
 
-/* export const getCollection = (name:string):any => {
-  return firestore.collection(name)
-} */
-//export app, analytics, firestore
-// need db url and other info about db
 export default firestore;

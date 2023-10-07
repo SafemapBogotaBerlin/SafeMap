@@ -9,16 +9,17 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.getTest = exports.addTest = void 0;
+exports.getColdPoints = exports.addPoint = void 0;
 const testModel_1 = require("../models/testModel");
-function addTest(req, res) {
+function addPoint(req, res) {
     return __awaiter(this, void 0, void 0, function* () {
-        const { value } = req.body;
-        if (!value) {
-            return res.status(400).json({ error: 'Value is required' });
+        const { user_id, added_dttm, danger_type, coordinates } = req.body;
+        const { latitude, longitude } = coordinates;
+        if (!user_id || !added_dttm || !danger_type || !coordinates) {
+            return res.status(400).json({ error: 'All fields are required' });
         }
         try {
-            const id = yield (0, testModel_1.addTestToFirestore)({ value });
+            const id = yield (0, testModel_1.addColdPointModel)({ user_id, added_dttm, danger_type, coordinates });
             if (id) {
                 res.status(201).json({ id });
             }
@@ -32,12 +33,12 @@ function addTest(req, res) {
         }
     });
 }
-exports.addTest = addTest;
-function getTest(req, res) {
+exports.addPoint = addPoint;
+function getColdPoints(req, res) {
     return __awaiter(this, void 0, void 0, function* () {
         try {
             console.log('here');
-            const documents = yield (0, testModel_1.getTestFromFirestore)();
+            const documents = yield (0, testModel_1.getColdPointsModel)();
             if (documents) {
                 res.status(200).json(documents);
             }
@@ -51,5 +52,5 @@ function getTest(req, res) {
         }
     });
 }
-exports.getTest = getTest;
+exports.getColdPoints = getColdPoints;
 //# sourceMappingURL=testController.js.map

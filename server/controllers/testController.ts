@@ -1,15 +1,16 @@
 import { Request, Response } from 'express';
-import { addTestToFirestore, getTestFromFirestore } from '../models/testModel';
+import { addColdPointModel, getColdPointsModel, coordinates } from '../models/testModel';
 
-export async function addTest(req: Request, res: Response): Promise<Response> {
-  const { value } = req.body;
+export async function addPoint(req: Request, res: Response): Promise<Response> {
+  const { user_id, added_dttm, danger_type, coordinates } = req.body;
+  const { latitude, longitude } = coordinates;
 
-  if (!value) {
-    return res.status(400).json({ error: 'Value is required' });
+  if (!user_id || !added_dttm || !danger_type || !coordinates) {
+    return res.status(400).json({ error: 'All fields are required' });
   }
 
   try {
-    const id = await addTestToFirestore({ value });
+    const id = await addColdPointModel({ user_id, added_dttm, danger_type, coordinates });
     if (id) {
       res.status(201).json({ id });
     } else {
@@ -21,10 +22,10 @@ export async function addTest(req: Request, res: Response): Promise<Response> {
   }
 }
 
-export async function getTest(req: Request, res: Response): Promise<Response> {
+export async function getColdPoints(req: Request, res: Response): Promise<Response> {
   try {
     console.log('here')
-    const documents = await getTestFromFirestore()
+    const documents = await getColdPointsModel()
     if (documents) {
       res.status(200).json(documents);
     } else {

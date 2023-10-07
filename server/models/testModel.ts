@@ -1,12 +1,14 @@
-import { Firestore, collection, addDoc,getDocs } from 'firebase/firestore';
-import { getFirestore } from 'firebase/firestore/lite';
+import {  collection, addDoc, getDocs } from 'firebase/firestore';
 import firestore  from './db'
 
-//const fs = getFirestore(); 
+export interface coordinates {
+  latitude: number
+  longitude: number
+};
 
-export async function addTestToFirestore(testData: { value: string }): Promise<string | undefined> {
+export async function addColdPointModel(testData: { user_id: string, added_dttm: string, danger_type: string, coordinates: coordinates }): Promise<string | undefined> {
   try {
-    const docRef = await addDoc(collection(firestore, 'test'), testData);
+    const docRef = await addDoc(collection(firestore, 'dangerPoints'), testData);
     return docRef.id;
   } catch (error) {
     console.error('Error adding document: ', error);
@@ -14,9 +16,9 @@ export async function addTestToFirestore(testData: { value: string }): Promise<s
   }
 }
 
-export async function getTestFromFirestore(): Promise<any[] | undefined> {
+export async function getColdPointsModel(): Promise<any[] | undefined> {
   try {
-    const docRef = await getDocs(collection(firestore, 'test'));
+    const docRef = await getDocs(collection(firestore, 'dangerPoints'));
     const documents: any[] = [];
     docRef.forEach((doc) => {
       const data = doc.data();
