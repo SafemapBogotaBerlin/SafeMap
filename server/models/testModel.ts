@@ -6,9 +6,18 @@ export interface coordinates {
   longitude: number
 };
 
+export interface point {
+  user_id: string
+  added_dttm: string
+  danger_type: string
+  coordinates: coordinates
+};
+
+const dangerPointsCollection = 'dangerPoints';
+
 export async function addColdPointModel(testData: { user_id: string, added_dttm: string, danger_type: string, coordinates: coordinates }): Promise<string | undefined> {
   try {
-    const docRef = await addDoc(collection(firestore, 'dangerPoints'), testData);
+    const docRef = await addDoc(collection(firestore, dangerPointsCollection), testData);
     return docRef.id;
   } catch (error) {
     console.error('Error adding document: ', error);
