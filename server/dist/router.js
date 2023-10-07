@@ -8,6 +8,6 @@ router.get('/', (req, res) => {
     res.send("This is a basic route!");
 });
 router.post('/addTest', testController_1.addTest);
-router.post('/getTest', testController_1.getTest);
+router.get('/getTest', testController_1.getTest);
 exports.default = router;
 //# sourceMappingURL=router.js.map

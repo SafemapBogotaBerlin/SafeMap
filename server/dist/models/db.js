@@ -14,6 +14,9 @@ const firebaseConfig = {
 const app = (0, app_1.initializeApp)(firebaseConfig);
 //const analytics = getAnalytics(app);
 const firestore = (0, firestore_1.getFirestore)(app);
+/* export const getCollection = (name:string):any => {
+  return firestore.collection(name)
+} */
 //export app, analytics, firestore
 // need db url and other info about db
 exports.default = firestore;

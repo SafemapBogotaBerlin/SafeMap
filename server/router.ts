@@ -10,6 +10,6 @@ router.get('/', ( req, res ) => {
 })
 
 router.post('/addTest', addTest);
-router.post('/getTest', getTest);
+router.get('/getTest', getTest);
 
 export default router;

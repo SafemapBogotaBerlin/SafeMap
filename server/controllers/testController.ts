@@ -23,6 +23,7 @@ export async function addTest(req: Request, res: Response): Promise<Response> {
 
 export async function getTest(req: Request, res: Response): Promise<Response> {
   try {
+    console.log('here')
     const documents = await getTestFromFirestore()
     if (documents) {
       res.status(200).json(documents);

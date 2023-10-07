@@ -36,6 +36,7 @@ exports.addTest = addTest;
 function getTest(req, res) {
     return __awaiter(this, void 0, void 0, function* () {
         try {
+            console.log('here');
             const documents = yield (0, testModel_1.getTestFromFirestore)();
             if (documents) {
                 res.status(200).json(documents);
