@@ -30,6 +30,7 @@ export async function addPointRT(req: Request, res: Response): Promise<Response>
   }
   try {
     await addRealTimePointModel({ user_id, added_dttm, danger_type, coordinates });
+    return res.status(201).json({ message: 'Data saved successfully' });
   } catch (error) {
     console.error('Error adding test data: ', error);
     res.status(500).json({ error: 'Internal Server Error' });

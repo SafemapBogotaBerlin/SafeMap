@@ -45,6 +45,7 @@ function addPointRT(req, res) {
         }
         try {
             yield (0, pointsRealTime_1.addRealTimePointModel)({ user_id, added_dttm, danger_type, coordinates });
+            return res.status(201).json({ message: 'Data saved successfully' });
         }
         catch (error) {
             console.error('Error adding test data: ', error);

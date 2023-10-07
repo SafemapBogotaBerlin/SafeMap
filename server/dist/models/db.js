@@ -1,5 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
+exports.app = void 0;
 const app_1 = require("firebase/app");
 const firestore_1 = require("firebase/firestore");
 const firebaseConfig = {
@@ -12,6 +13,7 @@ const firebaseConfig = {
     measurementId: "G-8HXEDLS40G"
 };
 const app = (0, app_1.initializeApp)(firebaseConfig);
+exports.app = app;
 const firestore = (0, firestore_1.getFirestore)(app);
 exports.default = firestore;
 //# sourceMappingURL=db.js.map

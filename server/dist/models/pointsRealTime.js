@@ -11,7 +11,9 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.addRealTimePointModel = void 0;
 const database_1 = require("firebase/database");
-const database = (0, database_1.getDatabase)();
+const db_1 = require("./db");
+const database = (0, database_1.getDatabase)(db_1.app);
+const hotpoints = (0, database_1.ref)(database, 'hotpoints');
 function addRealTimePointModel(data) {
     return __awaiter(this, void 0, void 0, function* () {
         console.log('realtime here');
@@ -26,4 +28,8 @@ function addRealTimePointModel(data) {
     });
 }
 exports.addRealTimePointModel = addRealTimePointModel;
+(0, database_1.onValue)(hotpoints, (snapshot) => {
+    const data = snapshot.val();
+    console.log('New data!', data);
+});
 //# sourceMappingURL=pointsRealTime.js.map

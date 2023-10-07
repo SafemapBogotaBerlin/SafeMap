@@ -1,8 +1,10 @@
-import { getDatabase, set, ref } from "firebase/database";
+import { getDatabase, set, ref, onValue } from "firebase/database";
+import { app } from "./db";
 import { getFirestore, collection, addDoc } from "firebase/firestore";
 import { coordinates, point } from "./pointsCold";
 
-const database = getDatabase();
+const database = getDatabase(app);
+const hotpoints = ref(database, 'hotpoints');
 
 export async function addRealTimePointModel(data: point): Promise<void> {
   console.log('realtime here')
@@ -14,6 +16,9 @@ export async function addRealTimePointModel(data: point): Promise<void> {
         .catch((error) => {
         console.error('error when sending Firebase Realtime Database: ', error);
       });
-
-
 }
+
+onValue(hotpoints, (snapshot) => {
+  const data = snapshot.val();
+  console.log('New data!', data)
+})
