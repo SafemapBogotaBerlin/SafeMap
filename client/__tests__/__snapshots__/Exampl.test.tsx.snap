@@ -1,0 +1,11 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<Login /> renders correctly 1`] = `
+<RCTSafeAreaView>
+  <Text
+    testID="login-text"
+  >
+    Login
+  </Text>
+</RCTSafeAreaView>
+`;
