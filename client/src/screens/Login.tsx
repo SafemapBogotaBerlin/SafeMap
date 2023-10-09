@@ -12,6 +12,9 @@ import {
 import { signInWithEmailAndPassword, UserCredential } from "firebase/auth";
 import { NavigationProp, useNavigation } from "@react-navigation/native";
 import { routes } from "../Routes/public";
+import { login, loginFalse } from '../../redux/Login';      
+import { useDispatch, useSelector } from 'react-redux';
+import { RootState, AppDispatch } from '../../redux/Login/store';
 
 export default function Login() {
   const [email, setEmail] = useState("camilomafioly@gmail.com");
@@ -45,7 +48,6 @@ export default function Login() {
   return (
     <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
       <SafeAreaView style={styles.container}>
-        <Text>hola</Text>
         <Text style={styles.title}>Safe map</Text>
         <TextInput style={styles.input} placeholder="Email" onChangeText={setEmail} />
         <TextInput

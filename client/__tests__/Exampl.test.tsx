@@ -1,12 +1,18 @@
 import React from 'react';
 import renderer from 'react-test-renderer';
 import Login from '../src/screens/Login';
+import { Provider } from 'react-redux';
+import { store } from '../redux/Login/store';
 
 describe('<Login />', () => {
   let component: any;
 
   beforeEach(() => {
-    component = renderer.create(<Login />);
+    component = renderer.create(
+      <Provider store={store}>
+        <Login />
+      </Provider>
+    );
   });
 
   it('renders correctly', () => {
@@ -17,6 +23,6 @@ describe('<Login />', () => {
   it('contains specific text', () => {
     const instance = component.root;
     const textElement = instance.findByProps({ testID: 'login-text' });
-    expect(textElement.props.children).toBe('Login');
+    expect(textElement.props.children).toBe('Login false.');
   });
 });
