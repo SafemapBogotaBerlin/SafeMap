@@ -2,7 +2,7 @@ import { StyleSheet, View } from 'react-native';
 import Private from '../navigation/Private';
 import Public from '../navigation/Public';
 import { NavigationContainer } from '@react-navigation/native';
-import { RootState } from '../../redux/login/store';
+import { RootState } from '../../redux/Login/store';
 import { useSelector } from 'react-redux';
 
 export default function Navigation() {

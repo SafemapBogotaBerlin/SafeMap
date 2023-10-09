@@ -1,8 +1,8 @@
 import React from 'react';
 import { View, Text, SafeAreaView, Button } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
-import { RootState, AppDispatch } from '../../redux/login/store';
-import { login, loginFalse } from '../../redux/login';
+import { RootState, AppDispatch } from '../../redux/Login/store';
+import { login, loginFalse } from '../../redux/Login';
 
 export default function Login() {
   const value = useSelector((state: RootState) => state.auth.value);
@@ -10,7 +10,7 @@ export default function Login() {
 
   return (
     <SafeAreaView>
-      <Text>{`Login ${value}.`}</Text>
+      <Text testID='login-text'>{`Login ${value}.`}</Text>
       <Button title='Login' onPress={() => dispatch(login())}></Button>
       <Button
         title='LoginFalse'
