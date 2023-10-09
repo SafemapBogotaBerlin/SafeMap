@@ -2,11 +2,13 @@ import { createSlice } from '@reduxjs/toolkit';
 
 interface LoginState {
   value: boolean;
+  authentificated: boolean;
   // with the proper Authentification, different and more variables
 }
 
 const initialState: LoginState = {
   value: false,
+  authentificated: false,
 };
 
 const authSlice = createSlice({
@@ -19,8 +21,11 @@ const authSlice = createSlice({
     loginFalse: (state) => {
       state.value = false;
     },
+    authentificate: (state) => {
+      state.authentificated = true;
+    },
   },
 });
 
-export const { login, loginFalse } = authSlice.actions;
+export const { login, loginFalse, authentificate } = authSlice.actions;
 export default authSlice.reducer;

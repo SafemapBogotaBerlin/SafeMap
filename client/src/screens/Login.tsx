@@ -5,7 +5,7 @@ import { RootState, AppDispatch } from '../../redux/login/store';
 import { login, loginFalse } from '../../redux/login';
 
 export default function Login() {
-  const value = useSelector((state: RootState) => state.test.value);
+  const value = useSelector((state: RootState) => state.auth.value);
   const dispatch: AppDispatch = useDispatch();
 
   return (
