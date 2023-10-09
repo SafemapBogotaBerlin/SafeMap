@@ -1,6 +1,6 @@
 import { StyleSheet, View } from 'react-native';
-import Navigation from './src/components/Navigation';
-import { store } from './redux/Login/store';
+import Navigation from './src/components/Navigation/Navigation';
+import { store } from './src/redux/Login/store';
 import { Provider } from 'react-redux';
 
 export default function App() {

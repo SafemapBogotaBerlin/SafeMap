@@ -1,9 +1,10 @@
-import { StyleSheet, View } from 'react-native';
-import Private from '../navigation/Private';
-import Public from '../navigation/Public';
+import { View } from 'react-native';
+import Private from '../../navigation/Private';
+import Public from '../../navigation/Public';
 import { NavigationContainer } from '@react-navigation/native';
 import { RootState } from '../../redux/Login/store';
 import { useSelector } from 'react-redux';
+import { styles } from './style';
 
 export default function Navigation() {
   const authentificated = useSelector(
@@ -18,10 +19,3 @@ export default function Navigation() {
     </View>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-  },
-});
