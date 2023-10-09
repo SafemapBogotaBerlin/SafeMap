@@ -1,8 +1,8 @@
-import { auth } from "@/firebase.config";
-import { firebaseServices } from "@/services/firebase";
-import { NavigationProp, useNavigation } from "@react-navigation/native";
-import { UserCredential, signInWithEmailAndPassword } from "firebase/auth";
 import React, { useState } from "react";
+import { auth } from "../firebase.config";
+import { firebaseServices } from "../services/firebase";
+import { UserCredential, signInWithEmailAndPassword } from "firebase/auth";
+
 
 export default function useLogin() {
   const [email, setEmail] = useState("camilomafioly@gmail.com");

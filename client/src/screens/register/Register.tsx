@@ -1,4 +1,4 @@
-import { auth } from "../firebase.config";
+import { auth } from "../../firebase.config";
 import { createUserWithEmailAndPassword, sendEmailVerification } from "firebase/auth";
 import React, { useEffect, useState } from "react";
 import {
@@ -10,8 +10,9 @@ import {
   TouchableWithoutFeedback,
   Keyboard,
 } from "react-native";
-import RegisterInput from "../components/registerInput/RegisterInput";
-import useRegister from "../hooks/useRegister";
+import RegisterInput from "../../components/registerInput/RegisterInput";
+import useRegister from "../../hooks/useRegister";
+import { styles } from "./styles";
 
 export default function Register() {
   const {
@@ -72,11 +73,3 @@ export default function Register() {
   );
 }
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    justifyContent: "center",
-    paddingHorizontal: 20,
-    backgroundColor: "#f5f5f5",
-  },
-});

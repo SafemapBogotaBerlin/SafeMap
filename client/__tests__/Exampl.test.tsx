@@ -1,6 +1,6 @@
 import React from 'react';
 import renderer from 'react-test-renderer';
-import Login from '../src/screens/Login';
+import Login from '../src/screens/login/Login';
 import { Provider } from 'react-redux';
 import { store } from '../redux/Login/store';
 
