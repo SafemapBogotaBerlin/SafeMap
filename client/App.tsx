@@ -3,7 +3,7 @@ import { StyleSheet, Text, View } from 'react-native';
 import Private from './src/navigation/Private';
 import Public from './src/navigation/Public';
 import { NavigationContainer } from '@react-navigation/native';
-import { store } from './redux/Login/store';
+import { store } from './redux/login/store';
 import { Provider } from 'react-redux';
 
 export default function App() {
