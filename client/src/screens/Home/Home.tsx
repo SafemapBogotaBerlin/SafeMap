@@ -1,14 +1,33 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Image, View, Alert, TouchableOpacity } from 'react-native';
 import MapView, { Marker } from 'react-native-maps';
 import { styles } from './style';
+import { RootState, AppDispatch } from '../../redux/store';
+import { addPoint } from '../../redux/Home';
+import { useDispatch, useSelector } from 'react-redux';
+import ModalForm from '../../components/addPointForm/ModalForm'; // Import the ModalForm component
 
 export default function Home() {
-  const defaultPoints = [
-    { latitude: 19.532608, longitude: -99.53209 },
-    { latitude: 19.632608, longitude: -99.73209 },
-    { latitude: 19.732608, longitude: -99.03 },
-  ];
+  const [isModalVisible, setModalVisible] = useState(false);
+  const [formData, setFormData] = useState({ latitude: 0, longitude: 0 });
+
+  const handleMapLongPress = (event) => {
+    const { latitude, longitude } = event.nativeEvent.coordinate;
+    const newPoint: { latitude: number; longitude: number } = {
+      latitude,
+      longitude,
+    };
+    setModalVisible(true);
+    dispatch(addPoint(newPoint));
+  };
+  const handleSubmit = () => {
+    // Perform form validation if needed
+    // Call the onSubmit function with form data
+    // For example, onSubmit(latitude, longitude);
+  };
+
+  const hotpoints = useSelector((state: RootState) => state.home.hotpoints);
+  const dispatch: AppDispatch = useDispatch();
 
   return (
     <View style={{ flex: 1 }}>
@@ -20,8 +39,9 @@ export default function Home() {
           latitudeDelta: 0.222,
           longitudeDelta: 0.1421,
         }}
+        onLongPress={handleMapLongPress}
       >
-        {defaultPoints.map((point, index) => (
+        {hotpoints.map((point, index) => (
           <Marker
             key={index}
             coordinate={point}
@@ -30,6 +50,11 @@ export default function Home() {
           />
         ))}
       </MapView>
+      <ModalForm
+        isVisible={isModalVisible}
+        onClose={() => setModalVisible(false)}
+        onSubmit={() => handleSubmit()}
+      />
 
       <View style={[styles.buttonContainer, { left: 0 }]}>
         <TouchableOpacity
@@ -37,8 +62,8 @@ export default function Home() {
           onPress={() => Alert.alert('Notifications Button')}
         >
           <Image
-            source={require('../../../assets/hamburger.png')} // Provide the path to your PNG image
-            style={styles.icon} // Set the desired width and height for your button
+            source={require('../../../assets/hamburger.png')}
+            style={styles.icon}
           />
         </TouchableOpacity>
       </View>
