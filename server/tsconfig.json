@@ -6,6 +6,8 @@
       "noImplicitAny": true,
       "moduleResolution": "node",
       "sourceMap": true,
+      "skipLibCheck": true,
+      "forceConsistentCasingInFileNames": true,
       "outDir": "dist",
       "baseUrl": ".",
       "paths": {
@@ -14,7 +16,6 @@
           ]
       }
   },
-  "include": [
-      "/**/*"
-  ]
+  "include": ["**/*.ts", "../client/services/pointsSubscription.ts"],
+  "exclude": ["node_modules"]
 }

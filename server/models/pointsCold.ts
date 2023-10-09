@@ -18,9 +18,9 @@ export interface point {
 
 const dangerPointsCollection = 'dangerPoints';
 
-export async function addColdPointModel(data: point): Promise<string | undefined> {
+export async function addColdPointModel(data: point): Promise< string | undefined> {
   try {
-    const docRef = await addDoc(collection(firestore, dangerPointsCollection), data);
+    const docRef:any = await addDoc(collection(firestore, dangerPointsCollection), data);
     return docRef.id;
   } catch (error) {
     console.error('Error adding document: ', error);
