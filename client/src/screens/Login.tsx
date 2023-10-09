@@ -12,7 +12,7 @@ import {
 import { signInWithEmailAndPassword, UserCredential } from "firebase/auth";
 import { NavigationProp, useNavigation } from "@react-navigation/native";
 import { routes } from "../Routes/public";
-import { login, loginFalse } from '../../redux/Login';      
+import { login, loginFalse } from '../../redux/Login';
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState, AppDispatch } from '../../redux/Login/store';
 
@@ -31,7 +31,6 @@ export default function Login() {
         return;
       }
       const userCredential: UserCredential = await signInWithEmailAndPassword(auth, email, password);
-      console.log(userCredential);
       const user = userCredential.user;
       if (user) {
         if (user.emailVerified) {

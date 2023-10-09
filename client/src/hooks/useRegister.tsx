@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
-import { createUserWithEmailAndPassword, sendEmailVerification } from "firebase/auth";
+import { createUserWithEmailAndPassword, sendEmailVerification, UserCredential, User } from "firebase/auth";
 import { auth } from "../firebase.config";
+import { firebaseServices } from '../services/firebase';
 
 export default function useRegister() {
   const [displayName, setDisplayName] = useState("");
@@ -19,9 +20,9 @@ export default function useRegister() {
       return;
     }
     try {
-      const userCredential = await createUserWithEmailAndPassword(auth, email, password);
-      const user = userCredential.user;
-      //TODO create userData in collection
+      const userCredential: UserCredential = await createUserWithEmailAndPassword(auth, email, password);
+      const user: User = userCredential.user;
+      firebaseServices.initUser(user, {displayName})
       if (user) {
         await sendEmailVerification(user);
         alert("Verification email sent!");
