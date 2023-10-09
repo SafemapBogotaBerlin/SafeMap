@@ -7,7 +7,14 @@
     "start": "expo start",
     "android": "expo start --android",
     "ios": "expo start --ios",
-    "web": "expo start --web"
+    "web": "expo start --web",
+    "test": "jest"
+  },
+  "jest": {
+    "preset": "jest-expo",
+    "transformIgnorePatterns": [
+      "node_modules/(?!((jest-)?react-native|@react-native(-community)?)|expo(nent)?|@expo(nent)?/.*|@expo-google-fonts/.*|react-navigation|@react-navigation/native-stack|@react-navigation/.*|@unimodules/.*|unimodules|sentry-expo|native-base|react-native-svg)"
+    ]
   },
   "dependencies": {
     "@react-navigation/native": "^6.1.8",
@@ -24,6 +31,7 @@
   },
   "devDependencies": {
     "@babel/core": "^7.20.0",
+    "@types/jest": "^29.5.5",
     "@types/react": "~18.2.14",
     "@types/react-redux": "^7.1.27",
     "redux-tools": "^3.2.0",
