@@ -12,9 +12,10 @@ import {
 import { signInWithEmailAndPassword, UserCredential } from "firebase/auth";
 import { NavigationProp, useNavigation } from "@react-navigation/native";
 import { routes } from "../Routes/public";
-import { login, loginFalse } from '../../redux/Login';
-import { useDispatch, useSelector } from 'react-redux';
-import { RootState, AppDispatch } from '../../redux/Login/store';
+import { login, loginFalse } from "../../redux/Login";
+import { useDispatch, useSelector } from "react-redux";
+import { RootState, AppDispatch } from "../../redux/Login/store";
+import { firebaseServices } from "../services/firebase";
 
 export default function Login() {
   const [email, setEmail] = useState("camilomafioly@gmail.com");
@@ -30,7 +31,11 @@ export default function Login() {
       if (password === "") {
         return;
       }
-      const userCredential: UserCredential = await signInWithEmailAndPassword(auth, email, password);
+      const userCredential: UserCredential = await signInWithEmailAndPassword(
+        auth,
+        email,
+        password
+      );
       const user = userCredential.user;
       if (user) {
         if (user.emailVerified) {
@@ -39,6 +44,14 @@ export default function Login() {
           alert("Please verify your email before logging in.");
         }
       }
+
+      let userData = await firebaseServices.getUserData(user.uid);
+      if (!userData) {
+        alert("user not found");
+        return;
+      }
+      console.log('user data', userData);
+      //Todo set redux user data
     } catch (error) {
       console.log(error);
     }
@@ -56,7 +69,7 @@ export default function Login() {
           onChangeText={setPassword}
         />
         <Button title="Login" onPress={login} />
-        <Button title="Register" onPress={() =>navigation.navigate(routes.register)} />
+        <Button title="Register" onPress={() => navigation.navigate(routes.register)} />
       </SafeAreaView>
     </TouchableWithoutFeedback>
   );
