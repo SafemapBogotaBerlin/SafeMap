@@ -1,7 +1,8 @@
 import React, { useState } from "react";
 import { auth } from "../firebase.config";
 import { firebaseServices } from "../services/firebase";
-import { UserCredential, signInWithEmailAndPassword } from "firebase/auth";
+import { UserCredential, signInWithEmailAndPassword, User } from "firebase/auth";
+import { UserData } from '../types/index';
 
 
 export default function useLogin() {
@@ -31,25 +32,31 @@ export default function useLogin() {
         password
       );
       const user = userCredential.user;
-      if (user) {
-        if (user.emailVerified) {
-          alert("Successfully logged in!");
-        } else {
-          alert("Please verify your email before logging in.");
-        }
-      }
+      if (!userIsVerified) return;
+
+
 
       let userData = await firebaseServices.getUserData(user.uid);
       if (!userData) {
         alert("user not found");
         return;
       }
-      console.log("user data", userData);
+      console.log("user data", userData as UserData);
       //Todo set redux user data
     } catch (error) {
       console.log(error);
     }
   };
+
+  const userIsVerified = (user: User) =>{
+    if (user) {
+        if (user.emailVerified) {
+          alert("Successfully logged in!");
+        } else {
+          alert("Please verify your email before logging in.");
+        }
+      }
+  }
 
   return { setEmail, setPassword, login };
 }
