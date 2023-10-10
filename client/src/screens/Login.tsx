@@ -14,7 +14,7 @@ import { NavigationProp, useNavigation } from '@react-navigation/native';
 import { routes } from '../Routes/public';
 import { login, loginFalse } from '../redux/Login';
 import { useDispatch, useSelector } from 'react-redux';
-import { RootState, AppDispatch } from '../redux/Login/store';
+import { RootState, AppDispatch } from '../redux/store';
 
 export default function Login() {
   const [email, setEmail] = useState('camilomafioly@gmail.com');
