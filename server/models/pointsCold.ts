@@ -1,8 +1,5 @@
 import {  collection, addDoc, getDocs } from 'firebase/firestore';
 import firestore  from './db'
-import { getDatabase, ref, set } from "firebase/database";
-
-const database = getDatabase();
 
 export interface coordinates {
   latitude: number

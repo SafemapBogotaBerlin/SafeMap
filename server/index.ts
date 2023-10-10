@@ -1,18 +1,7 @@
 import express from 'express';
 import dotenv from 'dotenv';
 import cors from 'cors';
-//import {resolve} from 'path';
 import router from './router';
-
-//path not working - only .env from same folder
-//const envPath = resolve(__dirname, '../.env');
-//require('dotenv').config({ path: envPath});
-//const result = dotenv.config()
-
-
-//if (result.error) {
-//  throw result.error
-//}
 
 dotenv.config();
 
@@ -22,10 +11,6 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 app.use(router);
-
-
-
-
 
 app.listen(port, '0.0.0.0', () => {
   console.log(`Server is running at 0.0.0.0 on port ${port}`);
