@@ -1,10 +1,10 @@
 {
-  "main": "dist/index.js",
+  "main": "dist/sever/index.js",
   "scripts": {
     "build": "tsc",
     "prestart": "npm run build",
     "server:watch": "ts-node-dev --respawn --transpile-only src/index.ts",
-    "start": "node .",
+    "start": "node dist/index.js",
     "test": "jest"
   },
   "dependencies": {
