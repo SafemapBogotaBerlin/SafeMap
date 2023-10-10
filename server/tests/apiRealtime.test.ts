@@ -1,11 +1,17 @@
-import { getDatabase, set, ref, push, remove } from "firebase/database";
+import { getDatabase, get, ref } from "firebase/database";
 import { app } from "../models/db";
-import { coordinates, point } from "../models/pointsCold";
-import { addRealTimePointModel } from "../models/pointsRealTime";
+import { point } from "../models/pointsCold";
+import { addRealTimePointModel, deleteRealTimeCollection } from "../models/pointsRealTime";
 
 const database = getDatabase(app);
+const collection = 'testpoints'
 
 describe("addRealTimePointModel", () => {
+  
+  afterAll(async () => {
+    await deleteRealTimeCollection(collection)
+  })
+  
   it("should add a new point to the Realtime Database", async () => {
     
     const newPoint : point = 
@@ -17,17 +23,10 @@ describe("addRealTimePointModel", () => {
         "longitude": 10.00000000002
         }
     }
-
-    const mockSet = jest.fn();
-    jest.mock("firebase/database", () => ({
-      getDatabase: () => database,
-      set: mockSet,
-    }));
-
-    await addRealTimePointModel(newPoint, 'testpoints');
-
-    expect(1).toBe(1);
-
-    jest.clearAllMocks();
+    const testRef = ref(database,collection);
+    await addRealTimePointModel(newPoint, collection);
+    const gotPoint:any = await get(testRef);
+    const gotObj:any = Object.values(gotPoint.val())[0]
+    expect(gotObj.danger_type).toBe(newPoint.danger_type);
   });
 });

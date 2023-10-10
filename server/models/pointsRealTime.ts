@@ -1,6 +1,6 @@
-import { getDatabase, set, ref, push } from "firebase/database";
+import { getDatabase, set, ref, push, remove } from "firebase/database";
 import { app } from "./db";
-import { coordinates, point } from "./pointsCold";
+import { point } from "./pointsCold";
 
 const database = getDatabase(app);
 
@@ -10,10 +10,7 @@ export async function addRealTimePointModel(data: point, collection: string): Pr
   set(newPOint, data)
 }
 
-//Here we're only adding points to Realtime DB to centralize process
-//Subscription on information changes will be in client side
-
-/* onValue(hotpoints, (snapshot) => {
-  const data = snapshot.val();
-  console.log('New data!', data)
-}) */
+export async function deleteRealTimeCollection(collection: string) : Promise<void> {
+  const dbRef = ref(database, collection)
+  remove(dbRef)
+}
