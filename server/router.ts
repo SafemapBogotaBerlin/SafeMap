@@ -1,9 +1,9 @@
 
 import { Router } from 'express';
-import { addPoint, getColdPoints, addPointRT } from './controllers/pointsColdController';
+import { addPoint, getColdPoints } from './controllers/pointsColdController';
+import { addPointRT } from './controllers/pointsRTController';
 
 const router = Router();
-//routes
 
 router.get('/', ( req, res ) => {
   res.send( "This is a basic route!" );

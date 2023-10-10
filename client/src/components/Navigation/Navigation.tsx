@@ -2,13 +2,13 @@ import { View } from "react-native";
 import Private from "../../navigation/Private";
 import Public from "../../navigation/Public";
 import { NavigationContainer } from "@react-navigation/native";
-import { RootState } from "../../redux/session/store";
+import { RootState } from "../../redux/store";
 import { useSelector, useDispatch } from "react-redux";
 import { styles } from "./style";
 import { auth } from "../../firebase.config";
 import { onAuthStateChanged } from "firebase/auth";
 import { useEffect } from "react";
-import { authenticate } from "../../redux/session";
+import { authenticate } from "../../redux/session"; 
 
 export default function Navigation() {
   const authenticated = useSelector((state: RootState) => state.auth.authenticated);
