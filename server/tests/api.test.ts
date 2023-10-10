@@ -1,12 +1,5 @@
-
-//import { PrismaClient } from "@prisma/client";
-//import { describe }  from 'jest';
-
 import { initializeApp } from 'firebase/app';
 import { getFirestore, addDoc, getDoc, collection, doc, getDocs, deleteDoc } from 'firebase/firestore';
-import { getDatabase } from 'firebase/database';
-import {jest} from '@jest/globals';
-
 
 interface coordinates {
   latitude: number
