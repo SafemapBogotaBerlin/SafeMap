@@ -3,29 +3,21 @@ import { Image, View, Alert, TouchableOpacity } from 'react-native';
 import MapView, { Marker } from 'react-native-maps';
 import { styles } from './style';
 import { RootState, AppDispatch } from '../../redux/store';
-import { addPoint } from '../../redux/Home';
+import { selectPoint } from '../../redux/Home';
 import { useDispatch, useSelector } from 'react-redux';
-import ModalForm from '../../components/addPointForm/ModalForm'; // Import the ModalForm component
+import ModalForm from '../../components/addPointForm/ModalForm';
 
 export default function Home() {
-  const [isModalVisible, setModalVisible] = useState(false);
-  const [formData, setFormData] = useState({ latitude: 0, longitude: 0 });
-
-  const handleMapLongPress = (event) => {
+  const [isModalVisible, setModalVisible] = useState<boolean>(false);
+  const handleMapLongPress = (event: any) => {
     const { latitude, longitude } = event.nativeEvent.coordinate;
     const newPoint: { latitude: number; longitude: number } = {
       latitude,
       longitude,
     };
     setModalVisible(true);
-    dispatch(addPoint(newPoint));
+    dispatch(selectPoint(newPoint));
   };
-  const handleSubmit = () => {
-    // Perform form validation if needed
-    // Call the onSubmit function with form data
-    // For example, onSubmit(latitude, longitude);
-  };
-
   const hotpoints = useSelector((state: RootState) => state.home.hotpoints);
   const dispatch: AppDispatch = useDispatch();
 
@@ -53,7 +45,6 @@ export default function Home() {
       <ModalForm
         isVisible={isModalVisible}
         onClose={() => setModalVisible(false)}
-        onSubmit={() => handleSubmit()}
       />
 
       <View style={[styles.buttonContainer, { left: 0 }]}>
