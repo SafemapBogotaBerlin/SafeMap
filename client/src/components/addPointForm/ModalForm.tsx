@@ -3,9 +3,11 @@ import { Modal, View, TouchableOpacity, Text, Animated } from 'react-native';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import SelectDropdown from 'react-native-select-dropdown';
 import { styles } from './style';
-import { addPoint } from '../../redux/Home';
+import { addPointToDatabase } from '../../redux/Home/index';
 import { useDispatch, useSelector } from 'react-redux';
 import { AppDispatch, RootState } from '../../redux/store';
+import axios from 'axios';
+
 
 const ModalForm = ({ isVisible, onClose }) => {
   const slideAnimation = useRef(new Animated.Value(500)).current;
@@ -27,8 +29,9 @@ const ModalForm = ({ isVisible, onClose }) => {
     });
   };
 
-  const handleFormSubmit = () => {
-    dispatch(addPoint(selectedPoint));
+  const handleFormSubmit = async () => {
+    console.log('check');
+    await addPointToDatabase();
     hideForm();
   };
 

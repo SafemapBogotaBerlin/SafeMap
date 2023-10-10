@@ -13,20 +13,12 @@ exports.addRealTimePointModel = void 0;
 const database_1 = require("firebase/database");
 const db_1 = require("./db");
 const database = (0, database_1.getDatabase)(db_1.app);
-//const hotpoints = ref(database, 'hotpoints');
 function addRealTimePointModel(data) {
     return __awaiter(this, void 0, void 0, function* () {
         console.log('realtime here');
         const dbRef = (0, database_1.ref)(database, 'hotpoints');
         const newPOint = (0, database_1.push)(dbRef);
         (0, database_1.set)(newPOint, data);
-        /* push(dbRef, data)   // change it to .push()
-            .then(() => {
-                console.log('sent to Firebase Realtime Database');
-            })
-              .catch((error) => {
-              console.error('error when sending Firebase Realtime Database: ', error);
-            }); */
     });
 }
 exports.addRealTimePointModel = addRealTimePointModel;
@@ -35,5 +27,5 @@ exports.addRealTimePointModel = addRealTimePointModel;
 /* onValue(hotpoints, (snapshot) => {
   const data = snapshot.val();
   console.log('New data!', data)
-}) */ 
+}) */
 //# sourceMappingURL=pointsRealTime.js.map
