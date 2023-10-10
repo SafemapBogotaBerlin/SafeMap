@@ -8,7 +8,7 @@ interface LoginState {
 
 const initialState: LoginState = {
   value: false,
-  authentificated: true, //should be false (for going to home added true)
+  authentificated: false, //should be false (for going to home added true)
 };
 
 const authSlice = createSlice({
