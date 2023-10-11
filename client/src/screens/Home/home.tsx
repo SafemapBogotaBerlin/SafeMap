@@ -1,4 +1,6 @@
 import React, { useState, useEffect } from "react";
+import { onValue } from "firebase/database";
+import { Coordinates, DataObject } from "types/point";
 import { Image, View, Alert, TouchableOpacity, Animated } from "react-native";
 import MapView, { Marker, Circle } from "react-native-maps";
 import { styles } from "./style";
@@ -15,7 +17,7 @@ import { Point } from "../../types";
 
 export default function Home() {
   const [isModalVisible, setModalVisible] = useState<boolean>(false);
-
+  const [newData, setNewData] = useState<DataObject>({})
   const [location, setLocation] = useState<Location.LocationObject | null>(null);
   const [heading, setHeading] = useState(null);
   const [errorMsg, setErrorMsg] = useState(null);
@@ -34,8 +36,8 @@ export default function Home() {
           longitude: location.coords.longitude,
           latitude: location.coords.latitude,
         };
-        hotpoints.forEach((marker) => {
-          if (geolocationHelper.getDistance(userLocation, marker) <= 100) {
+        /*hotpoints*/Object.values(newData).forEach((marker) => {
+          if (geolocationHelper.getDistance(userLocation, marker.coordinates) <= 100) {
             console.log("danger zone!!!!!"); //TODO notify user
           }
         });

@@ -4,13 +4,16 @@ import { Coordinates, Point, DataObject } from '../../../types/point';
 
 
 interface HomeState {
+  hotpoints: Coordinates[];
   data: DataObject;
   selectedPoint: Coordinates | null;
   status: 'idle' | 'pending' | 'succeeded' | 'rejected';
   error: string | null;
 }
+ 
 
 let data: DataObject = {};
+
 
 const initialState: HomeState = {
 
