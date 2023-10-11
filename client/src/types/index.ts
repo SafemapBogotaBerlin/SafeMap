@@ -9,3 +9,8 @@ export type UserData ={
     name:string;
     created:string
 }
+
+export type Point = {
+  latitude: number;
+  longitude: number;
+}
