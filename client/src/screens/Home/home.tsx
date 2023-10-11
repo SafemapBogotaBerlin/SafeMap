@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Image, View, Alert, TouchableOpacity } from "react-native";
+import { Image, View, Alert, TouchableOpacity, Animated } from "react-native";
 import MapView, { Marker, Circle } from "react-native-maps";
 import { styles } from "./style";
 import { RootState, AppDispatch } from "../../redux/store";
@@ -7,32 +7,36 @@ import { selectPoint } from "../../redux/Home";
 import { useDispatch, useSelector } from "react-redux";
 import ModalForm from "../../components/addPointForm/ModalForm";
 import * as Location from "expo-location";
-import { coordinates } from '../../../../server/models/pointsCold';
+import { coordinates } from "../../../../server/models/pointsCold";
 
-type LatLng = {
-  latitude: Number,
-  longitude: Number,
-}
+import { geolocationHelper } from '../../helpers/geolocation';
+import { Point } from '../../types';
+
 
 
 export default function Home() {
   const [isModalVisible, setModalVisible] = useState<boolean>(false);
 
   const [location, setLocation] = useState<Location.LocationObject | null>(null);
-  const [heading, setHeading] = useState(null)
+  const [heading, setHeading] = useState(null);
   const [errorMsg, setErrorMsg] = useState(null);
 
   useEffect(() => {
     (async () => {
       let { status } = await Location.requestForegroundPermissionsAsync();
-      Location.watchPositionAsync({timeInterval:1000, accuracy:3, },(location)=>{
+      Location.watchPositionAsync({ timeInterval: 1000, accuracy: 3 }, (location) => {
+        let userLocation: Point = {longitude: location.coords.longitude, latitude: location.coords.latitude}
+        hotpoints.forEach((marker)=>{
+          if(geolocationHelper.getDistance(userLocation, marker) <= 100){
+            console.log('danger zone!!!!!') //TODO notify user
+          }
+        })
         setLocation(location);
-
       });
-      // Location.watchHeadingAsync((head)=>{
-      //   console.log(head)
-      //   setHeading(head);
-      // })
+      // Location.watchHeadingAsync((head) => {
+      //   console.log(head);
+      //   setHeading(head.magHeading);
+      // });
       if (status !== "granted") {
         setErrorMsg("Permission to access location was denied");
         return;
@@ -58,33 +62,60 @@ export default function Home() {
 
   return (
     <View style={{ flex: 1 }}>
-      {location?.coords ?
-      <MapView
-      style={styles.map}
-      initialRegion={{
-        latitude:location.coords.latitude,
-        longitude: location.coords.longitude,
-        latitudeDelta: 0.01,
-        longitudeDelta: 0.01,
-      }
-      }
-      onLongPress={handleMapLongPress}
-      showsUserLocation={true}
-      userInterfaceStyle={'dark'} //need user themes
-      onUserLocationChange={()=>{}}
+      {location?.coords ? (
+        <MapView
+          style={styles.map}
+          initialRegion={{
+            latitude: location.coords.latitude,
+            longitude: location.coords.longitude,
+            latitudeDelta: 0.01,
+            longitudeDelta: 0.01,
+          }}
+          onLongPress={handleMapLongPress}
+          showsUserLocation={true}
+          userInterfaceStyle={"dark"} //need user themes
+          onUserLocationChange={() => {}}
+        >
 
-    >
-
-
-      {hotpoints.map((point, index) => (
+{/* {location?.coords && (
         <Marker
-          key={index}
-          coordinate={point}
-          title={`Marker ${index + 1}`}
-          description={`Latitude: ${point.latitude}, Longitude: ${point.longitude}`}
-        />
-      ))}
-    </MapView>:<></>}
+          coordinate={{
+            latitude: location.coords.latitude,
+            longitude: location.coords.longitude,
+          }}
+          anchor={{ x: 0.5, y: 0.5 }}
+        >
+          <Animated.View
+            style={{
+              transform: [{ rotate: `${heading}deg` }],
+              alignItems: 'center'
+            }}
+          >
+            <Image
+              source={require("../../../assets/mapHeadingArrow.png")}
+              style={{
+                height: 20,
+                width: 20,
+                transform: [{ translateY: -20 }], // radius of the circle
+              }}
+            />
+          </Animated.View>
+        </Marker>
+    )} */}
+
+
+          {hotpoints.map((point, index) => (
+            <Marker
+              key={index}
+              coordinate={point}
+              title={`Marker ${index + 1}`}
+              description={`Latitude: ${point.latitude}, Longitude: ${point.longitude}`}
+            />
+          ))}
+        </MapView>
+      ) : (
+        <></>
+      )}
 
       <ModalForm isVisible={isModalVisible} onClose={() => setModalVisible(false)} />
 

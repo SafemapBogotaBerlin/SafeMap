@@ -1,10 +1,8 @@
 import { createSlice } from '@reduxjs/toolkit';
 import type { PayloadAction } from '@reduxjs/toolkit';
+import { Point } from '../../types';
 
-interface Point {
-  latitude: number;
-  longitude: number;
-}
+
 
 interface HomeState {
   hotpoints: Point[];
@@ -17,6 +15,7 @@ const initialState: HomeState = {
     { latitude: 19.532608, longitude: -99.53209 },
     { latitude: 19.632608, longitude: -99.73209 },
     { latitude: 19.732608, longitude: -99.03 },
+    {latitude: 4.820954117734985, longitude: -74.06501975735756}
   ],
   selectedPoint: null,
 };
