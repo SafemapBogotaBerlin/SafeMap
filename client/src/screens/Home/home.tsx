@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Image, View, Alert, TouchableOpacity } from 'react-native';
 import MapView, { Marker } from 'react-native-maps';
 import { styles } from './style';
@@ -6,20 +6,32 @@ import { RootState, AppDispatch } from '../../redux/store';
 import { selectPoint } from '../../redux/Home';
 import { useDispatch, useSelector } from 'react-redux';
 import ModalForm from '../../components/addPointForm/ModalForm';
+import { hotpoints } from '../../../services/pointsSubscription';
+import { onValue } from 'firebase/database';
+import { Coordinates, Point, DataObject } from '../../../types/point';
 
 export default function Home() {
   const [isModalVisible, setModalVisible] = useState<boolean>(false);
+  const [newData, setNewData] = useState<DataObject>({});
+
+  const dispatch: AppDispatch = useDispatch();
+
+  useEffect(() => {
+    onValue(hotpoints, (snapshot) => {
+      const fetchedData: DataObject = snapshot.val();
+      setNewData(fetchedData);
+    });
+  }, []);
+
   const handleMapLongPress = (event: any) => {
     const { latitude, longitude } = event.nativeEvent.coordinate;
-    const newPoint: { latitude: number; longitude: number } = {
+    const newPoint: Coordinates = {
       latitude,
       longitude,
     };
     setModalVisible(true);
     dispatch(selectPoint(newPoint));
   };
-  const hotpoints = useSelector((state: RootState) => state.home.hotpoints);
-  const dispatch: AppDispatch = useDispatch();
 
   return (
     <View style={{ flex: 1 }}>
@@ -33,12 +45,12 @@ export default function Home() {
         }}
         onLongPress={handleMapLongPress}
       >
-        {hotpoints.map((point, index) => (
+        {Object.values(newData).map((point, index) => (
           <Marker
             key={index}
-            coordinate={point}
+            coordinate={point.coordinates}
             title={`Marker ${index + 1}`}
-            description={`Latitude: ${point.latitude}, Longitude: ${point.longitude}`}
+            description={`Latitude: ${point.coordinates.latitude}, Longitude: ${point.coordinates.longitude}`}
           />
         ))}
       </MapView>
