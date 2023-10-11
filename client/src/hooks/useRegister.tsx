@@ -41,7 +41,7 @@ export default function useRegister() {
 
   useEffect(() => {
     handleShowErrors();
-  }, [displayName, emailValid, passwordValid, verifyPassword]);
+  }, [displayName, email, password, verifyPassword]);
 
   return {
     displayName,

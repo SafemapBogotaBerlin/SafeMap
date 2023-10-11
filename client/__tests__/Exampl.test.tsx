@@ -2,7 +2,7 @@ import React from 'react';
 import renderer from 'react-test-renderer';
 import Login from '../src/screens/login/Login';
 import { Provider } from 'react-redux';
-import { store } from '../src/redux/session/store';
+import { store } from '../src/redux/Session/store';
 
 describe('<Login />', () => {
   let component: any;
