@@ -2,19 +2,11 @@ import { firestore } from "../firebase.config";
 import { User } from "firebase/auth";
 import { RegisterInitData } from "../types/index";
 import {
-  getFirestore,
   collection,
   addDoc,
-  setDoc,
   getDocs,
-  doc,
-  serverTimestamp,
   query,
   where,
-  deleteDoc,
-  updateDoc,
-  arrayUnion,
-  arrayRemove,
 } from "@firebase/firestore";
 
 const USER_DATA = collection(firestore, "userData");

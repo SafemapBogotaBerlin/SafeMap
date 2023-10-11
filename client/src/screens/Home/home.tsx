@@ -1,13 +1,13 @@
 import React, { useState, useEffect } from "react";
 import { onValue } from "firebase/database";
 import { Coordinates, DataObject } from "../../types";
-import { Image, View, Alert, TouchableOpacity, Animated } from "react-native";
-import MapView, { Marker, Circle } from "react-native-maps";
+import { Image, View, Alert, TouchableOpacity } from "react-native";
+import MapView, { LongPressEvent, Marker} from "react-native-maps";
 import { styles } from "./style";
-import { RootState, AppDispatch } from "../../redux/store";
+import {  AppDispatch } from "../../redux/store";
 import { selectPoint } from "../../redux/home";
 import { hotpoints } from '../../services/pointsSubscription';
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch} from "react-redux";
 import ModalForm from "../../components/addPointForm/ModalForm";
 import * as Location from "expo-location";
 
@@ -17,8 +17,8 @@ export default function Home() {
   const [isModalVisible, setModalVisible] = useState<boolean>(false);
   const [newData, setNewData] = useState<DataObject>({})
   const [location, setLocation] = useState<Location.LocationObject | null>(null);
-  const [heading, setHeading] = useState(null);
-  const [errorMsg, setErrorMsg] = useState(null);
+  // const [heading, setHeading] = useState(null);
+  // const [errorMsg, setErrorMsg] = useState(null);
   const dispatch: AppDispatch = useDispatch();
 
 
@@ -28,9 +28,9 @@ export default function Home() {
       const fetchedData: DataObject = snapshot.val();
       setNewData(fetchedData);
       });
-      let { status } = await Location.requestForegroundPermissionsAsync();
+      const { status } = await Location.requestForegroundPermissionsAsync();
       Location.watchPositionAsync({ timeInterval: 1000, accuracy: 3 }, (location) => {
-        let userLocation: Coordinates = {
+        const userLocation: Coordinates = {
           longitude: location.coords.longitude,
           latitude: location.coords.latitude,
         };
@@ -42,17 +42,17 @@ export default function Home() {
         setLocation(location);
       });
       if (status !== "granted") {
-        setErrorMsg("Permission to access location was denied");
+        console.log("Permission to access location was denied");
         return;
       }
 
-      let location = await Location.getCurrentPositionAsync({});
+      const location = await Location.getCurrentPositionAsync({});
       console.log(location);
       setLocation(location);
     })();
   }, []);
 
-  const handleMapLongPress = (event: any) => {
+  const handleMapLongPress = (event: LongPressEvent) => {
     const { latitude, longitude } = event.nativeEvent.coordinate;
     const newPoint: Coordinates = {
       latitude,

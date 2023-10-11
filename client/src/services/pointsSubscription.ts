@@ -1,6 +1,6 @@
-import { getDatabase, ref, onValue } from 'firebase/database';
+import { getDatabase, ref } from 'firebase/database';
 import { initializeApp } from 'firebase/app';
-import { getFirestore } from 'firebase/firestore';
+import { Firestore, getFirestore } from 'firebase/firestore';
 
 const firebaseConfig = {
   apiKey: 'AIzaSyAM2TYDpwTfII_E1vCpVcFgRH5kNcAokDE',
@@ -13,14 +13,14 @@ const firebaseConfig = {
 };
 
 const app = initializeApp(firebaseConfig);
-export const firestore: any = getFirestore(app);
+export const firestore:Firestore = getFirestore(app);
 
 export const database = getDatabase(app);
 export const hotpoints = ref(database, 'hotpoints');
 
 // Consider call this directly from component
 
-onValue(hotpoints, (snapshot) => {
-  const data = snapshot.val();
-  //console.log('New data!', data);
-});
+// onValue(hotpoints, (snapshot) => {
+//   // const data = snapshot.val();
+//   //console.log('New data!', data);
+// });

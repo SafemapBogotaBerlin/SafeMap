@@ -7,15 +7,17 @@ import {
   Keyboard,
   TouchableWithoutFeedback,
 } from "react-native";
-import { NavigationProp, useNavigation } from "@react-navigation/native";
+import { useNavigation } from "@react-navigation/native";
 import { routes } from "../../routes/public";
 import useLogin from "../../hooks/UseLogin";
 import { styles } from "./style";
+import { NavigationProp } from '../../types/index';
+
 
 export default function Login() {
   const { setEmail, setPassword, login } = useLogin();
 
-  const navigation: NavigationProp<any> = useNavigation();
+  const navigation:NavigationProp  = useNavigation();
 
   return (
     <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>

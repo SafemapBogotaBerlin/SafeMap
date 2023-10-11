@@ -1,7 +1,12 @@
-import React, { useState, useEffect } from "react";
-import { createUserWithEmailAndPassword, sendEmailVerification, UserCredential, User } from "firebase/auth";
+import { useState, useEffect } from "react";
+import {
+  createUserWithEmailAndPassword,
+  sendEmailVerification,
+  UserCredential,
+  User,
+} from "firebase/auth";
 import { auth } from "../firebase.config";
-import { firebaseServices } from '../services/firebase';
+import { firebaseServices } from "../services/firebase";
 
 export default function useRegister() {
   const [displayName, setDisplayName] = useState("");
@@ -20,9 +25,13 @@ export default function useRegister() {
       return;
     }
     try {
-      const userCredential: UserCredential = await createUserWithEmailAndPassword(auth, email, password);
+      const userCredential: UserCredential = await createUserWithEmailAndPassword(
+        auth,
+        email,
+        password
+      );
       const user: User = userCredential.user;
-      firebaseServices.initUser(user, {displayName})
+      firebaseServices.initUser(user, { displayName });
       if (user) {
         await sendEmailVerification(user);
         alert("Verification email sent!");

@@ -1,12 +1,7 @@
-import { auth } from "../../firebase.config";
-import { createUserWithEmailAndPassword, sendEmailVerification } from "firebase/auth";
-import React, { useEffect, useState } from "react";
+import React from "react";
 import {
   View,
-  TextInput,
   Button,
-  StyleSheet,
-  Text,
   TouchableWithoutFeedback,
   Keyboard,
 } from "react-native";

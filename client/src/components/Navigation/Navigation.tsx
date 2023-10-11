@@ -1,3 +1,4 @@
+import React from "react";
 import { View } from "react-native";
 import Private from "../../navigation/Private";
 import Public from "../../navigation/Public";
@@ -21,11 +22,13 @@ export default function Navigation() {
       try {
         const token = await user.getIdToken();
         if (!token) return;
-        let userData = await firebaseServices.getUserData(user.uid);
+        const userData = await firebaseServices.getUserData(user.uid);
         if (!userData) return;
         dispatch(setUserData(userData));
         dispatch(authenticate());
-      } catch (error) {}
+      } catch (error) {
+        console.log(error)
+      }
     });
   }, []);
 

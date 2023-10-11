@@ -1,3 +1,4 @@
+import React from 'react'
 import { StyleSheet, View } from 'react-native';
 import Navigation from './src/components/navigation/Navigation';
 import { store } from './src/redux/store';
