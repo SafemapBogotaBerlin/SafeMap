@@ -1,4 +1,4 @@
-import { Point } from '../types/point';
+import { Point } from '../types';
 
 const NGROK_URL = 'https://d365-213-86-144-42.ngrok-free.app'; //TODO add to .env
 

@@ -1,6 +1,6 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import type { PayloadAction } from '@reduxjs/toolkit';
-import { Coordinates, Point, DataObject } from '../../../types/point';
+import { Coordinates, Point, DataObject } from '../../types';
 
 
 interface HomeState {

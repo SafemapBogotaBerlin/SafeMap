@@ -1,19 +1,17 @@
 import React, { useState, useEffect } from "react";
 import { onValue } from "firebase/database";
-import { Coordinates, DataObject } from "types/point";
+import { Coordinates, DataObject } from "../../types";
 import { Image, View, Alert, TouchableOpacity, Animated } from "react-native";
 import MapView, { Marker, Circle } from "react-native-maps";
 import { styles } from "./style";
 import { RootState, AppDispatch } from "../../redux/store";
-import { selectPoint } from "../../redux/Home";
-import { hotpoints } from '../../../services/pointsSubscription';
+import { selectPoint } from "../../redux/home";
+import { hotpoints } from '../../services/pointsSubscription';
 import { useDispatch, useSelector } from "react-redux";
 import ModalForm from "../../components/addPointForm/ModalForm";
 import * as Location from "expo-location";
-import { coordinates } from "../../../../server/models/pointsCold";
 
 import { geolocationHelper } from "../../helpers/geolocation";
-import { Point } from "../../types";
 
 export default function Home() {
   const [isModalVisible, setModalVisible] = useState<boolean>(false);
@@ -32,7 +30,7 @@ export default function Home() {
       });
       let { status } = await Location.requestForegroundPermissionsAsync();
       Location.watchPositionAsync({ timeInterval: 1000, accuracy: 3 }, (location) => {
-        let userLocation: Point = {
+        let userLocation: Coordinates = {
           longitude: location.coords.longitude,
           latitude: location.coords.latitude,
         };

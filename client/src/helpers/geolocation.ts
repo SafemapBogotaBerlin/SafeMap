@@ -1,10 +1,10 @@
-import { Point } from "../types";
+import { Coordinates } from "../types";
 export const geolocationHelper = {
   toRadians(degree: number) {
     return degree * (Math.PI / 180);
   },
 
-  getDistance(coord1: Point, coord2: Point): number {
+  getDistance(coord1: Coordinates , coord2: Coordinates): number {
     const earthRadius = 6371e3;
     const lat1Rad = this.toRadians(coord1.latitude);
     const lat2Rad = this.toRadians(coord2.latitude);

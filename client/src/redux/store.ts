@@ -1,6 +1,6 @@
 import { configureStore } from '@reduxjs/toolkit';
-import homeReducer from './Home';
-import authReducer from './Session';
+import homeReducer from './home';
+import authReducer from './session';
 import thunk from 'redux-thunk';
 import logger from 'redux-logger';
 

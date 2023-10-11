@@ -11,7 +11,7 @@ import {
   Keyboard,
 } from "react-native";
 import RegisterInput from "../../components/registerInput/RegisterInput";
-import useRegister from "../../hooks/useRegister";
+import useRegister from "../../hooks/UseRegister";
 import { styles } from "./styles";
 
 export default function Register() {

@@ -8,8 +8,8 @@ import {
   TouchableWithoutFeedback,
 } from "react-native";
 import { NavigationProp, useNavigation } from "@react-navigation/native";
-import { routes } from "../../Routes/public";
-import useLogin from "../../hooks/useLogin";
+import { routes } from "../../routes/public";
+import useLogin from "../../hooks/UseLogin";
 import { styles } from "./style";
 
 export default function Login() {

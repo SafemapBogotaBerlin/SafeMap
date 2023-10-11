@@ -4,7 +4,7 @@ import { firebaseServices } from "../services/firebase";
 import { UserCredential, signInWithEmailAndPassword, User } from "firebase/auth";
 import { UserData } from '../types/index';
 import { useDispatch } from 'react-redux';
-import { authenticate, setUserData } from "../redux/Session";
+import { authenticate, setUserData } from "../redux/session";
 
 
 export default function useLogin() {

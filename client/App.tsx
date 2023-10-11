@@ -1,5 +1,5 @@
 import { StyleSheet, View } from 'react-native';
-import Navigation from './src/components/Navigation/Navigation';
+import Navigation from './src/components/navigation/Navigation';
 import { store } from './src/redux/store';
 import { Provider } from 'react-redux';
 

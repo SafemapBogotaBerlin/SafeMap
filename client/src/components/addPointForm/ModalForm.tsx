@@ -5,8 +5,8 @@ import SelectDropdown from 'react-native-select-dropdown';
 import { styles } from './style';
 import { useDispatch, useSelector } from 'react-redux';
 import { AppDispatch, RootState } from '../../redux/store';
-import { Coordinates, Point } from '../../../types/point';
-import { addDangerPointToBothDBs } from '../../../services/apiService';
+import { Coordinates, Point } from '../../types/index';
+import { addDangerPointToBothDBs } from '../../services/apiService';
 
 const ModalForm = ({ isVisible, onClose }) => {
   const [selectedEventType, setSelectedEventType] = useState<string | null>(

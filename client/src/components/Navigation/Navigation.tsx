@@ -8,7 +8,7 @@ import { styles } from "./style";
 import { auth } from "../../firebase.config";
 import { onAuthStateChanged } from "firebase/auth";
 import { useEffect } from "react";
-import { authenticate, setUserData } from "../../redux/Session";
+import { authenticate, setUserData } from "../../redux/session/index";
 import { firebaseServices } from "../../services/firebase";
 
 export default function Navigation() {
