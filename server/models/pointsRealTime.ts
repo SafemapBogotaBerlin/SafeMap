@@ -4,8 +4,6 @@ import { point } from './pointsCold';
 
 const database = getDatabase(app);
 
-export async function addRealTimePointModel(data: point, collection: string): Promise<void> {
-  const dbRef = ref(database, collection);
 export async function addRealTimePointModel(data: point): Promise<void> {
   console.log('realtime here');
   const dbRef = ref(database, 'hotpoints');
