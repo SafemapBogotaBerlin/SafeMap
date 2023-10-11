@@ -3,7 +3,7 @@ import dotenv from 'dotenv';
 import cors from 'cors';
 import router from './router';
 
-dotenv.config();
+dotenv.config({path:'../.env'});
 
 const port:number = parseInt(process.env.SERVER_PORT);
 const app = express();

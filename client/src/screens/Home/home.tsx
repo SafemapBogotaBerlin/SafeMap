@@ -4,6 +4,7 @@ import MapView, { Marker, Circle } from "react-native-maps";
 import { styles } from "./style";
 import { RootState, AppDispatch } from "../../redux/store";
 import { selectPoint } from "../../redux/Home";
+import { hotpoints } from '../../../services/pointsSubscription';
 import { useDispatch, useSelector } from "react-redux";
 import ModalForm from "../../components/addPointForm/ModalForm";
 import * as Location from "expo-location";
@@ -18,9 +19,15 @@ export default function Home() {
   const [location, setLocation] = useState<Location.LocationObject | null>(null);
   const [heading, setHeading] = useState(null);
   const [errorMsg, setErrorMsg] = useState(null);
+  const dispatch: AppDispatch = useDispatch();
+
 
   useEffect(() => {
     (async () => {
+      onValue(hotpoints, (snapshot) => {
+      const fetchedData: DataObject = snapshot.val();
+      setNewData(fetchedData);
+      });
       let { status } = await Location.requestForegroundPermissionsAsync();
       Location.watchPositionAsync({ timeInterval: 1000, accuracy: 3 }, (location) => {
         let userLocation: Point = {
@@ -47,15 +54,13 @@ export default function Home() {
 
   const handleMapLongPress = (event: any) => {
     const { latitude, longitude } = event.nativeEvent.coordinate;
-    const newPoint: { latitude: number; longitude: number } = {
+    const newPoint: Coordinates = {
       latitude,
       longitude,
     };
     setModalVisible(true);
     dispatch(selectPoint(newPoint));
   };
-  const hotpoints = useSelector((state: RootState) => state.home.hotpoints);
-  const dispatch: AppDispatch = useDispatch();
 
   return (
     <View style={{ flex: 1 }}>
@@ -73,20 +78,29 @@ export default function Home() {
           userInterfaceStyle={"dark"} //TODO need user themes
           onUserLocationChange={() => {}}
         >
-          {hotpoints.map((point, index) => (
+          {/*hotpoints.map((point, index) => (
             <Marker
               key={index}
               coordinate={point}
               title={`Marker ${index + 1}`}
               description={`Latitude: ${point.latitude}, Longitude: ${point.longitude}`}
             />
-          ))}
+          ))*/}
+          {Object.values(newData).map((point, index) => (
+          <Marker
+            key={index}
+            coordinate={point.coordinates}
+            title={`Marker ${index + 1}`}
+            description={`Latitude: ${point.coordinates.latitude}, Longitude: ${point.coordinates.longitude}`}
+          />
+        ))}
         </MapView>
       ) : (
         <></>
       )}
 
       <ModalForm isVisible={isModalVisible} onClose={() => setModalVisible(false)} />
+
 
       <View style={[styles.buttonContainer, { left: 0 }]}>
         <TouchableOpacity style={styles.button} onPress={() => Alert.alert("Notifications Button")}>

@@ -9,9 +9,8 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.getColdPoints = exports.addPointRT = exports.addPoint = void 0;
+exports.getColdPoints = exports.addPoint = void 0;
 const pointsCold_1 = require("../models/pointsCold");
-const pointsRealTime_1 = require("../models/pointsRealTime");
 function addPoint(req, res) {
     return __awaiter(this, void 0, void 0, function* () {
         const { user_id, added_dttm, danger_type, coordinates } = req.body;
@@ -35,25 +34,6 @@ function addPoint(req, res) {
     });
 }
 exports.addPoint = addPoint;
-function addPointRT(req, res) {
-    return __awaiter(this, void 0, void 0, function* () {
-        console.log('entered controllers realtime');
-        const { user_id, added_dttm, danger_type, coordinates } = req.body;
-        const { latitude, longitude } = coordinates;
-        if (!user_id || !added_dttm || !danger_type || !coordinates) {
-            return res.status(400).json({ error: 'All fields are required' });
-        }
-        try {
-            yield (0, pointsRealTime_1.addRealTimePointModel)({ user_id, added_dttm, danger_type, coordinates });
-            return res.status(201).json({ message: 'Data saved successfully' });
-        }
-        catch (error) {
-            console.error('Error adding test data: ', error);
-            res.status(500).json({ error: 'Internal Server Error' });
-        }
-    });
-}
-exports.addPointRT = addPointRT;
 function getColdPoints(req, res) {
     return __awaiter(this, void 0, void 0, function* () {
         try {

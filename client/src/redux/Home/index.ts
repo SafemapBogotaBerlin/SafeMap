@@ -1,15 +1,19 @@
-import { createSlice } from '@reduxjs/toolkit';
+import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import type { PayloadAction } from '@reduxjs/toolkit';
-import { Point } from '../../types';
-
+import { Coordinates, Point, DataObject } from '../../../types/point';
 
 
 interface HomeState {
-  hotpoints: Point[];
-  selectedPoint: Point | null;
+  data: DataObject;
+  selectedPoint: Coordinates | null;
+  status: 'idle' | 'pending' | 'succeeded' | 'rejected';
+  error: string | null;
 }
 
+let data: DataObject = {};
+
 const initialState: HomeState = {
+
   // this should be replaced by the call to the real time database
   hotpoints: [
     { latitude: 19.532608, longitude: -99.53209 },
@@ -17,22 +21,26 @@ const initialState: HomeState = {
     { latitude: 19.732608, longitude: -99.03 },
     {latitude: 4.820954117734985, longitude: -74.06501975735756}
   ],
+
+  data: data,
+
   selectedPoint: null,
+  status: 'idle',
+  error: null,
 };
 
 const homeSlice = createSlice({
   name: 'home',
   initialState: initialState,
   reducers: {
-    addPoint: (state, action: PayloadAction<Point>) => {
-      state.hotpoints = [...state.hotpoints, action.payload];
-    },
-    selectPoint: (state, action: PayloadAction<Point>) => {
+    // updatePoints: (state) => {
+    //   update a point might be needed later
+    // },
+    selectPoint: (state, action: PayloadAction<Coordinates>) => {
       state.selectedPoint = { ...action.payload };
     },
-    // next Action would be real time DB update
   },
 });
 
-export const { addPoint, selectPoint } = homeSlice.actions;
+export const { selectPoint } = homeSlice.actions;
 export default homeSlice.reducer;

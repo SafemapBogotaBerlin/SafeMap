@@ -15,8 +15,6 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.getColdPointsModel = exports.addColdPointModel = void 0;
 const firestore_1 = require("firebase/firestore");
 const db_1 = __importDefault(require("./db"));
-const database_1 = require("firebase/database");
-const database = (0, database_1.getDatabase)();
 ;
 ;
 const dangerPointsCollection = 'dangerPoints';

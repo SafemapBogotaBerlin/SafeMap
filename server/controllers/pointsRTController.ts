@@ -10,7 +10,7 @@ export async function addPointRT(req: Request, res: Response): Promise<Response>
     return res.status(400).json({ error: 'All fields are required' });
   }
   try {
-    await addRealTimePointModel({ user_id, added_dttm, danger_type, coordinates });
+    await addRealTimePointModel({ user_id, added_dttm, danger_type, coordinates }, 'hotpoints');
     return res.status(201).json({ message: 'Data saved successfully' });
   } catch (error) {
     console.error('Error adding test data: ', error);
