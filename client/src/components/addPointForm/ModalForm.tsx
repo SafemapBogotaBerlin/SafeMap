@@ -1,18 +1,20 @@
-import React, { useRef } from 'react';
+import React, { useRef, useState } from 'react';
 import { Modal, View, TouchableOpacity, Text, Animated } from 'react-native';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import SelectDropdown from 'react-native-select-dropdown';
 import { styles } from './style';
-import { addPointToDatabase } from '../../redux/Home/index';
 import { useDispatch, useSelector } from 'react-redux';
 import { AppDispatch, RootState } from '../../redux/store';
-import axios from 'axios';
-
+import { Coordinates, Point } from '../../../types/point';
+import { addDangerPointToBothDBs } from '../../../services/apiService';
 
 const ModalForm = ({ isVisible, onClose }) => {
+  const [selectedEventType, setSelectedEventType] = useState<string | null>(
+    null
+  );
   const slideAnimation = useRef(new Animated.Value(500)).current;
   const dispatch: AppDispatch = useDispatch();
-  const selectedPoint = useSelector(
+  const selectedPoint: Coordinates = useSelector(
     (state: RootState) => state.home.selectedPoint
   );
 
@@ -30,8 +32,13 @@ const ModalForm = ({ isVisible, onClose }) => {
   };
 
   const handleFormSubmit = async () => {
-    console.log('check');
-    await addPointToDatabase();
+    const hotpoint: Point = {
+      added_dttm: JSON.stringify(Date.now()),
+      coordinates: selectedPoint,
+      danger_type: selectedEventType,
+      user_id: 'randonUser',
+    };
+    await addDangerPointToBothDBs(hotpoint);
     hideForm();
   };
 
@@ -41,8 +48,8 @@ const ModalForm = ({ isVisible, onClose }) => {
         <View style={styles.container}>
           <SelectDropdown
             data={eventType}
-            onSelect={(selectedItem, index) => {
-              console.log(selectedItem, index);
+            onSelect={(selectedItem) => {
+              setSelectedEventType(selectedItem);
             }}
             defaultButtonText={'Select event type'}
             buttonTextAfterSelection={(selectedItem, index) => {

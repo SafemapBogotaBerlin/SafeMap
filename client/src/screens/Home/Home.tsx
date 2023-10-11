@@ -8,36 +8,17 @@ import { useDispatch, useSelector } from 'react-redux';
 import ModalForm from '../../components/addPointForm/ModalForm';
 import { hotpoints } from '../../../services/pointsSubscription';
 import { onValue } from 'firebase/database';
-
-interface Coordinates {
-  latitude: number;
-  longitude: number;
-}
-
-interface Point {
-  added_dttm: string;
-  coordinates: Coordinates;
-  danger_type: string;
-  user_id: string;
-}
-
-interface DataObject {
-  [key: string]: Point;
-}
-
-interface Coordinates {
-  latitude: number;
-  longitude: number;
-}
+import { Coordinates, Point, DataObject } from '../../../types/point';
 
 export default function Home() {
   const [isModalVisible, setModalVisible] = useState<boolean>(false);
   const [newData, setNewData] = useState<DataObject>({});
 
+  const dispatch: AppDispatch = useDispatch();
+
   useEffect(() => {
     onValue(hotpoints, (snapshot) => {
       const fetchedData: DataObject = snapshot.val();
-      console.log('New data!', newData);
       setNewData(fetchedData);
     });
   }, []);
@@ -50,10 +31,7 @@ export default function Home() {
     };
     setModalVisible(true);
     dispatch(selectPoint(newPoint));
-    console.log(newPoint);
   };
-  //const hotpoints = useSelector((state: RootState) => state.home.data);
-  const dispatch: AppDispatch = useDispatch();
 
   return (
     <View style={{ flex: 1 }}>

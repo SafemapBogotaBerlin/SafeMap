@@ -15,12 +15,12 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 export const firestore: any = getFirestore(app);
 
-const database = getDatabase(app);
+export const database = getDatabase(app);
 export const hotpoints = ref(database, 'hotpoints');
 
 // Consider call this directly from component
 
 onValue(hotpoints, (snapshot) => {
   const data = snapshot.val();
-  console.log('New data!', data);
+  //console.log('New data!', data);
 });
