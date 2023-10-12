@@ -5,8 +5,8 @@ export const styles = StyleSheet.create({
     backgroundColor: 'white',
     padding: 20,
     height: '70%',
-    borderRadius: 20,
     margin: 10,
+    borderRadius: 20,
     ...Platform.select({
       ios: {
         shadowColor: 'rgba(0, 0, 0, 0.4)',
@@ -24,9 +24,8 @@ export const styles = StyleSheet.create({
     height: 50,
     backgroundColor: '#FFF',
     borderRadius: 8,
-    borderWidth: 1,
+    borderWidth: 0,
     borderColor: '#444',
-    margin: 3,
   },
   dropdownBtnTxtStyle: { color: '#444', textAlign: 'left' },
   dropdownStyle: { backgroundColor: '#EFEFEF' },
@@ -47,12 +46,11 @@ export const styles = StyleSheet.create({
     margin: 3,
     width: '100%',
     padding: 10,
-    
     backgroundColor: 'blue',
     alignItems: 'center',
     justifyContent: 'center',
-    
     borderRadius: 8,
   },
   buttonText: { color: 'white' },
+
 });
