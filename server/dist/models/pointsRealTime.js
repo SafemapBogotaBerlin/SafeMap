@@ -9,23 +9,25 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.addRealTimePointModel = void 0;
+exports.deleteRealTimeCollection = exports.addRealTimePointModel = void 0;
 const database_1 = require("firebase/database");
 const db_1 = require("./db");
 const database = (0, database_1.getDatabase)(db_1.app);
-function addRealTimePointModel(data) {
+function addRealTimePointModel(data, collection) {
     return __awaiter(this, void 0, void 0, function* () {
         console.log('realtime here');
-        const dbRef = (0, database_1.ref)(database, 'hotpoints');
+        const dbRef = (0, database_1.ref)(database, collection);
         const newPOint = (0, database_1.push)(dbRef);
         (0, database_1.set)(newPOint, data);
+        return newPOint.key;
     });
 }
 exports.addRealTimePointModel = addRealTimePointModel;
-//Here we're only adding points to Realtime DB to centralize process
-//Subscription on information changes will be in client side
-/* onValue(hotpoints, (snapshot) => {
-  const data = snapshot.val();
-  console.log('New data!', data)
-}) */
+function deleteRealTimeCollection(collection) {
+    return __awaiter(this, void 0, void 0, function* () {
+        const dbRef = (0, database_1.ref)(database, collection);
+        (0, database_1.remove)(dbRef);
+    });
+}
+exports.deleteRealTimeCollection = deleteRealTimeCollection;
 //# sourceMappingURL=pointsRealTime.js.map
