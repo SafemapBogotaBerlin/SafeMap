@@ -1,12 +1,12 @@
-import { createSlice, } from "@reduxjs/toolkit";
-import type { PayloadAction } from "@reduxjs/toolkit";
-import { Coordinates,  DataObject } from "../../types";
+import { createSlice } from '@reduxjs/toolkit';
+import type { PayloadAction } from '@reduxjs/toolkit';
+import { Coordinates, DataObject } from '../../types';
 
 interface HomeState {
   hotpoints: Coordinates[];
   data: DataObject;
   selectedPoint: Coordinates | null;
-  status: "idle" | "pending" | "succeeded" | "rejected";
+  status: 'idle' | 'pending' | 'succeeded' | 'rejected';
   error: string | null;
 }
 
@@ -24,17 +24,18 @@ const initialState: HomeState = {
   data: data,
 
   selectedPoint: null,
-  status: "idle",
+  status: 'idle',
   error: null,
 };
 
 const homeSlice = createSlice({
-  name: "home",
+  name: 'home',
   initialState: initialState,
   reducers: {
     // updatePoints: (state) => {
     //   update a point might be needed later
     // },
+
     selectPoint: (state, action: PayloadAction<Coordinates>) => {
       state.selectedPoint = { ...action.payload };
     },

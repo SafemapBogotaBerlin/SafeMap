@@ -1,24 +1,31 @@
-import React, { useRef, useState } from "react";
-import { Modal, View, TouchableOpacity, Text, Animated } from "react-native";
-import FontAwesome from "react-native-vector-icons/FontAwesome";
-import SelectDropdown from "react-native-select-dropdown";
-import { styles } from "./style";
-import { useSelector } from "react-redux";
-import { RootState } from "../../redux/store";
-import { Coordinates, Point } from "../../types/index";
-import { addDangerPointToBothDBs } from "../../services/apiService";
+import React, { useRef, useState } from 'react';
+import { Modal, View, TouchableOpacity, Text, Animated } from 'react-native';
+import FontAwesome from 'react-native-vector-icons/FontAwesome';
+import SelectDropdown from 'react-native-select-dropdown';
+import { styles } from './style';
+import { useSelector } from 'react-redux';
+import { RootState } from '../../redux/store';
+import { Coordinates, Point } from '../../types/index';
+import { addDangerPointToBothDBs } from '../../services/apiService';
 
 type ModalFormProps = {
   isVisible: boolean;
   onClose: () => void;
 };
 
-const ModalForm:React.FC<ModalFormProps> = ({ isVisible, onClose }: ModalFormProps) => {
-  const [selectedEventType, setSelectedEventType] = useState<string | null>(null);
+const ModalForm: React.FC<ModalFormProps> = ({
+  isVisible,
+  onClose,
+}: ModalFormProps) => {
+  const [selectedEventType, setSelectedEventType] = useState<string | null>(
+    null
+  );
   const slideAnimation = useRef(new Animated.Value(500)).current;
-  const selectedPoint: Coordinates = useSelector((state: RootState) => state.home.selectedPoint);
+  const selectedPoint: Coordinates = useSelector(
+    (state: RootState) => state.home.selectedPoint
+  );
 
-  const eventType = ["Robbery", "Masshooting", "Police", "Scary Police"];
+  const eventType = ['Robbery', 'Masshooting', 'Police'];
 
   const hideForm = () => {
     Animated.timing(slideAnimation, {
@@ -36,14 +43,14 @@ const ModalForm:React.FC<ModalFormProps> = ({ isVisible, onClose }: ModalFormPro
       added_dttm: JSON.stringify(Date.now()),
       coordinates: selectedPoint,
       danger_type: selectedEventType,
-      user_id: "randonUser",
+      user_id: 'randonUser',
     };
     await addDangerPointToBothDBs(hotpoint);
     hideForm();
   };
 
   return (
-    <Modal visible={isVisible} transparent animationType="slide">
+    <Modal visible={isVisible} transparent animationType='slide'>
       <Animated.View style={{ transform: [{ translateY: slideAnimation }] }}>
         <View style={styles.container}>
           <SelectDropdown
@@ -51,7 +58,7 @@ const ModalForm:React.FC<ModalFormProps> = ({ isVisible, onClose }: ModalFormPro
             onSelect={(selectedItem) => {
               setSelectedEventType(selectedItem);
             }}
-            defaultButtonText={"Select event type"}
+            defaultButtonText={'Select event type'}
             buttonTextAfterSelection={(selectedItem) => {
               return selectedItem;
             }}
@@ -63,22 +70,22 @@ const ModalForm:React.FC<ModalFormProps> = ({ isVisible, onClose }: ModalFormPro
             renderDropdownIcon={(isOpened) => {
               return (
                 <FontAwesome
-                  name={isOpened ? "chevron-up" : "chevron-down"}
-                  color={"#444"}
+                  name={isOpened ? 'chevron-up' : 'chevron-down'}
+                  color={'#444'}
                   size={18}
                 />
               );
             }}
-            dropdownIconPosition={"right"}
+            dropdownIconPosition={'right'}
             dropdownStyle={styles.dropdownStyle}
             rowStyle={styles.dropdownRowStyle}
             rowTextStyle={styles.dropdownRowTxtStyle}
             selectedRowStyle={styles.selectedRowStyle}
             searchInputStyle={styles.searchInputStyle}
-            searchPlaceHolder={"Search here"}
-            searchPlaceHolderColor={"darkgrey"}
+            searchPlaceHolder={'Search here'}
+            searchPlaceHolderColor={'darkgrey'}
             renderSearchInputLeftIcon={() => {
-              return <FontAwesome name={"search"} color={"#444"} size={18} />;
+              return <FontAwesome name={'search'} color={'#444'} size={18} />;
             }}
           />
 
