@@ -1,6 +1,6 @@
 import { getDatabase, ref, onValue } from 'firebase/database';
-import { initializeApp } from 'firebase/app';
-import { getFirestore } from 'firebase/firestore';
+import { app } from "../firebase.config";
+
 
 const firebaseConfig = {
   apiKey: 'AIzaSyAM2TYDpwTfII_E1vCpVcFgRH5kNcAokDE',
@@ -12,8 +12,6 @@ const firebaseConfig = {
   measurementId: 'G-8HXEDLS40G',
 };
 
-const app = initializeApp(firebaseConfig);
-export const firestore: any = getFirestore(app);
 
 export const database = getDatabase(app);
 export const hotpoints = ref(database, 'hotpoints');
@@ -22,5 +20,4 @@ export const hotpoints = ref(database, 'hotpoints');
 
 onValue(hotpoints, (snapshot) => {
   const data = snapshot.val();
-  //console.log('New data!', data);
 });

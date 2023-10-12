@@ -1,6 +1,6 @@
 import { Point } from '../types';
 
-const NGROK_URL = 'https://d365-213-86-144-42.ngrok-free.app'; //TODO add to .env
+const NGROK_URL = 'https://7bc8-213-86-144-42.ngrok-free.app'; //TODO add to .env
 
 export async function addDangerPointToBothDBs(hotpoint: Point) {
   await addDangerPointRT(hotpoint);

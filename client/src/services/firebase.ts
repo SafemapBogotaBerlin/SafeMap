@@ -1,6 +1,6 @@
 import { firestore } from "../firebase.config";
 import { User } from "firebase/auth";
-import { RegisterInitData } from "../types/index";
+import { RegisterInitData, UserData } from "../types/index";
 import {
   getFirestore,
   collection,
@@ -50,4 +50,15 @@ export const firebaseServices = {
       return;
     }
   },
+
+  async updateUserData(uid: string, newData: UserData) {
+    try {
+      const userDocRef = doc(USER_DATA, uid); 
+      await updateDoc(userDocRef, newData);
+
+      console.log("User data updated successfully");
+    } catch (error) {
+      console.error("Error updating user data: ", error);
+    }
+  }
 };

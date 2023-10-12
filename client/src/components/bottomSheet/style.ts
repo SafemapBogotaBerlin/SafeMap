@@ -6,7 +6,6 @@ export const styles = StyleSheet.create({
     padding: 20,
     height: '70%',
     borderRadius: 20,
-    margin: 10,
     ...Platform.select({
       ios: {
         shadowColor: 'rgba(0, 0, 0, 0.4)',
@@ -26,7 +25,6 @@ export const styles = StyleSheet.create({
     borderRadius: 8,
     borderWidth: 1,
     borderColor: '#444',
-    margin: 3,
   },
   dropdownBtnTxtStyle: { color: '#444', textAlign: 'left' },
   dropdownStyle: { backgroundColor: '#EFEFEF' },
@@ -44,15 +42,12 @@ export const styles = StyleSheet.create({
   },
   button: {
     flex: 1,
-    margin: 3,
-    width: '100%',
+    marginTop: 10,
     padding: 10,
-    
     backgroundColor: 'blue',
     alignItems: 'center',
-    justifyContent: 'center',
-    
-    borderRadius: 8,
+    marginRight: 10,
+    borderRadius: 5,
   },
   buttonText: { color: 'white' },
 });
