@@ -6,6 +6,7 @@ import {
   Button,
   Keyboard,
   TouchableWithoutFeedback,
+  Image
 } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import { routes } from "../../routes/public";
@@ -22,6 +23,7 @@ export default function Login() {
   return (
     <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
       <SafeAreaView style={styles.container}>
+        <Image source={require('../../../assets/safemapLogo.png')} style={styles.logo} />
         <Text style={styles.title}>Safe map</Text>
         <TextInput style={styles.input} placeholder="Email" onChangeText={setEmail} />
         <TextInput

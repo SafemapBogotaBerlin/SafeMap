@@ -144,33 +144,31 @@ export default function Home() {
           ref={mapRef}
         >
           {Object.values(newData).map((point, index) => (
-            <>
-              <Marker
-                key={index}
-                coordinate={point.coordinates}
-                onPress={() => handleMarkerClick(point)}
-              >
-                <Image
-                  source={getMarkerIcon(point.danger_type)}
-                  style={{ width: 40, height: 40 }}
-                />
+    <React.Fragment key={index}>
+        <Marker
+            coordinate={point.coordinates}
+            onPress={() => handleMarkerClick(point)}
+        >
+            <Image
+                source={getMarkerIcon(point.danger_type)}
+                style={{ width: 40, height: 40 }}
+            />
 
-                <Callout style={styles.calloutContainer}>
-                  <Text style={styles.calloutTextIncidentType}>{point.danger_type}</Text>
-                  <Text>{markerDescription}</Text>
-                </Callout>
-              </Marker>
-              <Circle
-                key={index + "circle"}
-                center={point.coordinates}
-                radius={100}
-                strokeWidth={2}
-                strokeColor="#FF0000AA"
-                fillColor="rgba(255,0,0,0.2)"
-                lineDashPattern={[5, 5]}
-              />
-            </>
-          ))}
+            <Callout style={styles.calloutContainer}>
+                <Text style={styles.calloutTextIncidentType}>{point.danger_type}</Text>
+                <Text>{markerDescription}</Text>
+            </Callout>
+        </Marker>
+        <Circle
+            center={point.coordinates}
+            radius={100}
+            strokeWidth={2}
+            strokeColor="#FF0000AA"
+            fillColor="rgba(255,0,0,0.2)"
+            lineDashPattern={[5, 5]}
+        />
+    </React.Fragment>
+))}
         </MapView>
       ) : (
         <></>
