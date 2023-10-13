@@ -47,10 +47,16 @@ export const firebaseServices = {
 
   async updateUserData(uid: string, newData: UserData) {
     try {
-      const userDocRef = doc(USER_DATA, uid); 
-      await updateDoc(userDocRef, newData);
-
-      console.log("User data updated successfully");
+      const q = query(USER_DATA, where("id", "==", uid));
+      const querySnapshot = await getDocs(q);
+      console.log(querySnapshot.docs[0].id)
+      if (!querySnapshot.empty) {
+        const userDocRef = doc(USER_DATA, querySnapshot.docs[0].id); 
+        await updateDoc(userDocRef, newData);
+        console.log("User data updated successfully");
+      } else {
+        console.log('User not found');
+      }
     } catch (error) {
       console.error("Error updating user data: ", error);
     }

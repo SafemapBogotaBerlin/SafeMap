@@ -1,14 +1,19 @@
-import React from "react";
-import { View, TouchableOpacity, Text } from "react-native";
-import { styles } from "./style";
-import { useSelector } from "react-redux";
-import { RootState } from "../../redux/store";
+import React from 'react';
+import { View, TouchableOpacity, Text } from 'react-native';
+import { styles } from './style';
+import { useSelector } from 'react-redux';
+import { RootState } from '../../redux/store';
+import { useNavigation } from '@react-navigation/native';
+
 
 const GoProfileForm = () => {
   const userData = useSelector((state: RootState) => state.auth.userData);
+  const navigation = useNavigation();
 
   const handleGotoSubmit = async () => {
-    alert("Here is a navigation to Profile Screen");
+    
+    navigation.navigate('Profile');
+
   };
 
   return (
