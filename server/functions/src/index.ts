@@ -1,28 +1,19 @@
 import * as functions from "firebase-functions";
 import * as admin from "firebase-admin";
+
 admin.initializeApp();
-export const deleteNewPoint8Hours = functions.database
-  .ref("/hotpoints/{pushId}")
-  .onCreate((snapshot, context) => {
-    // eslint-disable-next-line @typescript-eslint/naming-convention
-    const {added_dttm} = snapshot.val();
-    const pushId = context.params.pushId;
-    const addedTime = JSON.parse(added_dttm);
-    const currentTime = Date.now();
-    const eightHoursInMillis = 8 * 60 * 60 * 1000;
-    const timeDifference = currentTime - addedTime;
-    const remainingTime = Math.min(eightHoursInMillis - timeDifference, eightHoursInMillis);
-    const refPath = `/hotpoints/${pushId}`;
-    const databaseRef = admin.database().ref(refPath);
-    setTimeout(() => {
-      databaseRef.remove()
-        .then(() => {
-          console.log(`Point with ID: ${pushId} deleted successfully.`);
-        })
-        .catch((error) => {
-          console.error(`Error deleting point with ID: ${pushId}`, error);
-        });
-    }, remainingTime);
-    return null;
+
+export const deleteOldItems = functions.pubsub.schedule('every 1 hours').onRun(async (context: functions.EventContext) => {
+  const ref = admin.database().ref('/hotpoints');
+  const now = Date.now();
+  const cutoff = now - 8 * 60 * 60 * 1000; // 8 hours in milliseconds
+  const oldItemsQuery = ref.orderByChild('added_dttm').endAt(cutoff.toString());
+
+  const snapshot = await oldItemsQuery.once('value');
+  const updates: Record<string, null> = {};
+  snapshot.forEach((child: admin.database.DataSnapshot) => {
+      updates[child.key as string] = null;
   });
 
+  return ref.update(updates);
+});
