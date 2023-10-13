@@ -29,6 +29,8 @@ export default function Home() {
 
   const [markerDescription, setMarkerDescription] = useState<string>("");
 
+  const [visibleRegion, setVisibleRegion] = useState<Region | null>(null);
+
   type Region = {
     latitude: number;
     longitude: number;
@@ -40,6 +42,7 @@ export default function Home() {
     const newDescription: string = formatTimeDifference(JSON.parse(point.added_dttm));
     setMarkerDescription(newDescription);
   };
+  const handleRegionChangeComplete = (region: Region) => {};
 
   useEffect(() => {
     (async () => {
@@ -122,6 +125,22 @@ export default function Home() {
     }
   };
 
+  const isMarkerVisible = (coordinates: Coordinates, visibleRegion: Region | null) => {
+    if (!visibleRegion) return false;
+
+    const latVisible = (
+      coordinates.latitude <= visibleRegion.latitude + (visibleRegion.latitudeDelta / 2) &&
+      coordinates.latitude >= visibleRegion.latitude - (visibleRegion.latitudeDelta / 2)
+    );
+
+    const longVisible = (
+      coordinates.longitude <= visibleRegion.longitude + (visibleRegion.longitudeDelta / 2) &&
+      coordinates.longitude >= visibleRegion.longitude - (visibleRegion.longitudeDelta / 2)
+    );
+
+    return latVisible && longVisible;
+  };
+
   return (
     <View style={{ flex: 1 }}>
       {location?.coords ? (
@@ -142,33 +161,33 @@ export default function Home() {
             setUserLocation({ latitude, longitude });
           }}
           ref={mapRef}
+          onRegionChangeComplete={(region) => setVisibleRegion(region)}
         >
-          {Object.values(newData).map((point, index) => (
-    <React.Fragment key={index}>
-        <Marker
-            coordinate={point.coordinates}
-            onPress={() => handleMarkerClick(point)}
-        >
-            <Image
-                source={getMarkerIcon(point.danger_type)}
-                style={{ width: 40, height: 40 }}
-            />
+          { Object.values(newData).filter(
+    point => isMarkerVisible(point.coordinates, visibleRegion)
+  ).map((point, index) => (
+            <React.Fragment key={index}>
+              <Marker coordinate={point.coordinates} onPress={() => handleMarkerClick(point)}>
+                <Image
+                  source={getMarkerIcon(point.danger_type)}
+                  style={{ width: 40, height: 40 }}
+                />
 
-            <Callout style={styles.calloutContainer}>
-                <Text style={styles.calloutTextIncidentType}>{point.danger_type}</Text>
-                <Text>{markerDescription}</Text>
-            </Callout>
-        </Marker>
-        <Circle
-            center={point.coordinates}
-            radius={100}
-            strokeWidth={2}
-            strokeColor="#FF0000AA"
-            fillColor="rgba(255,0,0,0.2)"
-            lineDashPattern={[5, 5]}
-        />
-    </React.Fragment>
-))}
+                <Callout style={styles.calloutContainer}>
+                  <Text style={styles.calloutTextIncidentType}>{point.danger_type}</Text>
+                  <Text>{markerDescription}</Text>
+                </Callout>
+              </Marker>
+              <Circle
+                center={point.coordinates}
+                radius={100}
+                strokeWidth={2}
+                strokeColor="#FF0000AA"
+                fillColor="rgba(255,0,0,0.2)"
+                lineDashPattern={[5, 5]}
+              />
+            </React.Fragment>
+          ))}
         </MapView>
       ) : (
         <></>
