@@ -3,8 +3,10 @@ import { useSelector, useDispatch } from 'react-redux';
 import { RootState, AppDispatch } from '@/redux/store';
 import { View, Text, Image, TouchableOpacity, TextInput } from 'react-native';
 import { styles } from './style';
-import { updateUserName, updateUserEmail } from '../../redux/session/';
+import { updateUserName } from '../../redux/session/';
 import { firebaseServices } from '../../services/firebase';
+// email notification
+//emial verifeid - logout -- not to change email
 
 
 
@@ -14,7 +16,7 @@ export default function Profile() {
   const logo = require('../../../assets/logo_main.png');
   const dispatch: AppDispatch = useDispatch();
   const [name, setName] = useState<string>(userData.name);
-  const [email, setEmail] = useState<string>(userData.email);
+  //const [email, setEmail] = useState<string>(userData.email);
 
   useEffect(() => {
     console.log('profile uses effect2')
@@ -23,15 +25,16 @@ export default function Profile() {
   const handleNameChange = (newName:string) => {
     setName(newName);
   }
-
-  const handleEmailChange = (newEmail:string) => {
+  //not now
+ /*  const handleEmailChange = (newEmail:string) => {
     setEmail(newEmail);
-  }
+  } */
 
   const handleUpdateProfile = () => {
     dispatch(updateUserName(name));
-    dispatch(updateUserEmail(email));
-    firebaseServices.updateUserData(userData.id, userData);
+    //NO updating email for now
+    //dispatch(updateUserEmail(email));
+    firebaseServices.updateUserData(userData.id, userData); // before redux with if
   };
 
   return (
@@ -40,7 +43,7 @@ export default function Profile() {
       <View style={styles.profileBlock}>
         <View style={styles.userDataContainer}>
           <TextInput style={styles.userDataField} placeholder={userData.name} placeholderTextColor="lightgray" onChangeText={handleNameChange} />
-          <TextInput style={styles.userDataField} placeholder={userData.email} placeholderTextColor="lightgray" onChangeText={handleEmailChange} />
+          <Text style={styles.userDataField}>{userData.email}</Text>
           <Text style={styles.userDataField}>Bogota +15km</Text>
         </View>
         <TouchableOpacity onPress={handleUpdateProfile} style={styles.button}>
