@@ -7,6 +7,8 @@ import {
   getDocs,
   query,
   where,
+  doc,
+  updateDoc
 } from "@firebase/firestore";
 
 const USER_DATA = collection(firestore, "userData");
