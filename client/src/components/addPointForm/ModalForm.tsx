@@ -57,7 +57,6 @@ const ModalForm = () => {
   };  */
 
   const handleFormSubmit = async () => {
-    console.log(selectedPoint);
     const hotpoint: Point = {
       added_dttm: JSON.stringify(timesToTimestamp(selectedTime)),
       coordinates: selectedPoint,

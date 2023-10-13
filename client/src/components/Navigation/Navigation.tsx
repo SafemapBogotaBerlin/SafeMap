@@ -27,7 +27,6 @@ export default function Navigation() {
         dispatch(setUserData(userData));
         dispatch(authenticate());
       } catch (error) {
-        console.log(error)
       }
     });
   }, []);

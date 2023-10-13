@@ -4,6 +4,7 @@ import {
   Button,
   TouchableWithoutFeedback,
   Keyboard,
+  Image
 } from "react-native";
 import RegisterInput from "../../components/registerInput/RegisterInput";
 import useRegister from "../../hooks/UseRegister";
@@ -28,7 +29,8 @@ export default function Register() {
 
   return (
     <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
-      <View style={styles.container}>
+       <View style={styles.container}>
+        <Image source={require('../../../assets/safemapLogo.png')} style={styles.logo} />
         <RegisterInput
           value={displayName}
           onChangeText={setDisplayName}
