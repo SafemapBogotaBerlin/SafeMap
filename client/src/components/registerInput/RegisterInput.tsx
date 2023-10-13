@@ -27,6 +27,7 @@ const RegisterInput: React.FC<RegisterInputProps> = ({
         style={[styles.input, showError ? styles.invalid : {}]}
         onChangeText={onChangeText}
         placeholder={placeholder}
+        placeholderTextColor={showError ? "red" : "gray"}
         secureTextEntry={secret}
         value={value}
       />

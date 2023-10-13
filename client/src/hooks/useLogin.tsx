@@ -40,7 +40,6 @@ export default function useLogin() {
         alert("user not found");
         return;
       }
-      console.log("user data", userData as UserData);
       dispatch(setUserData(userData));
       dispatch(authenticate());
     } catch (error) {

@@ -2,55 +2,41 @@ import { StyleSheet, Platform } from 'react-native';
 
 export const styles = StyleSheet.create({
   container: {
-    backgroundColor: 'white',
+    backgroundColor: '#f8f8f8',
     padding: 20,
     height: '70%',
-    margin: 10,
     borderRadius: 20,
+    margin: 10,
     ...Platform.select({
       ios: {
-        shadowColor: 'rgba(0, 0, 0, 0.4)',
+        shadowColor: 'rgba(0, 0, 0, 0.1)',
         shadowOffset: { width: 0, height: 2 },
-        shadowOpacity: 3,
+        shadowOpacity: 1,
         shadowRadius: 8,
       },
       android: {
-        elevation: 8,
+        elevation: 3,
       },
     }),
   },
-  dropdownBtnStyle: {
-    width: '100%',
-    height: 50,
-    backgroundColor: '#FFF',
-    borderRadius: 8,
-    borderWidth: 0,
-    borderColor: '#444',
-  },
-  dropdownBtnTxtStyle: { color: '#444', textAlign: 'left' },
-  dropdownStyle: { backgroundColor: '#EFEFEF' },
-  dropdownRowStyle: {
-    backgroundColor: '#EFEFEF',
-    borderBottomColor: '#C5C5C5',
-  },
-  dropdownRowTxtStyle: { color: '#444', textAlign: 'left' },
-  selectedRowStyle: { backgroundColor: 'rgba(0,0,0,0.1)' },
-  searchInputStyle: {
-    backgroundColor: '#EFEFEF',
-    borderRadius: 8,
-    borderBottomWidth: 1,
-    borderBottomColor: '#444',
+  userInfoText: {
+    fontSize: 16,
+    color: '#555',
+    marginBottom: 10,
+    marginTop: 5,
   },
   button: {
-    flex: 1,
     margin: 3,
     width: '100%',
     padding: 10,
-    backgroundColor: 'blue',
+    backgroundColor: '#4285f4',
     alignItems: 'center',
     justifyContent: 'center',
-    borderRadius: 8,
+    borderRadius: 10,
   },
-  buttonText: { color: 'white' },
-
+  buttonText: {
+    color: 'white',
+    fontSize: 16,
+    fontWeight: '600'
+  },
 });
