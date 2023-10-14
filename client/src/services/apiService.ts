@@ -1,6 +1,6 @@
 import { Point } from '../types';
 
-const NGROK_URL = 'https://7bc8-213-86-144-42.ngrok-free.app'; //TODO add to .env
+const NGROK_URL = 'https://ede2-213-86-144-42.ngrok-free.app'; //TODO add to .env
 
 export async function addDangerPointToBothDBs(hotpoint: Point) {
 
@@ -39,3 +39,21 @@ async function addDangerPoint(hotpoint: Point) {
     console.error(e, 'Error when adding to Normal DB');
   }
 }
+
+export async function getTotalPointsCold(): Promise<number> {
+  try {
+    const response= await fetch(`${NGROK_URL}/getDangerPoints`);
+    //console.log(response)
+    if (response.ok) {
+      const data = await response.json();
+      //console.log('from api '+data.length)
+      return data.length;
+    } else {
+      console.log('error fetching')
+    }
+    ;
+  } catch (e) {
+    console.error(e, 'Error getting points history')
+  }
+}
+  

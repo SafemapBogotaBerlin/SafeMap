@@ -5,6 +5,8 @@ import { View, Text, Image, TouchableOpacity, TextInput } from 'react-native';
 import { styles } from './style';
 import { updateUserName, updateUserEmail } from '../../redux/session/';
 import { firebaseServices } from '../../services/firebase';
+import { getTotalPointsCold } from '../../services/apiService';
+import { getActivePoints } from '../../services/pointsSubscription';
 
 
 
@@ -15,9 +17,23 @@ export default function Profile() {
   const dispatch: AppDispatch = useDispatch();
   const [name, setName] = useState<string>(userData.name);
   const [email, setEmail] = useState<string>(userData.email);
+  const [totalPoints, setTotalPoints] = useState<number>(0);
+  const [activePoints, setActivePoints] = useState<number>(0);
 
+  
   useEffect(() => {
-    console.log('profile uses effect2')
+    const fetchData = async () => {
+      try {
+        const total = await getTotalPointsCold();
+        const active = await getActivePoints();
+        setTotalPoints(total);
+        setActivePoints(active); 
+      } catch (error) {
+        console.error('Error getting data ', error);
+      }
+    };
+
+    fetchData();
   }, []);
 
   const handleNameChange = (newName:string) => {
@@ -49,14 +65,31 @@ export default function Profile() {
       </View>
       <View style={styles.statContainer}>
         <View style={styles.statsBlock}>
-          <Text></Text>
+        <View>
+            <Text style={styles.statsNumber}>3</Text>
+            <Text style={styles.statsCell}>My points</Text>
+          </View>
           <View style={styles.verticalLine}></View>
-          <Text></Text>
+          <View>
+            <Text style={styles.statsNumber}>6</Text>
+            <Text style={styles.statsCell}>My dangers</Text>
+          </View>
         </View>
         <View style={styles.statsBlock}>
-          <Text></Text>
+          <View>
+            <Text style={styles.statsNumber}>{activePoints}</Text>
+            <Text style={styles.statsCell}>Active points</Text>
+          </View>
           <View style={styles.verticalLine}></View>
-          <Text></Text>
+          <View>
+            <Text style={styles.statsNumber}>0</Text>
+            <Text style={styles.statsCell}>Dangers last 24h</Text>
+          </View>
+          <View style={styles.verticalLine}></View>
+          <View>
+            <Text style={styles.statsNumber}>{totalPoints}</Text>
+            <Text style={styles.statsCell}>Points total</Text>
+          </View>
         </View>
       </View>
     </View>
