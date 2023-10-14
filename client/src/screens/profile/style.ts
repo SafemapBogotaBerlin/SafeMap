@@ -1,8 +1,8 @@
-import { StyleSheet } from "react-native";
+import { StyleSheet, TextInput } from "react-native";
 
 export const styles = StyleSheet.create({
   container: {
-    backgroundColor: 'rgb(43,87,42)',
+    backgroundColor: '#F8FFFC',
     flex: 1,
     justifyContent: 'space-around',
     
@@ -31,32 +31,50 @@ export const styles = StyleSheet.create({
   },
   userDataField: {
     fontSize: 20,
-    color: 'lightgray',
+    color: '#0C5A1E',
     padding: 5,
-    borderWidth: 1,
-    borderRadius: 5,
-    borderColor: 'white',
-    backgroundColor: 'gray',
-    width: '85%',
+    borderWidth: .2,
+    borderRadius: 2,
+    borderColor: '#0C5A1E',
+    backgroundColor: '#F8FFFC',
     height: 40,
+    width: '100%',
+    fontFamily: 'Rubik_400Regular'
   },
+  userDataPlaceHolder: {
+    fontSize: 20,
+    color: '#0C5A1E',
+    padding: 5,
+    borderWidth: .5,
+    borderRadius: 5,
+    borderColor: '#0C5A1E',
+    backgroundColor: '#F8FFFC',
+    width: '100%',
+    height: 40,
+    fontFamily: 'Rubik_300Light'
+  },
+  
   button: {
     flex: 1,
     margin: 3,
     width: '70%',
     padding: 10,
-    backgroundColor: 'rgb(47,224,83)',
+    backgroundColor: '#0C5A1E',
     alignSelf: 'center',
     alignItems: 'center',
     justifyContent: 'center',
     borderRadius: 8,
   },
-  buttonText: { color: 'white' },
+  buttonText: { 
+    color: '#F8FFFC',
+    fontFamily: 'Rubik_600SemiBold',
+    fontSize: 20,
+   },
   statsBlock: {
     margin: 30,
     flex: 3,
     borderWidth: 1,
-    borderColor: 'white',
+    borderColor: '#0C5A1E',
     borderRadius: 35,
     flexDirection: 'row',  
     justifyContent: 'space-around', 
@@ -66,19 +84,21 @@ export const styles = StyleSheet.create({
   verticalLine: {
     width: 1,  
     height: '80%',  
-    backgroundColor: 'white',
+    backgroundColor: '#0C5A1E',
     margin: 40, 
   },
   statsCell: {
-    color: 'lightgrey',
-    alignSelf: 'center'
+    color: '#0C5A1E',
+    alignSelf: 'center',
+    fontFamily: 'Rubik_400Regular',
+    marginLeft: 25,
+    marginRight: 25,
   },
   statsNumber: {
-    color: 'lightgray',
+    color: '#0C5A1E',
     fontSize: 35,
     fontWeight: 'bold',
-    alignSelf: 'center'
-
+    alignSelf: 'center',
+    fontFamily: 'Rubik_500Medium',
   }
-
 });

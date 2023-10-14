@@ -3,10 +3,11 @@ import {
   Text,
   SafeAreaView,
   TextInput,
-  Button,
+  TouchableOpacity,
   Keyboard,
   TouchableWithoutFeedback,
-  Image
+  Image,
+  View
 } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import { routes } from "../../routes/public";
@@ -25,15 +26,23 @@ export default function Login() {
       <SafeAreaView style={styles.container}>
         <Image source={require('../../../assets/safemapLogo.png')} style={styles.logo} />
         <Text style={styles.title}>Safe map</Text>
-        <TextInput style={styles.input} placeholder="Email" onChangeText={setEmail} />
-        <TextInput
+        <View style={styles.loginContainer}>
+          <TextInput style={styles.input} placeholder="Email" onChangeText={setEmail} />
+          <TextInput
           style={styles.input}
           placeholder="Password"
           secureTextEntry
           onChangeText={setPassword}
-        />
-        <Button title="Login" onPress={login} />
-        <Button title="Register" onPress={() => navigation.navigate(routes.register)} />
+          />
+        </View>
+        <View style={styles.buttonsContainer}>
+          <TouchableOpacity onPress={login} style={styles.button}>
+            <Text style={styles.buttonText}>Login</Text>
+          </TouchableOpacity>
+          <TouchableOpacity onPress={() => navigation.navigate(routes.register)} style={styles.button}>
+            <Text style={styles.buttonText}>Register</Text>
+          </TouchableOpacity>
+        </View>
       </SafeAreaView>
     </TouchableWithoutFeedback>
   );

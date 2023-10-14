@@ -30,14 +30,24 @@ export const styles = StyleSheet.create({
     margin: 3,
     paddingLeft: 10,
   },
-  dropdownBtnTxtStyle: { color: '#555', textAlign: 'left', fontSize: 16 },
+  dropdownBtnTxtStyle: { 
+    color: '#555', 
+    textAlign: 'left', 
+    fontSize: 16 ,
+    fontFamily: 'Rubik_300Light',
+  },
   dropdownStyle: { backgroundColor: '#fafafa' },
   dropdownRowStyle: {
     backgroundColor: '#fafafa',
     borderBottomColor: '#ddd',
     borderBottomWidth: 1,
   },
-  dropdownRowTxtStyle: { color: '#555', textAlign: 'left', fontSize: 16 },
+  dropdownRowTxtStyle: { 
+    color: '#555', 
+    textAlign: 'left', 
+    fontSize: 16,
+    fontFamily: 'Rubik_300Light',
+   },
   selectedRowStyle: { backgroundColor: '#e1f5fe' },
   searchInputStyle: {
     backgroundColor: '#fafafa',
@@ -59,6 +69,7 @@ export const styles = StyleSheet.create({
   buttonText: { 
     color: '#F2FAF6', 
     fontSize: 30, 
-    fontWeight: '600' 
+    fontWeight: '600' ,
+    fontFamily: 'Rubik_600SemiBold',
   },
 });

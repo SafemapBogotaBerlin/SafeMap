@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { RootState, AppDispatch } from '@/redux/store';
-import { View, Text, Image, TouchableOpacity, TextInput } from 'react-native';
+import { View, Text, Image, TouchableOpacity, KeyboardAvoidingView, 
+  TextInput, ScrollView, TouchableWithoutFeedback, Keyboard } from 'react-native';
 import { styles } from './style';
 import { updateUserName } from '../../redux/session/';
 import { firebaseServices } from '../../services/firebase';
@@ -55,11 +56,21 @@ export default function Profile() {
   };
 
   return (
+    <ScrollView
+      contentContainerStyle={{ flexGrow: 1 }}
+      keyboardShouldPersistTaps="handled" 
+    >
+    <KeyboardAvoidingView
+      behavior={"padding"} //- needs to be tested 
+      style={{ flex: 1 }}
+    >
+    <TouchableWithoutFeedback onPress={Keyboard.dismiss} >
     <View style={styles.container}>
+
       <Image source={logo} style={styles.logo}></Image>
       <View style={styles.profileBlock}>
         <View style={styles.userDataContainer}>
-          <TextInput style={styles.userDataField} placeholder={userData.name} placeholderTextColor="lightgray" onChangeText={handleNameChange} />
+          <TextInput style={styles.userDataPlaceHolder} placeholder={`✎ ${userData.name}`} placeholderTextColor="#0C5A1E" onChangeText={handleNameChange} />
           <Text style={styles.userDataField}>{userData.email}</Text>
           <Text style={styles.userDataField}>Bogota +15km</Text>
         </View>
@@ -96,6 +107,10 @@ export default function Profile() {
           </View>
         </View>
       </View>
-    </View>
+      </View>
+    
+    </TouchableWithoutFeedback>
+    </KeyboardAvoidingView>
+    </ScrollView>
   );
 }

@@ -23,7 +23,7 @@ export const styles = StyleSheet.create({
     flex: 3,
     fontSize: 25,
     textAlign: 'justify',
-    fontFamily: 'EncodeSansExpanded-Medium',
+    fontFamily: 'Rubik_500Medium',
     color: '#0C5A1E',
     marginLeft: 15,
   },
@@ -41,5 +41,6 @@ export const styles = StyleSheet.create({
     color: '#F8FFFC', 
     fontSize: 20, 
     fontWeight: '600',
-  fontFamily: 'EncodeSansExpanded-Black' },
+    fontFamily: 'Rubik_600SemiBold',
+   },
 });
