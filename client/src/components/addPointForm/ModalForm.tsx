@@ -17,13 +17,12 @@ const ModalForm = () => {
   );
   const [selectedTime, setSelectedTime] = useState<string>(null);
   //const slideAnimation = useRef(new Animated.Value(500)).current;
-  //const dispatch: AppDispatch = useDispatch();
   const selectedPoint: Coordinates = useSelector(
     (state: RootState) => state.home.selectedPoint
   );
   const dispatch: AppDispatch = useDispatch();
 
-  const eventType = ['Robbery', 'Massshooting', 'Police', 'Scary Police'];
+  const eventType = ['Robbery', 'Massshooting', 'Police'];
   const times = [
     'Now',
     '15 minures ago',
@@ -68,7 +67,7 @@ const ModalForm = () => {
       user_id: 'randonUser',
     };
     await addDangerPointToBothDBs(hotpoint);
-    dispatch(toggleForm());
+    dispatch(toggleForm(false));
     //hideForm();
   };
 
@@ -112,7 +111,7 @@ const ModalForm = () => {
       <SelectDropdown
         data={times}
         onSelect={(selectedItem) => {
-          setSelectedEventType(selectedItem);
+          setSelectedTime(selectedItem);
         }}
         defaultButtonText={'When?'}
         buttonTextAfterSelection={(selectedItem) => {
