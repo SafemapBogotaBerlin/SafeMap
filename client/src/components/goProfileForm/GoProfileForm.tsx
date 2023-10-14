@@ -5,6 +5,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { RootState, AppDispatch } from '../../redux/store';
 import { useNavigation } from '@react-navigation/native';
 import { toggleForm, whatShouldBeOpenedChange } from '../../redux/home';
+import { logout } from '../../redux/session';
 
 const GoProfileForm = () => {
   const userData = useSelector((state: RootState) => state.auth.userData);
@@ -18,6 +19,12 @@ const GoProfileForm = () => {
     navigation.navigate('Profile');
   };
 
+  const handleLogOutSubmit = async () => {
+    dispatch(toggleForm(false));
+    dispatch(whatShouldBeOpenedChange(''));
+    dispatch(logout());
+  };
+
   return (
     <View style={styles.container}>
       <Text style={styles.userInfoText}>{userData.name}</Text>
@@ -25,7 +32,7 @@ const GoProfileForm = () => {
       <TouchableOpacity onPress={handleGotoSubmit} style={styles.button}>
         <Text style={styles.buttonText}>Profile and statistics</Text>
       </TouchableOpacity>
-      <TouchableOpacity style={styles.button}>
+      <TouchableOpacity onPress={handleLogOutSubmit} style={styles.button}>
         <Text style={styles.buttonText}>Log-out</Text>
       </TouchableOpacity>
     </View>
