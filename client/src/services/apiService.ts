@@ -1,5 +1,6 @@
 import { Point } from '../types';
 
+
 const NGROK_URL = 'https://polliwog-topical-snapper.ngrok-free.app'; //TODO add to .env
 //run this in command line to run on port 8001
 //ngrok http --domain=polliwog-topical-snapper.ngrok-free.app 8001

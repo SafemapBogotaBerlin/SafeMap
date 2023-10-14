@@ -19,7 +19,7 @@ export default function Private() {
         name='Profile'
         component={Profile}
         options={{
-          headerShown: false,
+          headerShown: true,
         }}
       />
     </Stack.Navigator>
