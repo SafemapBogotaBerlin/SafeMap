@@ -59,14 +59,26 @@ export const styles = StyleSheet.create({
     borderColor: 'white',
     borderRadius: 35,
     flexDirection: 'row',  
-    justifyContent: 'center', 
+    justifyContent: 'space-around', 
     alignItems: 'center',  
     paddingHorizontal: 30
   },
   verticalLine: {
     width: 1,  
     height: '80%',  
-    backgroundColor: 'white', 
+    backgroundColor: 'white',
+    margin: 40, 
+  },
+  statsCell: {
+    color: 'lightgrey',
+    alignSelf: 'center'
+  },
+  statsNumber: {
+    color: 'lightgray',
+    fontSize: 35,
+    fontWeight: 'bold',
+    alignSelf: 'center'
+
   }
 
 });
