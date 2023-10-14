@@ -20,6 +20,7 @@ export const styles = StyleSheet.create({
     }),
   },
   dropdownBtnStyle: {
+    flex: 3,
     width: '100%',
     height: 50,
     backgroundColor: '#FFF',
@@ -46,14 +47,18 @@ export const styles = StyleSheet.create({
     paddingLeft: 10,
   },
   button: {
-    flex: 1,
+    flex: 4,
     margin: 3,
     width: '100%',
     padding: 10,
-    backgroundColor: '#4285f4',
+    backgroundColor: '#0C5A1E',
     alignItems: 'center',
     justifyContent: 'center',
     borderRadius: 10,
   },
-  buttonText: { color: 'white', fontSize: 16, fontWeight: '600' },
+  buttonText: { 
+    color: '#F2FAF6', 
+    fontSize: 30, 
+    fontWeight: '600' 
+  },
 });

@@ -14,7 +14,7 @@ export const styles = StyleSheet.create({
     transform: [{ scale: 0.6 }],
     backgroundColor: '#FFFFFF',
     borderRadius: 12,
-    ...Platform.select({
+    /* ...Platform.select({
       ios: {
         shadowColor: 'rgba(0, 0, 0, 0.2)',
         shadowOffset: { width: 0, height: 2 },
@@ -24,7 +24,7 @@ export const styles = StyleSheet.create({
       android: {
         elevation: 6,
       },
-    }),
+    }), */
   },
   button: {
     transform: [{ scale: 0.6 }],

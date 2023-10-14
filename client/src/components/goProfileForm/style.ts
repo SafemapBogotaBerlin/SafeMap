@@ -2,7 +2,7 @@ import { StyleSheet, Platform } from 'react-native';
 
 export const styles = StyleSheet.create({
   container: {
-    backgroundColor: '#f8f8f8',
+    backgroundColor: '#F8FFFC',
     padding: 20,
     height: '70%',
     borderRadius: 20,
@@ -20,23 +20,26 @@ export const styles = StyleSheet.create({
     }),
   },
   userInfoText: {
-    fontSize: 16,
-    color: '#555',
-    marginBottom: 10,
-    marginTop: 5,
+    flex: 3,
+    fontSize: 25,
+    textAlign: 'justify',
+    fontFamily: 'EncodeSansExpanded-Medium',
+    color: '#0C5A1E',
+    marginLeft: 15,
   },
   button: {
+    flex: 4,
     margin: 3,
     width: '100%',
     padding: 10,
-    backgroundColor: '#4285f4',
+    backgroundColor: '#0C5A1E',
     alignItems: 'center',
     justifyContent: 'center',
     borderRadius: 10,
   },
-  buttonText: {
-    color: 'white',
-    fontSize: 16,
-    fontWeight: '600'
-  },
+  buttonText: { 
+    color: '#F8FFFC', 
+    fontSize: 20, 
+    fontWeight: '600',
+  fontFamily: 'EncodeSansExpanded-Black' },
 });
