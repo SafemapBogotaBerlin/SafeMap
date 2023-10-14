@@ -19,7 +19,11 @@ import MapView, {
 } from 'react-native-maps';
 import { styles } from './style';
 import { AppDispatch, RootState } from '../../redux/store';
-import { selectPoint, toggleForm } from '../../redux/home';
+import {
+  selectPoint,
+  toggleForm,
+  whatShouldBeOpenedChange,
+} from '../../redux/home';
 import { hotpoints } from '../../services/pointsSubscription';
 import { useDispatch, useSelector } from 'react-redux';
 import BottomForm from '../../components/bottomSheet/BottomForm';
@@ -35,7 +39,11 @@ export default function Home() {
     null
   );
   //const [errorMsg, setErrorMsg] = useState(null);
-  const [isPoint, setIsPoint] = useState(false);
+
+  const whatShouldBeOpened: string = useSelector(
+    (state: RootState) => state.home.whatShouldBeOpened
+  );
+
   const dispatch: AppDispatch = useDispatch();
 
   const [userLocation, setUserLocation] = useState<Coordinates | null>(null);
@@ -95,14 +103,14 @@ export default function Home() {
     })();
   }, []);
 
-  const handleProfileClick = (/*event: any*/) => {
+  const handleProfileClick = () => {
     dispatch(toggleForm());
-    setIsPoint(false);
+    dispatch(whatShouldBeOpenedChange('profile'));
   };
 
   const handleMapLongPress = (event: LongPressEvent) => {
     dispatch(toggleForm());
-    setIsPoint(true);
+    dispatch(whatShouldBeOpenedChange('pointadd'));
     const { latitude, longitude } = event.nativeEvent.coordinate;
     const newPoint: Coordinates = {
       latitude,
@@ -114,7 +122,7 @@ export default function Home() {
 
   const handleOutsideFormPress = () => {
     dispatch(toggleForm());
-    setIsPoint(false);
+    dispatch(whatShouldBeOpenedChange(''));
   };
 
   const getMarkerIcon = (dangerType) => {
@@ -203,7 +211,7 @@ export default function Home() {
               <Animated.View
                 style={{ transform: [{ translateY: slideAnimation }] }}
               >
-                {isPoint ? (
+                {whatShouldBeOpened === 'pointadd' ? (
                   <BottomForm fillType={'pointadd'} />
                 ) : (
                   <BottomForm fillType={'profile'} />

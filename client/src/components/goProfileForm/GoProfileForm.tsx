@@ -5,15 +5,12 @@ import { useSelector } from 'react-redux';
 import { RootState } from '../../redux/store';
 import { useNavigation } from '@react-navigation/native';
 
-
 const GoProfileForm = () => {
   const userData = useSelector((state: RootState) => state.auth.userData);
   const navigation = useNavigation();
 
   const handleGotoSubmit = async () => {
-    
     navigation.navigate('Profile');
-
   };
 
   return (
