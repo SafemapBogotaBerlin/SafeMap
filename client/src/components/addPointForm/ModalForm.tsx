@@ -3,7 +3,10 @@ import { Modal, View, TouchableOpacity, Text, Animated } from 'react-native';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import SelectDropdown from 'react-native-select-dropdown';
 import { styles } from './style';
-import { useSelector } from 'react-redux';
+import { toggleForm } from '../../redux/home';
+import { AppDispatch } from '../../redux/store';
+import { useDispatch, useSelector } from 'react-redux';
+
 import { RootState } from '../../redux/store';
 import { Coordinates, Point } from '../../types/index';
 import { addDangerPointToBothDBs } from '../../services/apiService';
@@ -14,12 +17,12 @@ const ModalForm = () => {
   );
   const [selectedTime, setSelectedTime] = useState<string>(null);
   //const slideAnimation = useRef(new Animated.Value(500)).current;
-  //const dispatch: AppDispatch = useDispatch();
   const selectedPoint: Coordinates = useSelector(
     (state: RootState) => state.home.selectedPoint
   );
+  const dispatch: AppDispatch = useDispatch();
 
-  const eventType = ['Robbery', 'Massshooting', 'Police', 'Scary Police'];
+  const eventType = ['Robbery', 'Massshooting', 'Police'];
   const times = [
     'Now',
     '15 minures ago',
@@ -64,6 +67,7 @@ const ModalForm = () => {
       user_id: 'randonUser',
     };
     await addDangerPointToBothDBs(hotpoint);
+    dispatch(toggleForm(false));
     //hideForm();
   };
 
@@ -107,13 +111,13 @@ const ModalForm = () => {
       <SelectDropdown
         data={times}
         onSelect={(selectedItem) => {
-          setSelectedEventType(selectedItem);
+          setSelectedTime(selectedItem);
         }}
         defaultButtonText={'When?'}
-        buttonTextAfterSelection={(selectedItem, index) => {
+        buttonTextAfterSelection={(selectedItem) => {
           return selectedItem;
         }}
-        rowTextForSelection={(item, index) => {
+        rowTextForSelection={(item) => {
           return item;
         }}
         buttonStyle={styles.dropdownBtnStyle}
