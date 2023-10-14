@@ -27,16 +27,16 @@ const authSlice = createSlice({
     updateUserName: (state, action) => {
       state.userData.name = action.payload;
     },
-
+    //Not now
+    /* 
     updateUserEmail: (state, action) => {
       state.userData.email = action.payload;
     },
-    //TO DO - Home region
-    /* updateHomeRegion: (state, action) => {
+    updateHomeRegion: (state, action) => {
       state.userData.homeRegion = action.payload;
     } */
   },
 });
 
-export const { setUserData, authenticate, updateUserName, updateUserEmail } = authSlice.actions;
+export const { setUserData, authenticate, updateUserName } = authSlice.actions;
 export default authSlice.reducer;
