@@ -25,6 +25,9 @@ const GoProfileForm = () => {
       <TouchableOpacity onPress={handleGotoSubmit} style={styles.button}>
         <Text style={styles.buttonText}>Profile and statistics</Text>
       </TouchableOpacity>
+      <TouchableOpacity style={styles.button}>
+        <Text style={styles.buttonText}>Log-out</Text>
+      </TouchableOpacity>
     </View>
   );
 };
