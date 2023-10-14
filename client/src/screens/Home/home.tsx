@@ -198,7 +198,12 @@ export default function Home() {
           onPress={handleOutsideFormPress}
           showsUserLocation={true}
           userInterfaceStyle={'dark'} //TODO need user themes
-          onUserLocationChange={() => handleDangerAlert()}
+          onUserLocationChange={(event) => {
+            const { latitude, longitude } = event.nativeEvent.coordinate;
+            setUserLocation({ latitude, longitude });
+
+            handleDangerAlert();
+          }}
           ref={mapRef}
           onRegionChangeComplete={(region) => setVisibleRegion(region)}
         >
