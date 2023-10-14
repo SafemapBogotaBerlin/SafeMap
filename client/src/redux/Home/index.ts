@@ -8,6 +8,9 @@ interface HomeState {
   selectedPoint: Coordinates | null;
   status: 'idle' | 'pending' | 'succeeded' | 'rejected';
   error: string | null;
+  isFormOpen: boolean;
+  isPointClicked: boolean;
+  whatShouldBeOpened: string;
 }
 
 const data: DataObject = {};
@@ -26,6 +29,9 @@ const initialState: HomeState = {
   selectedPoint: null,
   status: 'idle',
   error: null,
+  isFormOpen: false,
+  isPointClicked: false,
+  whatShouldBeOpened: '',
 };
 
 const homeSlice = createSlice({
@@ -39,8 +45,16 @@ const homeSlice = createSlice({
     selectPoint: (state, action: PayloadAction<Coordinates>) => {
       state.selectedPoint = { ...action.payload };
     },
+    toggleForm: (state) => {
+      state.isFormOpen = !state.isFormOpen;
+    },
+
+    whatShouldBeOpenedChange: (state, action: PayloadAction<string>) => {
+      state.whatShouldBeOpened = action.payload;
+    },
   },
 });
 
-export const { selectPoint } = homeSlice.actions;
+export const { selectPoint, toggleForm, whatShouldBeOpenedChange } =
+  homeSlice.actions;
 export default homeSlice.reducer;
