@@ -58,7 +58,7 @@ export default function Home() {
     latitudeDelta: number;
     longitudeDelta: number;
   };
-  
+
   const isFormOpen: boolean = useSelector(
     (state: RootState) => state.home.isFormOpen
   );
@@ -112,12 +112,12 @@ export default function Home() {
   }, []);
 
   const handleProfileClick = () => {
-    dispatch(toggleForm());
+    dispatch(toggleForm(true));
     dispatch(whatShouldBeOpenedChange('profile'));
   };
 
   const handleMapLongPress = (event: LongPressEvent) => {
-    dispatch(toggleForm());
+    dispatch(toggleForm(true));
     dispatch(whatShouldBeOpenedChange('pointadd'));
     const { latitude, longitude } = event.nativeEvent.coordinate;
     const newPoint: Coordinates = {
@@ -129,7 +129,7 @@ export default function Home() {
   const slideAnimation = useRef(new Animated.Value(500)).current;
 
   const handleOutsideFormPress = () => {
-    dispatch(toggleForm());
+    dispatch(toggleForm(false));
     dispatch(whatShouldBeOpenedChange(''));
   };
 
@@ -162,18 +162,23 @@ export default function Home() {
     }
   };
 
-  const isMarkerVisible = (coordinates: Coordinates, visibleRegion: Region | null) => {
+  const isMarkerVisible = (
+    coordinates: Coordinates,
+    visibleRegion: Region | null
+  ) => {
     if (!visibleRegion) return false;
 
-    const latVisible = (
-      coordinates.latitude <= visibleRegion.latitude + (visibleRegion.latitudeDelta / 2) &&
-      coordinates.latitude >= visibleRegion.latitude - (visibleRegion.latitudeDelta / 2)
-    );
+    const latVisible =
+      coordinates.latitude <=
+        visibleRegion.latitude + visibleRegion.latitudeDelta / 2 &&
+      coordinates.latitude >=
+        visibleRegion.latitude - visibleRegion.latitudeDelta / 2;
 
-    const longVisible = (
-      coordinates.longitude <= visibleRegion.longitude + (visibleRegion.longitudeDelta / 2) &&
-      coordinates.longitude >= visibleRegion.longitude - (visibleRegion.longitudeDelta / 2)
-    );
+    const longVisible =
+      coordinates.longitude <=
+        visibleRegion.longitude + visibleRegion.longitudeDelta / 2 &&
+      coordinates.longitude >=
+        visibleRegion.longitude - visibleRegion.longitudeDelta / 2;
 
     return latVisible && longVisible;
   };
@@ -197,31 +202,38 @@ export default function Home() {
           ref={mapRef}
           onRegionChangeComplete={(region) => setVisibleRegion(region)}
         >
-          { Object.values(newData).filter(
-    point => isMarkerVisible(point.coordinates, visibleRegion)
-  ).map((point, index) => (
-            <React.Fragment key={index}>
-              <Marker coordinate={point.coordinates} onPress={() => handleMarkerClick(point)}>
-                <Image
-                  source={getMarkerIcon(point.danger_type)}
-                  style={{ width: 40, height: 40 }}
-                />
+          {Object.values(newData)
+            .filter((point) =>
+              isMarkerVisible(point.coordinates, visibleRegion)
+            )
+            .map((point, index) => (
+              <React.Fragment key={index}>
+                <Marker
+                  coordinate={point.coordinates}
+                  onPress={() => handleMarkerClick(point)}
+                >
+                  <Image
+                    source={getMarkerIcon(point.danger_type)}
+                    style={{ width: 40, height: 40 }}
+                  />
 
-                <Callout style={styles.calloutContainer}>
-                  <Text style={styles.calloutTextIncidentType}>{point.danger_type}</Text>
-                  <Text>{markerDescription}</Text>
-                </Callout>
-              </Marker>
-              <Circle
-                center={point.coordinates}
-                radius={100}
-                strokeWidth={2}
-                strokeColor="#FF0000AA"
-                fillColor="rgba(255,0,0,0.2)"
-                lineDashPattern={[5, 5]}
-              />
-            </React.Fragment>
-          ))}
+                  <Callout style={styles.calloutContainer}>
+                    <Text style={styles.calloutTextIncidentType}>
+                      {point.danger_type}
+                    </Text>
+                    <Text>{markerDescription}</Text>
+                  </Callout>
+                </Marker>
+                <Circle
+                  center={point.coordinates}
+                  radius={100}
+                  strokeWidth={2}
+                  strokeColor='#FF0000AA'
+                  fillColor='rgba(255,0,0,0.2)'
+                  lineDashPattern={[5, 5]}
+                />
+              </React.Fragment>
+            ))}
         </MapView>
       ) : (
         <></>

@@ -45,8 +45,8 @@ const homeSlice = createSlice({
     selectPoint: (state, action: PayloadAction<Coordinates>) => {
       state.selectedPoint = { ...action.payload };
     },
-    toggleForm: (state) => {
-      state.isFormOpen = !state.isFormOpen;
+    toggleForm: (state, action: PayloadAction<boolean>) => {
+      state.isFormOpen = action.payload;
     },
 
     whatShouldBeOpenedChange: (state, action: PayloadAction<string>) => {
