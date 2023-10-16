@@ -1,10 +1,13 @@
 import React from "react";
 import {
   View,
-  Button,
+  KeyboardAvoidingView,
+  ScrollView,
   TouchableWithoutFeedback,
   Keyboard,
-  Image
+  Image, 
+  Text,
+  TouchableOpacity,
 } from "react-native";
 import RegisterInput from "../../components/registerInput/RegisterInput";
 import useRegister from "../../hooks/UseRegister";
@@ -28,45 +31,66 @@ export default function Register() {
   } = useRegister();
 
   return (
-    <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
-       <View style={styles.container}>
-        <Image source={require('../../../assets/safemapLogo.png')} style={styles.logo} />
-        <RegisterInput
-          value={displayName}
-          onChangeText={setDisplayName}
-          placeholder="Name"
-          valid={displayNameValid}
-          errorMessage="Invalid display name"
-        />
+    <ScrollView
+      contentContainerStyle={{ flexGrow: 1 }}
+      keyboardShouldPersistTaps="handled" 
+    >
+      <KeyboardAvoidingView
+        behavior={"padding"} 
+        style={{ flex: 1 }}
+      >
+        <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
+        <View style={styles.container}>
+          <View style={styles.header}></View>
+          <View style={styles.logo}>
+            <Image source={require('../../../assets/safemapLogo.png')} style={styles.logo} />
+          </View>
+          <View style={styles.title}>
+            <Text style={styles.titleText}></Text>
+          </View>
+          <View style={styles.registerContainer}>
+            <RegisterInput
+              value={displayName}
+              onChangeText={setDisplayName}
+              placeholder="Name"
+              valid={displayNameValid}
+              errorMessage="Invalid display name"
+            />
 
-        <RegisterInput
-          value={email}
-          onChangeText={setEmail}
-          placeholder="Email"
-          valid={emailValid}
-          errorMessage="Invalid email address"
-        />
+            <RegisterInput
+              value={email}
+              onChangeText={setEmail}
+              placeholder="Email"
+              valid={emailValid}
+              errorMessage="Invalid email address"
+            />
 
-        <RegisterInput
-          value={password}
-          onChangeText={setPassword}
-          placeholder="Password"
-          valid={passwordValid}
-          errorMessage="Password too short"
-          secret
-        />
+            <RegisterInput
+              value={password}
+              onChangeText={setPassword}
+              placeholder="Password"
+              valid={passwordValid}
+              errorMessage="Password too short"
+              secret
+            />
 
-        <RegisterInput
-          value={verifyPassword}
-          onChangeText={setVerifyPassword}
-          placeholder="Verify Password"
-          valid={verifyPasswordValid}
-          errorMessage="Passwords do not match"
-          secret
-        />
-        <Button title="Register" onPress={handleRegister} />
-      </View>
-    </TouchableWithoutFeedback>
+            <RegisterInput
+              value={verifyPassword}
+              onChangeText={setVerifyPassword}
+              placeholder="Verify Password"
+              valid={verifyPasswordValid}
+              errorMessage="Passwords do not match"
+              secret
+            />
+          </View>
+          <TouchableOpacity onPress={handleRegister} style={styles.button}>
+              <Text style={styles.buttonText}>Login</Text>
+          </TouchableOpacity>
+          <View style={styles.footer}></View>
+        </View>
+      </TouchableWithoutFeedback>
+    </KeyboardAvoidingView>
+  </ScrollView>
   );
 }
 

@@ -7,7 +7,8 @@ import {
   Keyboard,
   TouchableWithoutFeedback,
   Image,
-  View
+  View,
+  KeyboardAvoidingView, ScrollView, Platform
 } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import { routes } from "../../routes/public";
@@ -22,10 +23,20 @@ export default function Login() {
   const navigation:NavigationProp  = useNavigation();
 
   return (
+    <ScrollView
+      contentContainerStyle={{ flexGrow: 1 }}
+      keyboardShouldPersistTaps="handled" 
+    >
+      
     <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
       <SafeAreaView style={styles.container}>
-        <Image source={require('../../../assets/safemapLogo.png')} style={styles.logo} />
-        <Text style={styles.title}>Safe map</Text>
+        <View style={styles.header}></View>
+        <View style={styles.logo} >
+          <Image source={require('../../../assets/safemapLogo.png')} />
+        </View>
+        <View style={styles.title}>
+          <Text style={styles.titleText}>Mapsafe.</Text>
+        </View>
         <View style={styles.loginContainer}>
           <TextInput style={styles.input} placeholder="Email" onChangeText={setEmail} />
           <TextInput
@@ -43,8 +54,10 @@ export default function Login() {
             <Text style={styles.buttonText}>Register</Text>
           </TouchableOpacity>
         </View>
+        <View style={styles.footer}></View>
       </SafeAreaView>
     </TouchableWithoutFeedback>
+    </ScrollView>
   );
 }
 

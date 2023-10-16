@@ -60,57 +60,55 @@ export default function Profile() {
       contentContainerStyle={{ flexGrow: 1 }}
       keyboardShouldPersistTaps="handled" 
     >
-    <KeyboardAvoidingView
-      behavior={"padding"} //- needs to be tested 
-      style={{ flex: 1 }}
-    >
-    <TouchableWithoutFeedback onPress={Keyboard.dismiss} >
-    <View style={styles.container}>
-
-      <Image source={logo} style={styles.logo}></Image>
-      <View style={styles.profileBlock}>
-        <View style={styles.userDataContainer}>
-          <TextInput style={styles.userDataPlaceHolder} placeholder={`✎ ${userData.name}`} placeholderTextColor="#0C5A1E" onChangeText={handleNameChange} />
-          <Text style={styles.userDataField}>{userData.email}</Text>
-          <Text style={styles.userDataField}>Bogota +15km</Text>
-        </View>
-        <TouchableOpacity onPress={handleUpdateProfile} style={styles.button}>
-          <Text style={styles.buttonText}>Update profile</Text>
-        </TouchableOpacity>
-      </View>
-      <View style={styles.statContainer}>
-        <View style={styles.statsBlock}>
-        <View>
-            <Text style={styles.statsNumber}>3</Text>
-            <Text style={styles.statsCell}>My points</Text>
+      <KeyboardAvoidingView
+        behavior={"padding"} //- needs to be tested 
+        style={{ flex: 1 }}
+      >
+        <TouchableWithoutFeedback onPress={Keyboard.dismiss} >
+          <View style={styles.container}>
+            <Image source={logo} style={styles.logo}></Image>
+            <View style={styles.profileBlock}>
+              <View style={styles.userDataContainer}>
+                <TextInput style={styles.userDataPlaceHolder} placeholder={`✎ ${userData.name}`} placeholderTextColor="#0C5A1E" onChangeText={handleNameChange} />
+                <Text style={styles.userDataField}>{userData.email}</Text>
+                <Text style={styles.userDataField}>Bogota +15km</Text>
+              </View>
+              <TouchableOpacity onPress={handleUpdateProfile} style={styles.button}>
+                <Text style={styles.buttonText}>Update profile</Text>
+              </TouchableOpacity>
+            </View>
+            <View style={styles.statContainer}>
+              <View style={styles.statsBlock}>
+              <View>
+                  <Text style={styles.statsNumber}>3</Text>
+                  <Text style={styles.statsCell}>My points</Text>
+                </View>
+                <View style={styles.verticalLine}></View>
+                <View>
+                  <Text style={styles.statsNumber}>6</Text>
+                  <Text style={styles.statsCell}>My dangers</Text>
+                </View>
+              </View>
+              <View style={styles.statsBlock}>
+                <View>
+                  <Text style={styles.statsNumber}>{activePoints}</Text>
+                  <Text style={styles.statsCell}>Active points</Text>
+                </View>
+                <View style={styles.verticalLine}></View>
+                <View>
+                  <Text style={styles.statsNumber}>0</Text>
+                  <Text style={styles.statsCell}>Dangers last 24h</Text>
+                </View>
+                <View style={styles.verticalLine}></View>
+                <View>
+                  <Text style={styles.statsNumber}>{totalPoints}</Text>
+                  <Text style={styles.statsCell}>Points total</Text>
+                </View>
+              </View>
+            </View>
           </View>
-          <View style={styles.verticalLine}></View>
-          <View>
-            <Text style={styles.statsNumber}>6</Text>
-            <Text style={styles.statsCell}>My dangers</Text>
-          </View>
-        </View>
-        <View style={styles.statsBlock}>
-          <View>
-            <Text style={styles.statsNumber}>{activePoints}</Text>
-            <Text style={styles.statsCell}>Active points</Text>
-          </View>
-          <View style={styles.verticalLine}></View>
-          <View>
-            <Text style={styles.statsNumber}>0</Text>
-            <Text style={styles.statsCell}>Dangers last 24h</Text>
-          </View>
-          <View style={styles.verticalLine}></View>
-          <View>
-            <Text style={styles.statsNumber}>{totalPoints}</Text>
-            <Text style={styles.statsCell}>Points total</Text>
-          </View>
-        </View>
-      </View>
-      </View>
-    
-    </TouchableWithoutFeedback>
-    </KeyboardAvoidingView>
+        </TouchableWithoutFeedback>
+      </KeyboardAvoidingView>
     </ScrollView>
   );
 }

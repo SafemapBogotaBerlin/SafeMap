@@ -3,16 +3,25 @@ import {StyleSheet} from 'react-native';
 export const styles = StyleSheet.create({
   inputContainer: {
     marginBottom: 20,
+    display: 'flex',
+    alignSelf: 'stretch',
+    
+    
+    
   },
   input: {
-    height: 50,
-    borderColor: "#dcdcdc",
-    borderWidth: 1,
-    paddingHorizontal: 15,
-    backgroundColor: "#ffffff",
-    borderRadius: 25,
-    fontSize: 16,
-    color: '#333',
+    fontSize: 20,
+    color: '#0C5A1E',
+    padding: 5,
+    borderWidth: .5,
+    borderRadius: 5,
+    
+    borderColor: '#0C5A1E',
+    backgroundColor: '#F8FFFC',
+    width: '90%',
+    height: 40,
+    fontFamily: 'Rubik_300Light',
+    alignSelf: 'center',
     shadowColor: "#000",
     shadowOffset: {
       width: 0,
@@ -20,7 +29,7 @@ export const styles = StyleSheet.create({
     },
     shadowOpacity: 0.1,
     shadowRadius: 4,
-    elevation: 2,
+    elevation: 1,
   },
   invalid: {
     borderColor: "#ff4757",
