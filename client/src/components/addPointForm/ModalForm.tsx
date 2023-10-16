@@ -61,7 +61,7 @@ const ModalForm = () => {
 
   const handleFormSubmit = async () => {
     const hotpoint: Point = {
-      added_dttm: JSON.stringify(timesToTimestamp(selectedTime)),
+      added_dttm: timesToTimestamp(selectedTime),
       coordinates: selectedPoint,
       danger_type: selectedEventType,
       user_id: 'randonUser',
