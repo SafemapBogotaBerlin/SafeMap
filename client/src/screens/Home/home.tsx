@@ -10,18 +10,28 @@ import {
   Modal,
   Text,
   Vibration,
-  Button,
-} from "react-native";
-import MapView, { LongPressEvent, Marker, Callout, Circle } from "react-native-maps";
+} from 'react-native';
+import MapView, {
+  LongPressEvent,
+  Marker,
+  Callout,
+  Circle,
+} from 'react-native-maps';
+import { styles } from './style';
+import { AppDispatch, RootState } from '../../redux/store';
+import {
+  selectPoint,
+  toggleForm,
+  whatShouldBeOpenedChange,
+} from '../../redux/home';
+import { hotpoints } from '../../services/pointsSubscription';
+import { useDispatch, useSelector } from 'react-redux';
+import BottomForm from '../../components/bottomSheet/BottomForm';
+import Spinner from '../../components/spinner/Spinner';
+import * as Location from 'expo-location';
+import { geolocationHelper } from '../../helpers/geolocation';
+import { formatTimeDifference } from '../../services/formatTime';
 import { styles } from "./style";
-import { AppDispatch, RootState } from "../../redux/store";
-import { selectPoint, toggleForm, whatShouldBeOpenedChange } from "../../redux/home";
-import { hotpoints } from "../../services/pointsSubscription";
-import { useDispatch, useSelector } from "react-redux";
-import BottomForm from "../../components/bottomSheet/BottomForm";
-import * as Location from "expo-location";
-import { geolocationHelper } from "../../helpers/geolocation";
-import { formatTimeDifference } from "../../services/formatTime";
 
 import Icon from "react-native-vector-icons/MaterialCommunityIcons";
 import UseNotifications from "../../hooks/UseNotification";
@@ -42,6 +52,8 @@ export default function Home() {
   const [buttonOpen, setButtonOpen] = useState<boolean>(false);
   const mapRef = useRef(null);
   const [visibleRegion, setVisibleRegion] = useState<Region | null>(null);
+
+  const [isLoaded, setIsLoaded] = useState<boolean>(false);
   const [markerDescription, setMarkerDescription] = useState<string>("");
 
   const { pushNotification } = UseNotifications();
@@ -65,21 +77,28 @@ export default function Home() {
 
   const handleDangerAlert = async () => {
     const { status } = await Location.requestForegroundPermissionsAsync();
-    Location.watchPositionAsync({ timeInterval: 1000, accuracy: 3 }, (location) => {
-      const userLocation: Coordinates = {
-        longitude: location.coords.longitude,
-        latitude: location.coords.latitude,
-      };
-      Object.values(newData).forEach((marker) => {
-        if (geolocationHelper.getDistance(userLocation, marker.coordinates) <= 100) {
-          pushNotification("you are in danger", 'save yourself!');
-          Vibration.vibrate(500);
-        }
-      });
-      setLocation(location);
-    });
-    if (status !== "granted") {
-      console.log("Permission to access location was denied");
+    Location.watchPositionAsync(
+      { timeInterval: 1000, accuracy: 3 },
+      (location) => {
+        const userLocation: Coordinates = {
+          longitude: location.coords.longitude,
+          latitude: location.coords.latitude,
+        };
+        Object.values(newData).forEach((marker) => {
+          if (
+            geolocationHelper.getDistance(userLocation, marker.coordinates) <=
+            100
+          ) {
+            console.log('danger zone!!!!!'); //TODO notify user
+            Vibration.vibrate(500);
+          }
+        });
+        setLocation(location);
+        setIsLoaded(true);
+      }
+    );
+    if (status !== 'granted') {
+      console.log('Permission to access location was denied');
       return;
     }
   };
@@ -222,7 +241,7 @@ export default function Home() {
 
         </MapView>
       ) : (
-        <></>
+        <><Spinner /></>
       )}
       <View>
         {isFormOpen && (
