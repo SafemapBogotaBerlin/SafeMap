@@ -27,6 +27,7 @@ import {
 import { hotpoints } from '../../services/pointsSubscription';
 import { useDispatch, useSelector } from 'react-redux';
 import BottomForm from '../../components/bottomSheet/BottomForm';
+import Spinner from '../../components/spinner/Spinner';
 import * as Location from 'expo-location';
 import { geolocationHelper } from '../../helpers/geolocation';
 import { formatTimeDifference } from '../../services/formatTime';
@@ -51,6 +52,7 @@ export default function Home() {
   const mapRef = useRef(null);
   const [visibleRegion, setVisibleRegion] = useState<Region | null>(null);
   const [markerDescription, setMarkerDescription] = useState<string>('');
+  const [isLoaded, setIsLoaded] = useState<boolean>(false);
 
   type Region = {
     latitude: number;
@@ -88,6 +90,7 @@ export default function Home() {
           }
         });
         setLocation(location);
+        setIsLoaded(true);
       }
     );
     if (status !== 'granted') {
