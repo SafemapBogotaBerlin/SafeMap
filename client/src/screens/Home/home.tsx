@@ -44,7 +44,7 @@ export default function Home() {
   const [visibleRegion, setVisibleRegion] = useState<Region | null>(null);
   const [markerDescription, setMarkerDescription] = useState<string>("");
 
-  const { setBody, setTitle, pushNotification } = UseNotifications();
+  const { pushNotification } = UseNotifications();
 
   type Region = {
     latitude: number;
@@ -70,9 +70,7 @@ export default function Home() {
       };
       Object.values(newData).forEach((marker) => {
         if (geolocationHelper.getDistance(userLocation, marker.coordinates) <= 100) {
-          // setTitle("Safe map notification");
-          // setBody("this is the body");
-          // pushNotification();
+          pushNotification("you are in danger", 'safe yourself!');
           Vibration.vibrate(500);
         }
       });
@@ -162,15 +160,9 @@ export default function Home() {
     return latVisible && longVisible;
   };
 
-  const sendNotification = () =>{
-    setTitle("Safe map notification");
-    setBody("this is the body");
-    pushNotification();
-  }
 
   return (
     <View style={{ flex: 1 }}>
-
       {location?.coords ? (
         <MapView
           style={styles.map}
@@ -249,7 +241,6 @@ export default function Home() {
           </View>
         </TouchableOpacity>
       </View>
-      <Button title="push notification" onPress={() => sendNotification()}/>
     </View>
   );
 }

@@ -21,19 +21,12 @@ export default function UseNotifications() {
   const responseListener = useRef<Notifications.Subscription>();
   const userData = useSelector((state: RootState) => state.auth.userData);
 
-  const [title, setTitle] = useState("");
-  const [body, setBody] = useState("");
-
   useEffect(() => {
     const getPermission = async () => {
       if (!userData.notificationToken) {
-        console.log("need permission");
         await registerForPushNotificationsAsync().then((token) => setExpoPushToken(token));
-      } else {
-        console.log("has token");
         setExpoPushToken(userData.notificationToken);
       }
-      console.log("listening");
       notificationListener.current = Notifications.addNotificationReceivedListener(
         (notification) => {
           setNotification(notification);
@@ -56,7 +49,7 @@ export default function UseNotifications() {
     };
   }, []);
 
-  async function pushNotification() {
+  async function pushNotification(title:string, body:string) {
     if (!expoPushToken) {
       console.log("Token not available!");
       return;
@@ -68,7 +61,7 @@ export default function UseNotifications() {
         body,
         data: { data: "you are in danger!" },
       },
-      trigger: { seconds: 5 },
+      trigger: { seconds: 1},
     });
   }
 
@@ -95,7 +88,7 @@ export default function UseNotifications() {
       if (finalStatus !== "granted") {
         return "";
       }
-      token = (await Notifications.getExpoPushTokenAsync()).data;
+      token = (await Notifications.getExpoPushTokenAsync({projectId: process.env.EXPO_PUBLIC_PROJECTID})).data;
     } else {
       console.log("Must use a physical device for Push Notifications");
     }
@@ -106,5 +99,5 @@ export default function UseNotifications() {
     return token;
   }
 
-  return { setBody, setTitle, pushNotification };
+  return { pushNotification };
 }
