@@ -60,7 +60,10 @@ export default function Home() {
     latitude: 0,
     longitude: 0,
   });
+  //are we in danger?
   const [isDanger, setIsDanger] = useState<boolean>(false);
+  //is it time to check danger?
+  const [isTimeToCheck, setIsTimeToCheck] =useState<boolean>(false)
 
   type Region = {
     latitude: number;
@@ -81,10 +84,26 @@ export default function Home() {
 
   //const calculation = useMemo(() => {}, []);
 
+  const handleDeviceMoved = (event) => {
+    const { latitude, longitude } = event.nativeEvent.coordinate;
+    setUserLocation({ latitude, longitude });
+    userLocation && setDistanceMoved(
+              geolocationHelper.getDistance(userLocation, originalCoordinate)
+            );
+    console.log('what distance? = '+distanceMoved + 'check?' + isTimeToCheck)
+    if (distanceMoved<100) setIsTimeToCheck(false) 
+    else setIsTimeToCheck(true)
+
+    if (isTimeToCheck) {
+      handleDangerAlert();
+      setIsTimeToCheck(false);
+      }
+  } 
+
   const handleDangerAlert = async () => {
     const { status } = await Location.requestForegroundPermissionsAsync();
     Location.watchPositionAsync(
-      { timeInterval: 1000, accuracy: 3 },
+      { timeInterval: 10000, accuracy: 3 },
       (location) => {
         const userLocation: Coordinates = {
           longitude: location.coords.longitude,
@@ -92,10 +111,22 @@ export default function Home() {
         };
 
         setOriginalCoordinate(userLocation);
-        const dangerPoints = findPointsWithDanger(newData, userLocation);
 
-        if (dangerPoints) {
+        //here kinda check are we in danger
+        const dangerPoints = findPointsWithDanger(newData, userLocation);
+        //console.log('time to check = '+isTimeToCheck);
+        //console.log('is danger = '+isDanger);
+        console.log(Object.keys(dangerPoints));
+        if (!isDanger && (Object.keys(dangerPoints).length!==0)) {
           console.log('danger zone!!!!!');
+          setIsDanger(true);
+          setIsTimeToCheck(false);
+        } else if (isDanger && (Object.keys(dangerPoints).length===0)) {
+          setIsDanger(false);
+          setIsTimeToCheck(false);
+        } else if (isDanger && Object.keys(dangerPoints).length!==0) {
+          setIsDanger(true);
+          setIsTimeToCheck(false);
         }
 
         //   //TODO notify user
@@ -115,7 +146,7 @@ export default function Home() {
         const fetchedData: DataObject = snapshot.val();
         setNewData(fetchedData);
       });
-      newData && handleDangerAlert();
+      newData && handleDeviceMoved//handleDangerAlert();
 
       const location = await Location.getCurrentPositionAsync({});
       setLocation(location);
@@ -209,13 +240,14 @@ export default function Home() {
           onPress={handleOutsideFormPress}
           showsUserLocation={true}
           userInterfaceStyle={'dark'} //TODO need user themes
-          onUserLocationChange={(event) => {
+          onUserLocationChange={(event) => handleDeviceMoved(event)
+            /* (event) => {
             const { latitude, longitude } = event.nativeEvent.coordinate;
             setUserLocation({ latitude, longitude });
             userLocation &&
               setDistanceMoved(
                 geolocationHelper.getDistance(userLocation, originalCoordinate)
-              );
+              ); */
             // console.log('distanceMoved', distanceMoved);
 
             // const dangerPoints = findPointsWithDanger(newData, userLocation);
@@ -228,7 +260,7 @@ export default function Home() {
             //   distanceMoved >= 100 &&
             //   lastWasDangerZone &&
             //   handleDangerAlert();
-          }}
+          }
           ref={mapRef}
           onRegionChangeComplete={(region) => setVisibleRegion(region)}
         >

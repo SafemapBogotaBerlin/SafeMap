@@ -39,7 +39,7 @@ export const geolocationHelper = {
   },
 };
 
-export const findPointsWithDanger = async (
+export const findPointsWithDanger = (
   newData: DataObject,
   userLocation: Coordinates
 ) => {
@@ -75,7 +75,7 @@ export const findPointsWithDanger = async (
       geolocationHelper.getDistance(
         userLocation,
         newData[marker].coordinates
-      ) <= 100
+      ) <= 50
     ) {
       dangerPoints[marker] = newData[marker];
     }
