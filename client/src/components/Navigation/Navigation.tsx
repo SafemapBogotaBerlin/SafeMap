@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useState} from "react";
 import { View } from "react-native";
 import Private from "../../navigation/Private";
 import Public from "../../navigation/Public";
@@ -11,10 +11,12 @@ import { onAuthStateChanged } from "firebase/auth";
 import { useEffect } from "react";
 import { authenticate, setUserData } from "../../redux/session/index";
 import { firebaseServices } from "../../services/firebase";
+import Spinner from "../spinner/Spinner";
 
 export default function Navigation() {
   const authenticated = useSelector((state: RootState) => state.auth.authenticated);
   const dispatch = useDispatch();
+  const [isLoaded, setIsLoaded] = useState<boolean>(false)
 
   useEffect(() => {
     onAuthStateChanged(auth, async (user) => {
@@ -29,11 +31,14 @@ export default function Navigation() {
       } catch (error) {
       }
     });
+    setIsLoaded(true)
   }, []);
 
   return (
     <View style={styles.container}>
+      {isLoaded ? (
       <NavigationContainer>{authenticated ? <Private /> : <Public />}</NavigationContainer>
+      ): (<Spinner />)}
     </View>
   );
 }
