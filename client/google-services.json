@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "1073813292870",
+    "firebase_url": "https://safemap-330e2-default-rtdb.firebaseio.com",
+    "project_id": "safemap-330e2",
+    "storage_bucket": "safemap-330e2.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1073813292870:android:d8569802cc0c51d20e4747",
+        "android_client_info": {
+          "package_name": "com.test.safemap"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1073813292870-kv437jv9efg6lvkrbh4id6pfpa73hakg.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.test.safemap",
+            "certificate_hash": "23e695900a22df287e9faa406182d053b5c5504d"
+          }
+        },
+        {
+          "client_id": "1073813292870-89gsvj57bhajakpt79smgaiubnd6oqa2.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCP6n5VKDxaIsnpmAv2BeG9IuHIWkU5VEk"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1073813292870-89gsvj57bhajakpt79smgaiubnd6oqa2.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "1073813292870-shblurh7p52p217o04oes6cksd7g03b7.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.gantkiewicz.safeMap"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
