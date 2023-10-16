@@ -242,7 +242,7 @@ export default function Home() {
               ))}
         </MapView>
       ) : (
-        <></>
+        <><Spinner /></>
       )}
       <View>
         {isFormOpen && (
