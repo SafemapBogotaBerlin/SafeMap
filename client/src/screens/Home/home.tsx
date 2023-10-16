@@ -249,7 +249,7 @@ export default function Home() {
           </View>
         </TouchableOpacity>
       </View>
-      <Button title="push notification" onPress={sendNotification}/>
+      <Button title="push notification" onPress={() => sendNotification()}/>
     </View>
   );
 }
