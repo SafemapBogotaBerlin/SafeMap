@@ -56,7 +56,9 @@ export default function Home() {
   const isFormOpen: boolean = useSelector((state: RootState) => state.home.isFormOpen);
 
   const handleMarkerClick = (point) => {
-    const newDescription: string = formatTimeDifference(JSON.parse(point.added_dttm));
+
+    const newDescription: string = formatTimeDifference(point.added_dttm);
+
     setMarkerDescription(newDescription);
   };
   const handleRegionChangeComplete = (region: Region) => {};
@@ -70,7 +72,7 @@ export default function Home() {
       };
       Object.values(newData).forEach((marker) => {
         if (geolocationHelper.getDistance(userLocation, marker.coordinates) <= 100) {
-          pushNotification("you are in danger", 'safe yourself!');
+          pushNotification("you are in danger", 'save yourself!');
           Vibration.vibrate(500);
         }
       });
@@ -88,7 +90,7 @@ export default function Home() {
         const fetchedData: DataObject = snapshot.val();
         setNewData(fetchedData);
       });
-      handleDangerAlert();
+      newData && handleDangerAlert();
 
       const location = await Location.getCurrentPositionAsync({});
       setLocation(location);
@@ -175,36 +177,49 @@ export default function Home() {
           onLongPress={handleMapLongPress}
           onPress={handleOutsideFormPress}
           showsUserLocation={true}
-          userInterfaceStyle={"dark"} //TODO need user themes
-          onUserLocationChange={() => handleDangerAlert()}
+          userInterfaceStyle={'dark'} //TODO need user themes
+          onUserLocationChange={(event) => {
+            const { latitude, longitude } = event.nativeEvent.coordinate;
+            setUserLocation({ latitude, longitude });
+            newData && handleDangerAlert();
+          }}
           ref={mapRef}
           onRegionChangeComplete={(region) => setVisibleRegion(region)}
         >
-          {Object.values(newData)
-            .filter((point) => isMarkerVisible(point.coordinates, visibleRegion))
-            .map((point, index) => (
-              <React.Fragment key={index}>
-                <Marker coordinate={point.coordinates} onPress={() => handleMarkerClick(point)}>
-                  <Image
-                    source={getMarkerIcon(point.danger_type)}
-                    style={{ width: 40, height: 40 }}
-                  />
+          {newData &&
+            Object.values(newData)
+              .filter((point) =>
+                isMarkerVisible(point.coordinates, visibleRegion)
+              )
+              .map((point, index) => (
+                <React.Fragment key={index}>
+                  <Marker
+                    coordinate={point.coordinates}
+                    onPress={() => handleMarkerClick(point)}
+                  >
+                    <Image
+                      source={getMarkerIcon(point.danger_type)}
+                      style={{ width: 40, height: 40 }}
+                    />
 
-                  <Callout style={styles.calloutContainer}>
-                    <Text style={styles.calloutTextIncidentType}>{point.danger_type}</Text>
-                    <Text>{markerDescription}</Text>
-                  </Callout>
-                </Marker>
-                <Circle
-                  center={point.coordinates}
-                  radius={100}
-                  strokeWidth={2}
-                  strokeColor="#FF0000AA"
-                  fillColor="rgba(255,0,0,0.2)"
-                  lineDashPattern={[5, 5]}
-                />
-              </React.Fragment>
-            ))}
+                    <Callout style={styles.calloutContainer}>
+                      <Text style={styles.calloutTextIncidentType}>
+                        {point.danger_type}
+                      </Text>
+                      <Text>{markerDescription}</Text>
+                    </Callout>
+                  </Marker>
+                  <Circle
+                    center={point.coordinates}
+                    radius={100}
+                    strokeWidth={2}
+                    strokeColor='#FF0000AA'
+                    fillColor='rgba(255,0,0,0.2)'
+                    lineDashPattern={[5, 5]}
+                  />
+                </React.Fragment>
+              ))}
+
         </MapView>
       ) : (
         <></>

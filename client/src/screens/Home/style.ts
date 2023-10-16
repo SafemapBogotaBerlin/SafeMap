@@ -8,7 +8,8 @@ export const styles = StyleSheet.create({
   },
   buttonContainer: {
     position: 'absolute',
-    top: '5%',
+    top: 775,
+    left: 10,
     justifyContent: 'center',
     alignItems: 'center',
     transform: [{ scale: 0.6 }],
@@ -72,7 +73,7 @@ export const styles = StyleSheet.create({
 
   nearMeContainer: {
     position: 'absolute',
-    top: 750,
+    top: 796,
     right: 10,
   },
 });

@@ -16,7 +16,7 @@ export type Coordinates = {
 };
 
 export type Point = {
-  added_dttm: string;
+  added_dttm: number;
   coordinates: Coordinates;
   danger_type: string;
   user_id: string;

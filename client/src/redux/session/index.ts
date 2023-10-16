@@ -3,7 +3,7 @@ import { UserData } from '../../types/index';
 
 interface LoginState {
   authenticated: boolean;
-  userData: UserData
+  userData: UserData;
   // with the proper Authentification, different and more variables
 }
 
@@ -27,6 +27,12 @@ const authSlice = createSlice({
     updateUserName: (state, action) => {
       state.userData.name = action.payload;
     },
+
+    logout: (state) => {
+      state.authenticated = false;
+      state.userData = null;
+    },
+
     //Not now
     /* 
     updateUserEmail: (state, action) => {
@@ -38,5 +44,6 @@ const authSlice = createSlice({
   },
 });
 
-export const { setUserData, authenticate, updateUserName } = authSlice.actions;
+export const { setUserData, authenticate, updateUserName, logout } =
+  authSlice.actions;
 export default authSlice.reducer;

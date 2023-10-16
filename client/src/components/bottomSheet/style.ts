@@ -6,7 +6,7 @@ export const styles = StyleSheet.create({
     padding: 20,
     height: '70%',
     borderRadius: 20,
-    ...Platform.select({
+    /* ...Platform.select({
       ios: {
         shadowColor: 'rgba(0, 0, 0, 0.4)',
         shadowOffset: { width: 0, height: 2 },
@@ -16,7 +16,7 @@ export const styles = StyleSheet.create({
       android: {
         elevation: 8,
       },
-    }),
+    }), */
   },
   dropdownBtnStyle: {
     width: '100%',

@@ -20,6 +20,7 @@ export const styles = StyleSheet.create({
     }),
   },
   dropdownBtnStyle: {
+    flex: 3,
     width: '100%',
     height: 50,
     backgroundColor: '#FFF',
@@ -29,14 +30,24 @@ export const styles = StyleSheet.create({
     margin: 3,
     paddingLeft: 10,
   },
-  dropdownBtnTxtStyle: { color: '#555', textAlign: 'left', fontSize: 16 },
+  dropdownBtnTxtStyle: { 
+    color: '#555', 
+    textAlign: 'left', 
+    fontSize: 16 ,
+    fontFamily: 'Rubik_300Light',
+  },
   dropdownStyle: { backgroundColor: '#fafafa' },
   dropdownRowStyle: {
     backgroundColor: '#fafafa',
     borderBottomColor: '#ddd',
     borderBottomWidth: 1,
   },
-  dropdownRowTxtStyle: { color: '#555', textAlign: 'left', fontSize: 16 },
+  dropdownRowTxtStyle: { 
+    color: '#555', 
+    textAlign: 'left', 
+    fontSize: 16,
+    fontFamily: 'Rubik_300Light',
+   },
   selectedRowStyle: { backgroundColor: '#e1f5fe' },
   searchInputStyle: {
     backgroundColor: '#fafafa',
@@ -46,14 +57,19 @@ export const styles = StyleSheet.create({
     paddingLeft: 10,
   },
   button: {
-    flex: 1,
+    flex: 4,
     margin: 3,
     width: '100%',
     padding: 10,
-    backgroundColor: '#4285f4',
+    backgroundColor: '#0C5A1E',
     alignItems: 'center',
     justifyContent: 'center',
     borderRadius: 10,
   },
-  buttonText: { color: 'white', fontSize: 16, fontWeight: '600' },
+  buttonText: { 
+    color: '#F2FAF6', 
+    fontSize: 30, 
+    fontWeight: '600' ,
+    fontFamily: 'Rubik_600SemiBold',
+  },
 });
