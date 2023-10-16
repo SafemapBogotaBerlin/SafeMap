@@ -32,6 +32,7 @@ import { geolocationHelper } from '../../helpers/geolocation';
 import { formatTimeDifference } from '../../services/formatTime';
 
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
+import * as Notifications from 'expo-notifications';
 
 export default function Home() {
   const [newData, setNewData] = useState<DataObject>({});
@@ -59,9 +60,35 @@ export default function Home() {
     longitudeDelta: number;
   };
 
+  Notifications.setNotificationHandler({
+    handleNotification: async () => ({
+      shouldShowAlert: true,
+      shouldPlaySound: true,
+      shouldSetBadge: false,
+    }),
+  });
+
   const isFormOpen: boolean = useSelector(
     (state: RootState) => state.home.isFormOpen
   );
+
+  async function sendLocalNotification(delay: number) {
+    const title = 'Hey User';
+    const body = 'First Notification';
+
+    Notifications.scheduleNotificationAsync({
+      content: {
+        title: title,
+        body: body,
+        data: {
+          name: 'arun',
+        },
+      },
+      trigger: {
+        seconds: delay,
+      },
+    });
+  }
 
   const handleMarkerClick = (point) => {
     const newDescription: string = formatTimeDifference(
@@ -86,7 +113,7 @@ export default function Home() {
             100
           ) {
             console.log('danger zone!!!!!'); //TODO notify user
-            Vibration.vibrate(500);
+            // Vibration.vibrate(500);
           }
         });
         setLocation(location);
@@ -105,6 +132,7 @@ export default function Home() {
         setNewData(fetchedData);
       });
       handleDangerAlert();
+      sendLocalNotification(4);
 
       const location = await Location.getCurrentPositionAsync({});
       setLocation(location);
