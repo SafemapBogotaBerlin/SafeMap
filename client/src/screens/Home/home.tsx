@@ -17,6 +17,7 @@ import MapView, {
   Callout,
   Circle,
 } from 'react-native-maps';
+
 import { styles } from './style';
 import { AppDispatch, RootState } from '../../redux/store';
 import {
@@ -28,7 +29,10 @@ import { hotpoints } from '../../services/pointsSubscription';
 import { useDispatch, useSelector } from 'react-redux';
 import BottomForm from '../../components/bottomSheet/BottomForm';
 import * as Location from 'expo-location';
-import { geolocationHelper } from '../../helpers/geolocation';
+import {
+  findPointsWithDanger,
+  geolocationHelper,
+} from '../../helpers/geolocation';
 import { formatTimeDifference } from '../../services/formatTime';
 
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
@@ -51,6 +55,12 @@ export default function Home() {
   const mapRef = useRef(null);
   const [visibleRegion, setVisibleRegion] = useState<Region | null>(null);
   const [markerDescription, setMarkerDescription] = useState<string>('');
+  const [distanceMoved, setDistanceMoved] = useState<number>(0);
+  const [originalCoordinate, setOriginalCoordinate] = useState<Coordinates>({
+    latitude: 0,
+    longitude: 0,
+  });
+  const [isDanger, setIsDanger] = useState<boolean>(false);
 
   type Region = {
     latitude: number;
@@ -69,6 +79,8 @@ export default function Home() {
   };
   const handleRegionChangeComplete = (region: Region) => {};
 
+  //const calculation = useMemo(() => {}, []);
+
   const handleDangerAlert = async () => {
     const { status } = await Location.requestForegroundPermissionsAsync();
     Location.watchPositionAsync(
@@ -78,18 +90,19 @@ export default function Home() {
           longitude: location.coords.longitude,
           latitude: location.coords.latitude,
         };
-        Object.values(newData).forEach((marker) => {
-          if (
-            geolocationHelper.getDistance(userLocation, marker.coordinates) <=
-            100
-          ) {
-            console.log('danger zone!!!!!'); //TODO notify user
-            Vibration.vibrate(500);
-          }
-        });
-        setLocation(location);
+
+        setOriginalCoordinate(userLocation);
+        const dangerPoints = findPointsWithDanger(newData, userLocation);
+
+        if (dangerPoints) {
+          console.log('danger zone!!!!!');
+        }
+
+        //   //TODO notify user
+        // Vibration.vibrate(500);
       }
     );
+
     if (status !== 'granted') {
       console.log('Permission to access location was denied');
       return;
@@ -199,7 +212,22 @@ export default function Home() {
           onUserLocationChange={(event) => {
             const { latitude, longitude } = event.nativeEvent.coordinate;
             setUserLocation({ latitude, longitude });
-            newData && handleDangerAlert();
+            userLocation &&
+              setDistanceMoved(
+                geolocationHelper.getDistance(userLocation, originalCoordinate)
+              );
+            // console.log('distanceMoved', distanceMoved);
+
+            // const dangerPoints = findPointsWithDanger(newData, userLocation);
+
+            // if (dangerPoints) {
+            //   console.log('danger zone!!!!!');
+            // }
+            // newData &&
+            //   distanceMoved > 0 &&
+            //   distanceMoved >= 100 &&
+            //   lastWasDangerZone &&
+            //   handleDangerAlert();
           }}
           ref={mapRef}
           onRegionChangeComplete={(region) => setVisibleRegion(region)}
