@@ -4,11 +4,10 @@ import { UserData } from '../../types/index';
 interface LoginState {
   authenticated: boolean;
   userData: UserData;
-  // with the proper Authentification, different and more variables
 }
 
 const initialState: LoginState = {
-  authenticated: false, //should be false (for going to home added true)
+  authenticated: false,
   userData: null,
 };
 
