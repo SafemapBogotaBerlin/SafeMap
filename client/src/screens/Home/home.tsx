@@ -1,6 +1,6 @@
-import React, { useState, useEffect, useRef } from "react";
-import { onValue } from "firebase/database";
-import { Coordinates, DataObject } from "../../types";
+import React, { useState, useEffect, useRef } from 'react';
+import { onValue } from 'firebase/database';
+import { Coordinates, DataObject } from '../../types';
 import {
   Image,
   View,
@@ -36,12 +36,15 @@ import {
 } from '../../helpers/geolocation';
 import { formatTimeDifference } from '../../services/formatTime';
 
-import Icon from "react-native-vector-icons/MaterialCommunityIcons";
-import UseNotifications from "../../hooks/UseNotification";
+import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
+import UseNotifications from '../../hooks/UseNotification';
+import Svg from 'react-native-svg';
 
 export default function Home() {
   const [newData, setNewData] = useState<DataObject>({});
-  const [location, setLocation] = useState<Location.LocationObject | null>(null);
+  const [location, setLocation] = useState<Location.LocationObject | null>(
+    null
+  );
 
   //const [errorMsg, setErrorMsg] = useState(null);
 
@@ -62,14 +65,12 @@ export default function Home() {
     longitude: 0,
   });
   const [isDanger, setIsDanger] = useState<boolean>(false);
-  const [isTimeToCheck, setIsTimeToCheck] =useState<boolean>(false)
-
+  const [isTimeToCheck, setIsTimeToCheck] = useState<boolean>(false);
 
   const [isLoaded, setIsLoaded] = useState<boolean>(false);
-  const [markerDescription, setMarkerDescription] = useState<string>("");
+  const [markerDescription, setMarkerDescription] = useState<string>('');
   const [justNotified, setJustNotified] = useState<boolean>(false);
   const { pushNotification } = UseNotifications();
-
 
   type Region = {
     latitude: number;
@@ -78,10 +79,11 @@ export default function Home() {
     longitudeDelta: number;
   };
 
-  const isFormOpen: boolean = useSelector((state: RootState) => state.home.isFormOpen);
+  const isFormOpen: boolean = useSelector(
+    (state: RootState) => state.home.isFormOpen
+  );
 
   const handleMarkerClick = (point) => {
-
     const newDescription: string = formatTimeDifference(point.added_dttm);
 
     setMarkerDescription(newDescription);
@@ -90,31 +92,34 @@ export default function Home() {
 
   const notify = () => {
     console.log('entered notify');
-    if (justNotified) return
+    if (justNotified) return;
     console.log('ready to notify');
     setJustNotified(true);
     pushNotification('MapSafe', 'You are in danger zone!');
-    console.log('notified')
-    setTimeout(() => {setJustNotified(false)}, 30000);
-  }
+    console.log('notified');
+    setTimeout(() => {
+      setJustNotified(false);
+    }, 30000);
+  };
 
   //const calculation = useMemo(() => {}, []);
 
   const handleDeviceMoved = (event) => {
     const { latitude, longitude } = event.nativeEvent.coordinate;
     setUserLocation({ latitude, longitude });
-    userLocation && setDistanceMoved(
-              geolocationHelper.getDistance(userLocation, originalCoordinate)
-            );
-    console.log('what distance? = '+distanceMoved + 'check?' + isTimeToCheck)
-    if (distanceMoved<100) setIsTimeToCheck(false) 
-    else setIsTimeToCheck(true)
+    userLocation &&
+      setDistanceMoved(
+        geolocationHelper.getDistance(userLocation, originalCoordinate)
+      );
+    console.log('what distance? = ' + distanceMoved + 'check?' + isTimeToCheck);
+    if (distanceMoved < 100) setIsTimeToCheck(false);
+    else setIsTimeToCheck(true);
 
     if (isTimeToCheck) {
       handleDangerAlert();
       setIsTimeToCheck(false);
-      }
-  } 
+    }
+  };
 
   const handleDangerAlert = async () => {
     const { status } = await Location.requestForegroundPermissionsAsync();
@@ -125,7 +130,7 @@ export default function Home() {
           longitude: location.coords.longitude,
           latitude: location.coords.latitude,
         };
-        
+
         setOriginalCoordinate(userLocation);
 
         //here kinda check are we in danger
@@ -133,23 +138,20 @@ export default function Home() {
         //console.log('time to check = '+isTimeToCheck);
         //console.log('is danger = '+isDanger);
         console.log(Object.keys(dangerPoints));
-        if (!isDanger && (Object.keys(dangerPoints).length!==0)) {
-
+        if (!isDanger && Object.keys(dangerPoints).length !== 0) {
           notify();
           //console.log('danger zone!!!!!');
-          
-          
+
           setIsDanger(true);
           setIsTimeToCheck(false);
-        } else if (isDanger && (Object.keys(dangerPoints).length===0)) {
+        } else if (isDanger && Object.keys(dangerPoints).length === 0) {
           setIsDanger(false);
           setIsTimeToCheck(false);
-        } else if (isDanger && Object.keys(dangerPoints).length!==0) {
+        } else if (isDanger && Object.keys(dangerPoints).length !== 0) {
           setIsDanger(true);
           setIsTimeToCheck(false);
         }
         // Vibration.vibrate(500);
-
       }
     );
 
@@ -165,7 +167,7 @@ export default function Home() {
         const fetchedData: DataObject = snapshot.val();
         setNewData(fetchedData);
       });
-      newData && handleDeviceMoved//handleDangerAlert();
+      newData && handleDeviceMoved; //handleDangerAlert();
 
       const location = await Location.getCurrentPositionAsync({});
       setLocation(location);
@@ -174,12 +176,12 @@ export default function Home() {
 
   const handleProfileClick = () => {
     dispatch(toggleForm(true));
-    dispatch(whatShouldBeOpenedChange("profile"));
+    dispatch(whatShouldBeOpenedChange('profile'));
   };
 
   const handleMapLongPress = (event: LongPressEvent) => {
     dispatch(toggleForm(true));
-    dispatch(whatShouldBeOpenedChange("pointadd"));
+    dispatch(whatShouldBeOpenedChange('pointadd'));
     const { latitude, longitude } = event.nativeEvent.coordinate;
     const newPoint: Coordinates = {
       latitude,
@@ -191,17 +193,17 @@ export default function Home() {
 
   const handleOutsideFormPress = () => {
     dispatch(toggleForm(false));
-    dispatch(whatShouldBeOpenedChange(""));
+    dispatch(whatShouldBeOpenedChange(''));
   };
 
   const getMarkerIcon = (dangerType) => {
     switch (dangerType) {
-      case "Police":
-        return require("../../../assets/police-car.png");
-      case "Massshooting":
-        return require("../../../assets/gun.png");
+      case 'Police':
+        return require('../../../assets/police-car.png');
+      case 'Massshooting':
+        return require('../../../assets/gun.png');
       default:
-        return require("../../../assets/thief.png");
+        return require('../../../assets/thief.png');
     }
   };
   const handleButtonClick = () => {
@@ -223,20 +225,26 @@ export default function Home() {
     }
   };
 
-  const isMarkerVisible = (coordinates: Coordinates, visibleRegion: Region | null) => {
+  const isMarkerVisible = (
+    coordinates: Coordinates,
+    visibleRegion: Region | null
+  ) => {
     if (!visibleRegion) return false;
 
     const latVisible =
-      coordinates.latitude <= visibleRegion.latitude + visibleRegion.latitudeDelta / 2 &&
-      coordinates.latitude >= visibleRegion.latitude - visibleRegion.latitudeDelta / 2;
+      coordinates.latitude <=
+        visibleRegion.latitude + visibleRegion.latitudeDelta / 2 &&
+      coordinates.latitude >=
+        visibleRegion.latitude - visibleRegion.latitudeDelta / 2;
 
     const longVisible =
-      coordinates.longitude <= visibleRegion.longitude + visibleRegion.longitudeDelta / 2 &&
-      coordinates.longitude >= visibleRegion.longitude - visibleRegion.longitudeDelta / 2;
+      coordinates.longitude <=
+        visibleRegion.longitude + visibleRegion.longitudeDelta / 2 &&
+      coordinates.longitude >=
+        visibleRegion.longitude - visibleRegion.longitudeDelta / 2;
 
     return latVisible && longVisible;
   };
-
 
   return (
     <View style={{ flex: 1 }}>
@@ -253,7 +261,8 @@ export default function Home() {
           onPress={handleOutsideFormPress}
           showsUserLocation={true}
           userInterfaceStyle={'dark'} //TODO need user themes
-          onUserLocationChange={(event) => handleDeviceMoved(event)
+          onUserLocationChange={
+            (event) => handleDeviceMoved(event)
             /* (event) => {
             const { latitude, longitude } = event.nativeEvent.coordinate;
             setUserLocation({ latitude, longitude });
@@ -310,20 +319,23 @@ export default function Home() {
                   />
                 </React.Fragment>
               ))}
-
         </MapView>
       ) : (
-        <><Spinner /></>
+        <>
+          <Spinner />
+        </>
       )}
       <View>
         {isFormOpen && (
-          <Modal transparent animationType="slide">
+          <Modal transparent animationType='slide'>
             <TouchableOpacity onPress={handleOutsideFormPress}>
-              <Animated.View style={{ transform: [{ translateY: slideAnimation }] }}>
-                {whatShouldBeOpened === "pointadd" ? (
-                  <BottomForm/>
+              <Animated.View
+                style={{ transform: [{ translateY: slideAnimation }] }}
+              >
+                {whatShouldBeOpened === 'pointadd' ? (
+                  <BottomForm />
                 ) : (
-                  <BottomForm/>
+                  <BottomForm />
                 )}
               </Animated.View>
             </TouchableOpacity>
@@ -333,16 +345,23 @@ export default function Home() {
 
       <View style={[styles.buttonContainer, { left: 0 }]}>
         <TouchableOpacity style={styles.button} onPress={handleProfileClick}>
-          <Image source={require("../../../assets/hamburger.png")} style={styles.icon} />
+          <Image
+            source={require('../../../assets/hamburger.png')}
+            style={styles.icon}
+          />
         </TouchableOpacity>
       </View>
       <View style={styles.nearMeContainer}>
         <TouchableOpacity onPress={handleButtonClick}>
           <View style={styles.circle}>
             {buttonOpen ? (
-              <Icon name="navigation-variant" size={40} color="#2ee153" />
+              <Icon name='navigation-variant' size={40} color='#2ee153' />
             ) : (
-              <Icon name="navigation-variant-outline" size={40} color="#2ee153" />
+              <Icon
+                name='navigation-variant-outline'
+                size={40}
+                color='#2ee153'
+              />
             )}
           </View>
         </TouchableOpacity>

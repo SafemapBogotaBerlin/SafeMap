@@ -1,30 +1,29 @@
-import { Button, StyleSheet } from "react-native";
+import { Button, StyleSheet } from 'react-native';
 
 export const styles = StyleSheet.create({
   container: {
     flex: 1,
     display: 'flex',
-    justifyContent: "center",
-    alignItems: "stretch",
+    justifyContent: 'center',
+    alignItems: 'stretch',
     padding: 16,
-    backgroundColor: "#F8FFFC",
-
+    backgroundColor: '#F8FFFC',
   },
   header: {
     flex: 2,
   },
   logo: {
     flex: 3,
-    // width: 150,
-    // height: 150,
-    alignSelf:'center',
+    // width: 170,
+    // height: 120,
+    alignSelf: 'center',
     marginBottom: 40,
   },
   title: {
     flex: 1,
     marginBottom: 16,
-    alignSelf:'center',
-    marginTop:15,
+    alignSelf: 'center',
+    marginTop: 15,
   },
   titleText: {
     marginTop: 10,
@@ -41,18 +40,17 @@ export const styles = StyleSheet.create({
     height: 90,
   },
   input: {
-
     fontSize: 20,
     color: '#0C5A1E',
     padding: 5,
-    borderWidth: .5,
+    borderWidth: 0.5,
     borderRadius: 5,
     borderColor: '#0C5A1E',
     backgroundColor: '#F8FFFC',
     width: '90%',
     height: 40,
     fontFamily: 'Rubik_300Light',
-    alignSelf: 'center'
+    alignSelf: 'center',
   },
   buttonsContainer: {
     flex: 3,
@@ -71,12 +69,12 @@ export const styles = StyleSheet.create({
     justifyContent: 'center',
     borderRadius: 8,
   },
-  buttonText: { 
+  buttonText: {
     color: '#F8FFFC',
     fontFamily: 'Rubik_600SemiBold',
     fontSize: 20,
-   },
+  },
   footer: {
     flex: 3,
-  }
+  },
 });

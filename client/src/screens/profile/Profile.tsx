@@ -1,8 +1,17 @@
 import React, { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { RootState, AppDispatch } from '@/redux/store';
-import { View, Text, Image, TouchableOpacity, KeyboardAvoidingView, 
-  TextInput, ScrollView, TouchableWithoutFeedback, Keyboard } from 'react-native';
+import {
+  View,
+  Text,
+  Image,
+  TouchableOpacity,
+  KeyboardAvoidingView,
+  TextInput,
+  ScrollView,
+  TouchableWithoutFeedback,
+  Keyboard,
+} from 'react-native';
 import { styles } from './style';
 import { updateUserName } from '../../redux/session/';
 import { firebaseServices } from '../../services/firebase';
@@ -10,11 +19,7 @@ import { firebaseServices } from '../../services/firebase';
 import { getTotalPointsCold } from '../../services/apiService';
 import { getActivePoints } from '../../services/pointsSubscription';
 
-
-
-
 export default function Profile() {
-
   const userData = useSelector((state: RootState) => state.auth.userData);
   const logo = require('../../../assets/logo_main.png');
   const dispatch: AppDispatch = useDispatch();
@@ -24,14 +29,13 @@ export default function Profile() {
   const [totalPoints, setTotalPoints] = useState<number>(0);
   const [activePoints, setActivePoints] = useState<number>(0);
 
-  
   useEffect(() => {
     const fetchData = async () => {
       try {
         const total = await getTotalPointsCold();
         const active = await getActivePoints();
         setTotalPoints(total);
-        setActivePoints(active); 
+        setActivePoints(active);
       } catch (error) {
         console.error('Error getting data ', error);
       }
@@ -40,11 +44,11 @@ export default function Profile() {
     fetchData();
   }, []);
 
-  const handleNameChange = (newName:string) => {
+  const handleNameChange = (newName: string) => {
     setName(newName);
-  }
+  };
   //not now
- /*  const handleEmailChange = (newEmail:string) => {
+  /*  const handleEmailChange = (newEmail:string) => {
     setEmail(newEmail);
   } */
 
@@ -58,28 +62,36 @@ export default function Profile() {
   return (
     <ScrollView
       contentContainerStyle={{ flexGrow: 1 }}
-      keyboardShouldPersistTaps="handled" 
+      keyboardShouldPersistTaps='handled'
     >
       <KeyboardAvoidingView
-        behavior={"padding"} //- needs to be tested 
+        behavior={'padding'} //- needs to be tested
         style={{ flex: 1 }}
       >
-        <TouchableWithoutFeedback onPress={Keyboard.dismiss} >
+        <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
           <View style={styles.container}>
             <Image source={logo} style={styles.logo}></Image>
             <View style={styles.profileBlock}>
               <View style={styles.userDataContainer}>
-                <TextInput style={styles.userDataPlaceHolder} placeholder={`✎ ${userData.name}`} placeholderTextColor="#0C5A1E" onChangeText={handleNameChange} />
+                <TextInput
+                  style={styles.userDataPlaceHolder}
+                  placeholder={`✎ ${userData.name}`}
+                  placeholderTextColor='#0C5A1E'
+                  onChangeText={handleNameChange}
+                />
                 <Text style={styles.userDataField}>{userData.email}</Text>
                 <Text style={styles.userDataField}>Bogota +15km</Text>
               </View>
-              <TouchableOpacity onPress={handleUpdateProfile} style={styles.button}>
+              <TouchableOpacity
+                onPress={handleUpdateProfile}
+                style={styles.button}
+              >
                 <Text style={styles.buttonText}>Update profile</Text>
               </TouchableOpacity>
             </View>
             <View style={styles.statContainer}>
               <View style={styles.statsBlock}>
-              <View>
+                <View>
                   <Text style={styles.statsNumber}>3</Text>
                   <Text style={styles.statsCell}>My points</Text>
                 </View>
