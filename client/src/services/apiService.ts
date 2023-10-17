@@ -44,10 +44,8 @@ async function addDangerPoint(hotpoint: Point) {
 export async function getTotalPointsCold(): Promise<number> {
   try {
     const response = await fetch(`${NGROK_URL}/getDangerPoints`);
-    //console.log(response)
     if (response.ok) {
       const data = await response.json();
-      //console.log('from api '+data.length)
       return data.length;
     } else {
       console.log('error fetching');
