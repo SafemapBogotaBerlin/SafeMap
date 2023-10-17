@@ -17,6 +17,7 @@ import MapView, {
   Callout,
   Circle,
 } from 'react-native-maps';
+
 import { styles } from './style';
 import { AppDispatch, RootState } from '../../redux/store';
 import {
@@ -29,7 +30,10 @@ import { useDispatch, useSelector } from 'react-redux';
 import BottomForm from '../../components/bottomSheet/BottomForm';
 import Spinner from '../../components/spinner/Spinner';
 import * as Location from 'expo-location';
-import { geolocationHelper } from '../../helpers/geolocation';
+import {
+  findPointsWithDanger,
+  geolocationHelper,
+} from '../../helpers/geolocation';
 import { formatTimeDifference } from '../../services/formatTime';
 import { styles } from "./style";
 
@@ -53,10 +57,20 @@ export default function Home() {
   const mapRef = useRef(null);
   const [visibleRegion, setVisibleRegion] = useState<Region | null>(null);
 
+  const [distanceMoved, setDistanceMoved] = useState<number>(0);
+  const [originalCoordinate, setOriginalCoordinate] = useState<Coordinates>({
+    latitude: 0,
+    longitude: 0,
+  });
+  const [isDanger, setIsDanger] = useState<boolean>(false);
+  const [isTimeToCheck, setIsTimeToCheck] =useState<boolean>(false)
+
+
   const [isLoaded, setIsLoaded] = useState<boolean>(false);
   const [markerDescription, setMarkerDescription] = useState<string>("");
 
   const { pushNotification } = UseNotifications();
+
 
   type Region = {
     latitude: number;
@@ -75,28 +89,57 @@ export default function Home() {
   };
   const handleRegionChangeComplete = (region: Region) => {};
 
+  //const calculation = useMemo(() => {}, []);
+
+  const handleDeviceMoved = (event) => {
+    const { latitude, longitude } = event.nativeEvent.coordinate;
+    setUserLocation({ latitude, longitude });
+    userLocation && setDistanceMoved(
+              geolocationHelper.getDistance(userLocation, originalCoordinate)
+            );
+    console.log('what distance? = '+distanceMoved + 'check?' + isTimeToCheck)
+    if (distanceMoved<100) setIsTimeToCheck(false) 
+    else setIsTimeToCheck(true)
+
+    if (isTimeToCheck) {
+      handleDangerAlert();
+      setIsTimeToCheck(false);
+      }
+  } 
+
   const handleDangerAlert = async () => {
     const { status } = await Location.requestForegroundPermissionsAsync();
     Location.watchPositionAsync(
-      { timeInterval: 1000, accuracy: 3 },
+      { timeInterval: 10000, accuracy: 3 },
       (location) => {
         const userLocation: Coordinates = {
           longitude: location.coords.longitude,
           latitude: location.coords.latitude,
         };
-        Object.values(newData).forEach((marker) => {
-          if (
-            geolocationHelper.getDistance(userLocation, marker.coordinates) <=
-            100
-          ) {
-            console.log('danger zone!!!!!'); //TODO notify user
-            Vibration.vibrate(500);
-          }
-        });
-        setLocation(location);
-        setIsLoaded(true);
+        
+        setOriginalCoordinate(userLocation);
+
+        //here kinda check are we in danger
+        const dangerPoints = findPointsWithDanger(newData, userLocation);
+        //console.log('time to check = '+isTimeToCheck);
+        //console.log('is danger = '+isDanger);
+        console.log(Object.keys(dangerPoints));
+        if (!isDanger && (Object.keys(dangerPoints).length!==0)) {
+          console.log('danger zone!!!!!');
+          setIsDanger(true);
+          setIsTimeToCheck(false);
+        } else if (isDanger && (Object.keys(dangerPoints).length===0)) {
+          setIsDanger(false);
+          setIsTimeToCheck(false);
+        } else if (isDanger && Object.keys(dangerPoints).length!==0) {
+          setIsDanger(true);
+          setIsTimeToCheck(false);
+        }
+        // Vibration.vibrate(500);
+
       }
     );
+
     if (status !== 'granted') {
       console.log('Permission to access location was denied');
       return;
@@ -109,7 +152,7 @@ export default function Home() {
         const fetchedData: DataObject = snapshot.val();
         setNewData(fetchedData);
       });
-      newData && handleDangerAlert();
+      newData && handleDeviceMoved//handleDangerAlert();
 
       const location = await Location.getCurrentPositionAsync({});
       setLocation(location);
@@ -197,11 +240,27 @@ export default function Home() {
           onPress={handleOutsideFormPress}
           showsUserLocation={true}
           userInterfaceStyle={'dark'} //TODO need user themes
-          onUserLocationChange={(event) => {
+          onUserLocationChange={(event) => handleDeviceMoved(event)
+            /* (event) => {
             const { latitude, longitude } = event.nativeEvent.coordinate;
             setUserLocation({ latitude, longitude });
-            newData && handleDangerAlert();
-          }}
+            userLocation &&
+              setDistanceMoved(
+                geolocationHelper.getDistance(userLocation, originalCoordinate)
+              ); */
+            // console.log('distanceMoved', distanceMoved);
+
+            // const dangerPoints = findPointsWithDanger(newData, userLocation);
+
+            // if (dangerPoints) {
+            //   console.log('danger zone!!!!!');
+            // }
+            // newData &&
+            //   distanceMoved > 0 &&
+            //   distanceMoved >= 100 &&
+            //   lastWasDangerZone &&
+            //   handleDangerAlert();
+          }
           ref={mapRef}
           onRegionChangeComplete={(region) => setVisibleRegion(region)}
         >
