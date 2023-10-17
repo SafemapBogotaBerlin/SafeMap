@@ -29,6 +29,7 @@ import { hotpoints } from '../../services/pointsSubscription';
 import { useDispatch, useSelector } from 'react-redux';
 import BottomForm from '../../components/bottomSheet/BottomForm';
 import Spinner from '../../components/spinner/Spinner';
+import InfoBlock from "../../components/infoBlock/InfoBlock";
 import * as Location from 'expo-location';
 import {
   findPointsWithDanger,
@@ -62,7 +63,9 @@ export default function Home() {
     longitude: 0,
   });
   const [isDanger, setIsDanger] = useState<boolean>(false);
-  const [isTimeToCheck, setIsTimeToCheck] =useState<boolean>(false)
+  const [isTimeToCheck, setIsTimeToCheck] =useState<boolean>(false);
+
+  const [isInfoOpened, setIsInfoOpened] = useState<boolean>(true);
 
 
   const [isLoaded, setIsLoaded] = useState<boolean>(false);
@@ -145,6 +148,10 @@ export default function Home() {
     }
   };
 
+  const handleInfoOpen = () => {
+    setIsInfoOpened(true);
+  }
+
   useEffect(() => {
     (async () => {
       onValue(hotpoints, (snapshot) => {
@@ -178,6 +185,7 @@ export default function Home() {
   const handleOutsideFormPress = () => {
     dispatch(toggleForm(false));
     dispatch(whatShouldBeOpenedChange(""));
+    setIsInfoOpened(false);
   };
 
   const getMarkerIcon = (dangerType) => {
@@ -333,6 +341,24 @@ export default function Home() {
           </View>
         </TouchableOpacity>
       </View>
+      
+      <View>
+        {isInfoOpened && (
+          <Modal transparent animationType="slide">
+            <TouchableOpacity onPress={handleOutsideFormPress}>
+              <Animated.View style={{ transform: [{ translateY: slideAnimation }] }}>
+                <InfoBlock />
+              </Animated.View>
+            </TouchableOpacity>
+          </Modal>
+        )}
+      </View>
+      <View style={[styles.infoButtonContainer, { left: 0 }]}>
+        <TouchableOpacity style={styles.button} onPress={handleInfoOpen}>
+          <Image source={require("../../../assets/Minimalist_info_Icon.png")} style={styles.icon} />
+        </TouchableOpacity>
+      </View>
+
     </View>
   );
 }

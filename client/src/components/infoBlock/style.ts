@@ -5,7 +5,7 @@ export const styles = StyleSheet.create({
   container: {
     backgroundColor: '#f8f8f8',
     padding: 20,
-    height: '70%',
+    height: '60%',
     borderRadius: 20,
     margin: 10,
     ...Platform.select({
@@ -22,17 +22,20 @@ export const styles = StyleSheet.create({
   },
   topLogo: {
     flex: 1,
+    maxWidth: 100,
   },
   title: {
     flex: 1,
   },
   titleText: {
+    color: '#0C5A1E',
     fontFamily: 'Rubik_600SemiBold',
   },
   infoBlock: {
     flex: 3,
   },
   infoText: {
+    color: '#0C5A1E',
     fontFamily: 'Rubik_300Light',
   }
   
