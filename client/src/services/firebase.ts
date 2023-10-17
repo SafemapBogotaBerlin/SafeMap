@@ -49,9 +49,8 @@ export const firebaseServices = {
     try {
       const q = query(USER_DATA, where("id", "==", uid));
       const querySnapshot = await getDocs(q);
-      console.log(querySnapshot.docs[0].id)
       if (!querySnapshot.empty) {
-        const userDocRef = doc(USER_DATA, querySnapshot.docs[0].id); 
+        const userDocRef = doc(USER_DATA, querySnapshot.docs[0].id);
         await updateDoc(userDocRef, newData);
         console.log("User data updated successfully");
       } else {

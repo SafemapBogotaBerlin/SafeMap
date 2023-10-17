@@ -56,7 +56,6 @@ export default function UseNotifications() {
       console.log("Token not available!");
       return;
     }
-    console.log(expoPushToken);
     await Notifications.scheduleNotificationAsync({
       content: {
         title,

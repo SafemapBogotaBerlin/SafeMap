@@ -3,7 +3,6 @@ import { addRealTimePointModel } from '../models/pointsRealTime';
 
 
 export async function addPointRT(req: Request, res: Response): Promise<Response> {
-  console.log('entered controllers realtime')
   const { user_id, added_dttm, danger_type, coordinates } = req.body;
   const { latitude, longitude } = coordinates;
   if (!user_id || !added_dttm || !danger_type || !coordinates) {
