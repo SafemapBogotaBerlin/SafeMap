@@ -35,7 +35,6 @@ import {
   geolocationHelper,
 } from '../../helpers/geolocation';
 import { formatTimeDifference } from '../../services/formatTime';
-import { styles } from "./style";
 
 import Icon from "react-native-vector-icons/MaterialCommunityIcons";
 import UseNotifications from "../../hooks/UseNotification";
@@ -308,9 +307,9 @@ export default function Home() {
             <TouchableOpacity onPress={handleOutsideFormPress}>
               <Animated.View style={{ transform: [{ translateY: slideAnimation }] }}>
                 {whatShouldBeOpened === "pointadd" ? (
-                  <BottomForm fillType={"pointadd"} />
+                  <BottomForm/>
                 ) : (
-                  <BottomForm fillType={"profile"} />
+                  <BottomForm/>
                 )}
               </Animated.View>
             </TouchableOpacity>
