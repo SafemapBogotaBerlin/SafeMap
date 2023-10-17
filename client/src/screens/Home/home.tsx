@@ -1,6 +1,6 @@
-import React, { useState, useEffect, useRef } from 'react';
-import { onValue } from 'firebase/database';
-import { Coordinates, DataObject } from '../../types';
+import React, { useState, useEffect, useRef } from "react";
+import { onValue } from "firebase/database";
+import { Coordinates, DataObject } from "../../types";
 import {
   Image,
   View,
@@ -28,20 +28,22 @@ import {
 import { hotpoints } from '../../services/pointsSubscription';
 import { useDispatch, useSelector } from 'react-redux';
 import BottomForm from '../../components/bottomSheet/BottomForm';
+import Spinner from '../../components/spinner/Spinner';
 import * as Location from 'expo-location';
 import {
   findPointsWithDanger,
   geolocationHelper,
 } from '../../helpers/geolocation';
 import { formatTimeDifference } from '../../services/formatTime';
+import { styles } from "./style";
 
-import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
+import Icon from "react-native-vector-icons/MaterialCommunityIcons";
+import UseNotifications from "../../hooks/UseNotification";
 
 export default function Home() {
   const [newData, setNewData] = useState<DataObject>({});
-  const [location, setLocation] = useState<Location.LocationObject | null>(
-    null
-  );
+  const [location, setLocation] = useState<Location.LocationObject | null>(null);
+
   //const [errorMsg, setErrorMsg] = useState(null);
 
   const whatShouldBeOpened: string = useSelector(
@@ -54,16 +56,21 @@ export default function Home() {
   const [buttonOpen, setButtonOpen] = useState<boolean>(false);
   const mapRef = useRef(null);
   const [visibleRegion, setVisibleRegion] = useState<Region | null>(null);
-  const [markerDescription, setMarkerDescription] = useState<string>('');
+
   const [distanceMoved, setDistanceMoved] = useState<number>(0);
   const [originalCoordinate, setOriginalCoordinate] = useState<Coordinates>({
     latitude: 0,
     longitude: 0,
   });
-  //are we in danger?
   const [isDanger, setIsDanger] = useState<boolean>(false);
-  //is it time to check danger?
   const [isTimeToCheck, setIsTimeToCheck] =useState<boolean>(false)
+
+
+  const [isLoaded, setIsLoaded] = useState<boolean>(false);
+  const [markerDescription, setMarkerDescription] = useState<string>("");
+
+  const { pushNotification } = UseNotifications();
+
 
   type Region = {
     latitude: number;
@@ -72,12 +79,12 @@ export default function Home() {
     longitudeDelta: number;
   };
 
-  const isFormOpen: boolean = useSelector(
-    (state: RootState) => state.home.isFormOpen
-  );
+  const isFormOpen: boolean = useSelector((state: RootState) => state.home.isFormOpen);
 
   const handleMarkerClick = (point) => {
+
     const newDescription: string = formatTimeDifference(point.added_dttm);
+
     setMarkerDescription(newDescription);
   };
   const handleRegionChangeComplete = (region: Region) => {};
@@ -109,7 +116,7 @@ export default function Home() {
           longitude: location.coords.longitude,
           latitude: location.coords.latitude,
         };
-
+        
         setOriginalCoordinate(userLocation);
 
         //here kinda check are we in danger
@@ -128,9 +135,8 @@ export default function Home() {
           setIsDanger(true);
           setIsTimeToCheck(false);
         }
-
-        //   //TODO notify user
         // Vibration.vibrate(500);
+
       }
     );
 
@@ -155,12 +161,12 @@ export default function Home() {
 
   const handleProfileClick = () => {
     dispatch(toggleForm(true));
-    dispatch(whatShouldBeOpenedChange('profile'));
+    dispatch(whatShouldBeOpenedChange("profile"));
   };
 
   const handleMapLongPress = (event: LongPressEvent) => {
     dispatch(toggleForm(true));
-    dispatch(whatShouldBeOpenedChange('pointadd'));
+    dispatch(whatShouldBeOpenedChange("pointadd"));
     const { latitude, longitude } = event.nativeEvent.coordinate;
     const newPoint: Coordinates = {
       latitude,
@@ -172,17 +178,17 @@ export default function Home() {
 
   const handleOutsideFormPress = () => {
     dispatch(toggleForm(false));
-    dispatch(whatShouldBeOpenedChange(''));
+    dispatch(whatShouldBeOpenedChange(""));
   };
 
   const getMarkerIcon = (dangerType) => {
     switch (dangerType) {
-      case 'Police':
-        return require('../../../assets/police-car.png');
-      case 'Massshooting':
-        return require('../../../assets/gun.png');
+      case "Police":
+        return require("../../../assets/police-car.png");
+      case "Massshooting":
+        return require("../../../assets/gun.png");
       default:
-        return require('../../../assets/thief.png');
+        return require("../../../assets/thief.png");
     }
   };
   const handleButtonClick = () => {
@@ -204,26 +210,20 @@ export default function Home() {
     }
   };
 
-  const isMarkerVisible = (
-    coordinates: Coordinates,
-    visibleRegion: Region | null
-  ) => {
+  const isMarkerVisible = (coordinates: Coordinates, visibleRegion: Region | null) => {
     if (!visibleRegion) return false;
 
     const latVisible =
-      coordinates.latitude <=
-        visibleRegion.latitude + visibleRegion.latitudeDelta / 2 &&
-      coordinates.latitude >=
-        visibleRegion.latitude - visibleRegion.latitudeDelta / 2;
+      coordinates.latitude <= visibleRegion.latitude + visibleRegion.latitudeDelta / 2 &&
+      coordinates.latitude >= visibleRegion.latitude - visibleRegion.latitudeDelta / 2;
 
     const longVisible =
-      coordinates.longitude <=
-        visibleRegion.longitude + visibleRegion.longitudeDelta / 2 &&
-      coordinates.longitude >=
-        visibleRegion.longitude - visibleRegion.longitudeDelta / 2;
+      coordinates.longitude <= visibleRegion.longitude + visibleRegion.longitudeDelta / 2 &&
+      coordinates.longitude >= visibleRegion.longitude - visibleRegion.longitudeDelta / 2;
 
     return latVisible && longVisible;
   };
+
 
   return (
     <View style={{ flex: 1 }}>
@@ -297,21 +297,20 @@ export default function Home() {
                   />
                 </React.Fragment>
               ))}
+
         </MapView>
       ) : (
-        <></>
+        <><Spinner /></>
       )}
       <View>
         {isFormOpen && (
-          <Modal transparent animationType='slide'>
+          <Modal transparent animationType="slide">
             <TouchableOpacity onPress={handleOutsideFormPress}>
-              <Animated.View
-                style={{ transform: [{ translateY: slideAnimation }] }}
-              >
-                {whatShouldBeOpened === 'pointadd' ? (
-                  <BottomForm fillType={'pointadd'} />
+              <Animated.View style={{ transform: [{ translateY: slideAnimation }] }}>
+                {whatShouldBeOpened === "pointadd" ? (
+                  <BottomForm fillType={"pointadd"} />
                 ) : (
-                  <BottomForm fillType={'profile'} />
+                  <BottomForm fillType={"profile"} />
                 )}
               </Animated.View>
             </TouchableOpacity>
@@ -321,23 +320,16 @@ export default function Home() {
 
       <View style={[styles.buttonContainer, { left: 0 }]}>
         <TouchableOpacity style={styles.button} onPress={handleProfileClick}>
-          <Image
-            source={require('../../../assets/hamburger.png')}
-            style={styles.icon}
-          />
+          <Image source={require("../../../assets/hamburger.png")} style={styles.icon} />
         </TouchableOpacity>
       </View>
       <View style={styles.nearMeContainer}>
         <TouchableOpacity onPress={handleButtonClick}>
           <View style={styles.circle}>
             {buttonOpen ? (
-              <Icon name='navigation-variant' size={40} color='#2ee153' />
+              <Icon name="navigation-variant" size={40} color="#2ee153" />
             ) : (
-              <Icon
-                name='navigation-variant-outline'
-                size={40}
-                color='#2ee153'
-              />
+              <Icon name="navigation-variant-outline" size={40} color="#2ee153" />
             )}
           </View>
         </TouchableOpacity>

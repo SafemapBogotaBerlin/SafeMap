@@ -7,6 +7,7 @@ export type UserData = {
   email: string;
   name: string;
   created: string;
+  notificationToken?: string;
 };
 
 export type Coordinates = {
