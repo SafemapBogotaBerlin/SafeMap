@@ -76,4 +76,25 @@ export const styles = StyleSheet.create({
     top: 796,
     right: 10,
   },
+  infoButtonContainer: {
+    position: 'absolute',
+    top: 15,
+    left: 10,
+    justifyContent: 'center',
+    alignItems: 'center',
+    transform: [{ scale: 0.6 }],
+    backgroundColor: '#FFFFFF',
+    borderRadius: 12,
+    ...Platform.select({
+      ios: {
+        shadowColor: 'rgba(0, 0, 0, 0.2)',
+        shadowOffset: { width: 0, height: 2 },
+        shadowOpacity: 1,
+        shadowRadius: 6,
+      },
+      android: {
+        elevation: 6,
+      },
+    }),
+  },
 });
