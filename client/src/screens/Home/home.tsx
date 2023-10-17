@@ -35,7 +35,6 @@ import {
   geolocationHelper,
 } from '../../helpers/geolocation';
 import { formatTimeDifference } from '../../services/formatTime';
-import { styles } from "./style";
 
 import Icon from "react-native-vector-icons/MaterialCommunityIcons";
 import UseNotifications from "../../hooks/UseNotification";
@@ -68,7 +67,7 @@ export default function Home() {
 
   const [isLoaded, setIsLoaded] = useState<boolean>(false);
   const [markerDescription, setMarkerDescription] = useState<string>("");
-
+  const [justNotified, setJustNotified] = useState<boolean>(false);
   const { pushNotification } = UseNotifications();
 
 
@@ -88,6 +87,16 @@ export default function Home() {
     setMarkerDescription(newDescription);
   };
   const handleRegionChangeComplete = (region: Region) => {};
+
+  const notify = () => {
+    console.log('entered notify');
+    if (justNotified) return
+    console.log('ready to notify');
+    setJustNotified(true);
+    pushNotification('MapSafe', 'You are in danger zone!');
+    console.log('notified')
+    setTimeout(() => {setJustNotified(false)}, 30000);
+  }
 
   //const calculation = useMemo(() => {}, []);
 
@@ -125,7 +134,11 @@ export default function Home() {
         //console.log('is danger = '+isDanger);
         console.log(Object.keys(dangerPoints));
         if (!isDanger && (Object.keys(dangerPoints).length!==0)) {
-          console.log('danger zone!!!!!');
+
+          notify();
+          //console.log('danger zone!!!!!');
+          
+          
           setIsDanger(true);
           setIsTimeToCheck(false);
         } else if (isDanger && (Object.keys(dangerPoints).length===0)) {

@@ -15,16 +15,18 @@ Notifications.setNotificationHandler({
 });
 
 export default function UseNotifications() {
-  const [expoPushToken, setExpoPushToken] = useState<string>("");
   const [notification, setNotification] = useState<Notifications.Notification | false>(false);
   const notificationListener = useRef<Notifications.Subscription>();
   const responseListener = useRef<Notifications.Subscription>();
   const userData = useSelector((state: RootState) => state.auth.userData);
+  const [expoPushToken, setExpoPushToken] = useState<string>("");
+
 
   useEffect(() => {
     const getPermission = async () => {
       if (!userData.notificationToken) {
         await registerForPushNotificationsAsync().then((token) => setExpoPushToken(token));
+      } else {
         setExpoPushToken(userData.notificationToken);
       }
       notificationListener.current = Notifications.addNotificationReceivedListener(
@@ -88,7 +90,7 @@ export default function UseNotifications() {
       if (finalStatus !== "granted") {
         return "";
       }
-      token = (await Notifications.getExpoPushTokenAsync({projectId: process.env.EXPO_PUBLIC_PROJECTID})).data;
+      token = (await Notifications.getExpoPushTokenAsync()).data;
     } else {
       console.log("Must use a physical device for Push Notifications");
     }
