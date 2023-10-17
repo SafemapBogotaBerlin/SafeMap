@@ -5,8 +5,7 @@ import GoProfileForm from '../goProfileForm/GoProfileForm';
 import { useSelector } from 'react-redux';
 import { RootState } from '../../redux/store';
 
-const BottomForm = ({ fillType }: { fillType: string }) => {
-  const slideAnimation = useRef(new Animated.Value(500)).current;
+const BottomForm = () => {
   const whatShouldBeOpened: string = useSelector(
     (state: RootState) => state.home.whatShouldBeOpened
   );

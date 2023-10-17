@@ -31,7 +31,6 @@ import Spinner from '../../components/spinner/Spinner';
 import * as Location from 'expo-location';
 import { geolocationHelper } from '../../helpers/geolocation';
 import { formatTimeDifference } from '../../services/formatTime';
-import { styles } from "./style";
 
 import Icon from "react-native-vector-icons/MaterialCommunityIcons";
 import UseNotifications from "../../hooks/UseNotification";
