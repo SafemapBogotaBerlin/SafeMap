@@ -4,11 +4,10 @@ import { UserData } from '../../types/index';
 interface LoginState {
   authenticated: boolean;
   userData: UserData;
-  // with the proper Authentification, different and more variables
 }
 
 const initialState: LoginState = {
-  authenticated: false, //should be false (for going to home added true)
+  authenticated: false,
   userData: null,
 };
 
@@ -32,15 +31,6 @@ const authSlice = createSlice({
       state.authenticated = false;
       state.userData = null;
     },
-
-    //Not now
-    /* 
-    updateUserEmail: (state, action) => {
-      state.userData.email = action.payload;
-    },
-    updateHomeRegion: (state, action) => {
-      state.userData.homeRegion = action.payload;
-    } */
   },
 });
 

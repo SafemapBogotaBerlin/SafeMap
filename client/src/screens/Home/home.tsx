@@ -321,9 +321,9 @@ export default function Home() {
             <TouchableOpacity onPress={handleOutsideFormPress}>
               <Animated.View style={{ transform: [{ translateY: slideAnimation }] }}>
                 {whatShouldBeOpened === "pointadd" ? (
-                  <BottomForm fillType={"pointadd"} />
+                  <BottomForm/>
                 ) : (
-                  <BottomForm fillType={"profile"} />
+                  <BottomForm/>
                 )}
               </Animated.View>
             </TouchableOpacity>
