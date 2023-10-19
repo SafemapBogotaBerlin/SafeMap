@@ -1,4 +1,4 @@
-import { Region } from "react-native-maps";
+import { Region } from 'react-native-maps';
 
 type Coordinates = {
   latitude: number;
@@ -30,7 +30,10 @@ export const geolocationHelper = {
 
     const a =
       Math.sin(deltaLat / 2) * Math.sin(deltaLat / 2) +
-      Math.cos(lat1Rad) * Math.cos(lat2Rad) * Math.sin(deltaLon / 2) * Math.sin(deltaLon / 2);
+      Math.cos(lat1Rad) *
+        Math.cos(lat2Rad) *
+        Math.sin(deltaLon / 2) *
+        Math.sin(deltaLon / 2);
 
     const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
 
@@ -41,23 +44,29 @@ export const geolocationHelper = {
     if (!visibleRegion) return false;
 
     const latVisible =
-      coordinates.latitude <= visibleRegion.latitude + visibleRegion.latitudeDelta / 2 &&
-      coordinates.latitude >= visibleRegion.latitude - visibleRegion.latitudeDelta / 2;
+      coordinates.latitude <=
+        visibleRegion.latitude + visibleRegion.latitudeDelta / 2 &&
+      coordinates.latitude >=
+        visibleRegion.latitude - visibleRegion.latitudeDelta / 2;
 
     const longVisible =
-      coordinates.longitude <= visibleRegion.longitude + visibleRegion.longitudeDelta / 2 &&
-      coordinates.longitude >= visibleRegion.longitude - visibleRegion.longitudeDelta / 2;
+      coordinates.longitude <=
+        visibleRegion.longitude + visibleRegion.longitudeDelta / 2 &&
+      coordinates.longitude >=
+        visibleRegion.longitude - visibleRegion.longitudeDelta / 2;
 
     return latVisible && longVisible;
   },
   findPointsWithDanger(newData: DataObject, userLocation: Coordinates) {
     const dangerPoints: DataObject = {};
 
-    Object.keys(newData).forEach((marker) => {
-      if (this.getDistance(userLocation, newData[marker].coordinates) <= 50) {
-        dangerPoints[marker] = newData[marker];
-      }
-    });
+    if (newData) {
+      Object.keys(newData).forEach((marker) => {
+        if (this.getDistance(userLocation, newData[marker].coordinates) <= 50) {
+          dangerPoints[marker] = newData[marker];
+        }
+      });
+    }
     return dangerPoints;
   },
 };

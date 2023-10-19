@@ -1,5 +1,5 @@
-import React, { useRef, useState } from 'react';
-import { Modal, View, TouchableOpacity, Text, Animated } from 'react-native';
+import React, { useState } from 'react';
+import { View, TouchableOpacity, Text } from 'react-native';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import SelectDropdown from 'react-native-select-dropdown';
 import { styles } from './style';

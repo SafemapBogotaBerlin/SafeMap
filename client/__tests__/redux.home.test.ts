@@ -11,10 +11,13 @@ describe('Home redux state tests', () => {
     const state = store.getState().home;
     expect(state).toEqual({
       data: {},
+      selectedPoint: null,
       isFormOpen: false,
       isPointClicked: false,
-      selectedPoint: null,
       whatShouldBeOpened: '',
+      location: null,
+      userLocation: null,
+      isInfoOpened: true,
     });
   });
 
@@ -27,6 +30,9 @@ describe('Home redux state tests', () => {
       isPointClicked: false,
       selectedPoint: { latitude: 20, longitude: 20 },
       whatShouldBeOpened: '',
+      location: null,
+      userLocation: null,
+      isInfoOpened: true,
     });
   });
 
@@ -39,6 +45,9 @@ describe('Home redux state tests', () => {
       isPointClicked: false,
       selectedPoint: { latitude: 20, longitude: 20 },
       whatShouldBeOpened: '',
+      location: null,
+      userLocation: null,
+      isInfoOpened: true,
     });
   });
 
@@ -51,6 +60,9 @@ describe('Home redux state tests', () => {
       isPointClicked: false,
       selectedPoint: { latitude: 20, longitude: 20 },
       whatShouldBeOpened: 'profile',
+      location: null,
+      userLocation: null,
+      isInfoOpened: true,
     });
   });
 });
