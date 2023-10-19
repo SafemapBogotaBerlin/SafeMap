@@ -58,6 +58,6 @@ Backend development was streamlined with Firebase, eliminating the need for trad
 
 Deployment, especially across different platforms, was a task in itself, reminding us that each platform has its intricacies.
 
-##Contributing 🤝
+## Contributing 🤝
 
 Pull requests are welcome. For major changes, please open an issue first to discuss what you would like to change. Please ensure to update tests as appropriate.
