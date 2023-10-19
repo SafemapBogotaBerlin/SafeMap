@@ -2,13 +2,16 @@
 
 MapSafe is a mobile application designed to provide users with real-time insights into potential dangers in their vicinity. By leveraging cutting-edge technologies such as React Native and Firebase, MapSafe aims to offer peace of mind by enabling safer navigation in dynamic environments.
 
-![MapSafe Screenshot](client/assets/logo_main.png)
+## How it looks
+
+![MapSafe Screenshot](client/assets/logo_words_vector.svg)
+
+<img src='screens/Screenshot_20231019-144840.png' height=400> <img src='screens/Screenshot_20231019-144911.png' height=400> <img src='screens/Screenshot_20231019-154421.png' height=400>
+<img src='screens/1000030829.png' height=400> <img src='screens/1000030833.png' height=400> <img src='screens/1000030832.png' height=400> <img src='screens/Screenshot_20231019-145047.png' height=400> <img src='screens/Screenshot_20231019-145043.png' height=400> <img src='Screenshot_20231019-144911.png' height=400> <img src='screens/Screenshot_20231019-144911.pngscreens' height=400> <img src='screens/Screenshot_20231019-145013.png' height=400> <img src='screens/Screenshot_20231019-145001.png' height=400>
 
 ## Features 🌟
 
 - **Real-time Danger Alerts**: View and identify dangers on a real-time map.
-
-![Real-time Danger points](client/assets/dangerPointsSh.png)
 
 - **Firebase Authentication**: Secure and reliable user sign-up/sign-in processes.
 
@@ -18,7 +21,9 @@ MapSafe is a mobile application designed to provide users with real-time insight
 
 - **Intuitive UI**: User-friendly interface with a focus on user experience.
 
-## Technologies 💡
+## Tech Stack 💡
+
+![Tech Stack](https://skillicons.dev/icons?i=ts,react,redux,express,firebase,gcp,jest,github,css,discord,regex,vscode,git)
 
 - **React Native**: For cross-platform mobile application development.
 
@@ -30,6 +35,24 @@ MapSafe is a mobile application designed to provide users with real-time insight
 
 - **Git**: For version control.
 
+- **Redux**: State management library for JavaScript applications, commonly used with React/React Native.
+
+- **Express**: Minimal web application framework for Node.js, simplifying backend development.
+
+- **Google Cloud Platform (GCP)**: Suite of cloud computing services by Google for building, deploying, and scaling applications.
+
+- **Jest**: JavaScript testing framework developed by Facebook for writing unit tests.
+
+- **GitHub**: Web-based platform for version control (Git) and collaborative software development.
+
+- **CSS (Cascading Style Sheets)**: Stylesheet language controlling web page presentation and layout.
+
+- **Discord**: Communication platform with voice, video, and text channels, popular for communities and gamers.
+
+- **Regular Expressions (Regex)**: Patterns used for string matching, validation, and text manipulation tasks.
+
+- **Visual Studio Code (VSCode)**: Free code editor by Microsoft with extensive features for various programming languages.
+
 ... _and many more_ ...
 
 ## Setup & Installation 🛠️
@@ -38,18 +61,24 @@ MapSafe is a mobile application designed to provide users with real-time insight
 
    ```bash
    git clone https://github.com/SafemapBogotaBerlin/SafeMap.git
-   cd MapSafe
+   cd SafeMap
+   ```
+
 1. install Dependencies:
+
    ```bash
    npm install
 
-2. Set up Firebase:
+   ```
+
+1. Set up Firebase:
 
 Ensure you've set up a Firebase project. Add your Firebase project configuration to the appropriate file (e.g., firebaseConfig.js).
 
 3. Run the Application:
    ```bash
    npx expo start --tunnel
+   ```
 
 ## Insights & Challenges 🔍
 
