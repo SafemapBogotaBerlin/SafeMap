@@ -2,11 +2,13 @@
 
 MapSafe is a mobile application designed to provide users with real-time insights into potential dangers in their vicinity. By leveraging cutting-edge technologies such as React Native and Firebase, MapSafe aims to offer peace of mind by enabling safer navigation in dynamic environments.
 
-![MapSafe Screenshot](path-to-your-screenshot.png)
+![MapSafe Screenshot](client/assets/logo_main.png)
 
 ## Features 🌟
 
 - **Real-time Danger Alerts**: View and identify dangers on a real-time map.
+
+![Real-time Danger points](client/assets/dangerPointsSh.png)
 
 - **Firebase Authentication**: Secure and reliable user sign-up/sign-in processes.
 
@@ -45,7 +47,8 @@ npm install
 Ensure you've set up a Firebase project. Add your Firebase project configuration to the appropriate file (e.g., firebaseConfig.js).
 
 3. Run the Application:
-npx expo start --tunnel
+   ```bash
+   npx expo start --tunnel
 
 ## Insights & Challenges 🔍
 
