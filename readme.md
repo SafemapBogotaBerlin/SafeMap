@@ -1,13 +1,17 @@
 # MapSafe 🗺️
 
+<img src='client/assets/logo_words_vector.svg' width=500>
+
 MapSafe is a mobile application designed to provide users with real-time insights into potential dangers in their vicinity. By leveraging cutting-edge technologies such as React Native and Firebase, MapSafe aims to offer peace of mind by enabling safer navigation in dynamic environments.
 
 ## How it looks
 
-![MapSafe Screenshot](client/assets/logo_words_vector.svg)
+<img src='screens/Screenshot_20231019-144840.png' height=200>     <img src='screens/Screenshot_20231019-144911.png' height=200>     <img src='screens/Screenshot_20231019-154421.png' height=200>    <img src='screens/1000030829.png' height=200>     <img src='screens/1000030833.png' height=200> 
 
-<img src='screens/Screenshot_20231019-144840.png' height=400> <img src='screens/Screenshot_20231019-144911.png' height=400> <img src='screens/Screenshot_20231019-154421.png' height=400>
-<img src='screens/1000030829.png' height=400> <img src='screens/1000030833.png' height=400> <img src='screens/1000030832.png' height=400> <img src='screens/Screenshot_20231019-145047.png' height=400> <img src='screens/Screenshot_20231019-145043.png' height=400> <img src='Screenshot_20231019-144911.png' height=400> <img src='screens/Screenshot_20231019-144911.pngscreens' height=400> <img src='screens/Screenshot_20231019-145013.png' height=400> <img src='screens/Screenshot_20231019-145001.png' height=400>
+
+
+
+<img src='screens/1000030832.png' height=200>     <img src='screens/Screenshot_20231019-145047.png' height=200>     <img src='screens/Screenshot_20231019-145043.png' height=200>     <img src='screens/Screenshot_20231019-145013.png' height=200>      <img src='screens/Screenshot_20231019-145001.png' height=200>
 
 ## Features 🌟
 
