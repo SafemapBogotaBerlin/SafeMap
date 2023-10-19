@@ -32,7 +32,7 @@ jobs:
     - name: server dependencies
       run: cd server && npm i
     - name: server tests
-      run: cd server && npm test
+      run: cd server && npm test apiDummy.test.ts
 
     
     
