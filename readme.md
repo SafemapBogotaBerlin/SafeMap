@@ -40,7 +40,8 @@ MapSafe is a mobile application designed to provide users with real-time insight
    git clone https://github.com/SafemapBogotaBerlin/SafeMap.git
    cd MapSafe
 1. install Dependencies:
-npm install
+   ```bash
+   npm install
 
 2. Set up Firebase:
 
